@@ -1,0 +1,96 @@
+---
+title: "Company Enrichment API"
+api: "POST https://enrich.octolane.com/v1/company"
+description: "This API endpoint is used to fetch company enrichment data."
+---
+
+### Headers
+
+<ParamField header="x-api-key" type="string">
+  Your API key
+</ParamField>
+
+### Body
+The request body must be a JSON object containing the following fields:
+
+<ParamField body="domain" type="string">
+  The domain of the company. This is a required field.
+</ParamField>
+
+<ParamField body="company_name" type="string" required={false}>
+  The name of the company. This is an optional field.
+</ParamField>
+
+Example:
+```json
+{
+  "domain": "example.com",
+  "company_name": "Example Company" // optional
+}
+```
+
+### Response
+The response will be a JSON object containing the enrichment data for the company.
+The exact fields in the response can vary, but it will typically include fields such
+as `domain`, `company_name`, `industry`, `founded_at`, `primary_location`, `linkedin_url`,
+`twitter_url`, `twitter_followers`, `estimated_annual_revenue`, `employee_size_range`, `tags`.
+
+Example:
+```json
+{
+  "message": "Company enrichment data fetched successfully",
+  "success": true,
+  "statusCode": 200,
+  "data": {
+    "domain": "example.com",
+    "company_name": "Example Company",
+    "industry": "Technology",
+    "founded_at": "2000",
+    "primary_location": "San Francisco, CA",
+    "linkedin_url": "https://linkedin.com/example",
+    "twitter_url": "https://twitter.com/example",
+    "twitter_followers": 10000,
+    "estimated_annual_revenue": 1000000,
+    "employee_size_range": "100-500",
+    "tags": ["technology", "software"]
+  }
+}
+```
+
+<RequestExample>
+
+```bash Example Request
+curl --location --request POST 'https://enrich.octolane.com/v1/company' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: <token>' \
+--data-raw '{
+  "domain": "octolane.com"
+}'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "message": "Company enrichment data fetched successfully",
+  "success": true,
+  "statusCode": 200,
+  "data": {
+    "domain": "example.com",
+    "company_name": "Example Company",
+    "industry": "Technology",
+    "founded_at": "2000",
+    "primary_location": "San Francisco, CA",
+    "linkedin_url": "https://linkedin.com/example",
+    "twitter_url": "https://twitter.com/example",
+    "twitter_followers": 10000,
+    "estimated_annual_revenue": 1000000,
+    "employee_size_range": "100-500",
+    "tags": ["technology", "software"]
+  }
+}
+```
+
+</ResponseExample>

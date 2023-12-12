@@ -64,6 +64,7 @@
     {
       "group": "Endpoint Examples",
       "pages": [
+        "api-reference/endpoint/company-enrichment",
         "api-reference/endpoint/get",
         "api-reference/endpoint/create",
         "api-reference/endpoint/delete"
