@@ -1,0 +1,107 @@
+---
+title: "Find Email API"
+api: "POST https://enrich.octolane.com/v1/find-email"
+description: "This API endpoint is used to fetch people search enrichment data."
+---
+
+### Headers
+
+<ParamField header="x-api-key" type="string">
+  Your API key. This is required for authentication.
+</ParamField>
+
+### Body
+The body of the request should be a JSON object with the following properties:
+
+<ParamField body="domain" type="string">
+  The domain of the company where the people work. This is a required field.
+</ParamField>
+
+<ParamField body="first_name" type="string">
+  An array of strings representing the first names of the people. This is an optional field.
+</ParamField>
+
+<ParamField body="last_name" type="string">
+  An array of strings representing the last names of the people. This is an optional field.
+</ParamField>
+
+Example:
+```json
+{
+  "domain": "example.com",
+  "first_name": "John",
+  "last_name": "Doe"
+}
+```
+
+### Response
+The response will be a JSON object containing the email data for the searched person. 
+The exact fields in the response can vary, but it will typically include fields such as 
+`email`, `validation`, and `other_emails`.
+
+Example:
+```json
+{
+  "message": "Person email searched successfully",
+  "success": true,
+  "statusCode": 200,
+  "data": {
+    "email": "john@example.com",
+    "validation": "valid",
+    "other_emails": [
+      "john.doe@example.com"
+    ]
+  }
+}
+```
+
+<RequestExample>
+
+```bash Example Request
+curl --location --request POST 'https://enrich.octolane.com/v1/find-email' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: <token>' \
+--data-raw '{
+  "domain": "example.com",
+  "first_name": "John",
+  "last_name": "Doe"
+}'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "message": "Person email searched successfully",
+  "success": true,
+  "statusCode": 200,
+  "data": {
+    "email": "john@example.com",
+    "validation": "valid",
+    "other_emails": [
+      "john.doe@example.com"
+    ]
+  }
+}
+```
+
+</ResponseExample>
+
+### Error Handling
+If an error occurs, the API will return a JSON object with a `success` field set to `false`,
+a `statusCode` field set to relevant http status code and a `message` field containing a description 
+of the error.
+
+Example:
+```json
+{
+  "message": "Could not find email for this domain and person",
+  "success": false,
+  "statusCode": 404
+}
+```
+
+### Rate Limit
+This endpoint is rate-limited to **100** requests per **60 minutes**.

@@ -1,0 +1,126 @@
+---
+title: "People Search API"
+api: "POST https://enrich.octolane.com/v1/people"
+description: "This API endpoint is used to fetch people search enrichment data."
+---
+
+### Headers
+
+<ParamField header="x-api-key" type="string">
+  Your API key. This is required for authentication.
+</ParamField>
+
+### Body
+The request body must be a JSON object containing the following fields:
+
+<ParamField body="company_domain" type="string">
+  The domain of the company where the people work. This is a required field.
+</ParamField>
+
+<ParamField body="job_roles" type="Array<string>">
+  An array of strings representing the job roles of the people. This is a required field.
+</ParamField>
+
+<ParamField body="seniority" type="Array<string>" required={false}>
+  An array of strings representing the seniority levels of the people. This is an optional field.
+</ParamField>
+
+<ParamField body="keyword" type="string" required={false}>
+  A keyword for searching the people. This is an optional field.
+</ParamField>
+
+Example:
+```json
+{
+  "seniority": ["Senior", "Manager"],
+  "job_roles": ["Engineer", "Product Manager"],
+  "company_domain": "example.com",
+  "keyword": "software"
+}
+```
+
+### Response
+The response will be a JSON object containing the enrichment data for the people. 
+The exact fields in the response can vary, but it will typically include fields such as 
+`full_name`, `first_name`, `last_name`, `linkedin_url`, `email`, `email_verified`, `contact_number`,
+`job_title`, `seniority`, `current_company`, and `current_company_domain`.
+
+Example:
+```json
+{
+  "message": "People search enrichment data fetched successfully",
+  "success": true,
+  "statusCode": 200,
+  "data": {
+    "full_name": "John Doe",
+    "first_name": "John",
+    "last_name": "Doe",
+    "linkedin_url": "https://linkedin.com/johndoe",
+    "email": "john@example.com",
+    "email_verified": true,
+    "contact_number": "+1xxxxxxxxxx",
+    "job_title": "Software Engineer",
+    "seniority": "Senior",
+    "current_company": "Example Company",
+    "current_company_domain": "example.com"
+  }
+}
+```
+
+<RequestExample>
+
+```bash Example Request
+curl --location --request POST 'https://enrich.octolane.com/v1/people' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: <token>' \
+--data-raw '{
+  "seniority": ["Senior", "Manager"],
+  "job_roles": ["Engineer", "Product Manager"],
+  "company_domain": "example.com",
+  "keyword": "software"
+}'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "message": "People search enrichment data fetched successfully",
+  "success": true,
+  "statusCode": 200,
+  "data": {
+    "full_name": "John Doe",
+    "first_name": "John",
+    "last_name": "Doe",
+    "linkedin_url": "https://linkedin.com/johndoe",
+    "email": "john@example.com",
+    "email_verified": true,
+    "contact_number": "+1xxxxxxxxxx",
+    "job_title": "Software Engineer",
+    "seniority": "Senior",
+    "current_company": "Example Company",
+    "current_company_domain": "example.com"
+  }
+}
+```
+
+</ResponseExample>
+
+### Error Handling
+If an error occurs, the API will return a JSON object with a `success` field set to `false`,
+a `statusCode` field set to relevant http status code and a `message` field containing a description 
+of the error.
+
+Example:
+```json
+{
+  "message": "Could not find people for this domain and person",
+  "success": false,
+  "statusCode": 404
+}
+```
+
+### Rate Limit
+This endpoint is rate-limited to **100** requests per **60 minutes**.
