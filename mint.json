@@ -80,6 +80,11 @@
     "twitter": "https://twitter.com/octolane_app",
     "website": "https://www.octolane.com"
   },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
+  },
   "analytics": {
     "koala": {
       "publicApiKey": "pk_9bd45074f60eff79cf4e1042027522a2f56a"
