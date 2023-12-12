@@ -6,55 +6,60 @@
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
+  "modeToggle": {
+    "default": "light",
+    "isHidden": true
+  },
   "colors": {
-    "primary": "#000000",
-    "light": "#07C983",
+    "primary": "#171618",
+    "light": "#000",
     "dark": "#0D9373",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#171618",
+      "to": "#464646"
     }
   },
   "topbarLinks": [
     {
-      "name": "Support",
-      "url": "mailto:one@octolane.com"
+      "name": "Dashboard",
+      "url": "https://octolane.com"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://octolane.com"
-  },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
+  "tabs": [],
   "anchors": [
     {
-      "name": "Documentation",
+      "name": "Get Started",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "url": "introduction"
+    },
+    {
+      "name": "API Guide",
+      "icon": "square-terminal",
+      "url": "api-reference"
+    },
+    {
+      "name": "Slack Support",
+      "icon": "slack",
+      "url": "support"
     },
     {
       "name": "Website",
-      "icon": "newspaper",
+      "icon": "browser",
       "url": "https://octolane.com"
     }
   ],
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
-    },
-    {
-      "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
+      "pages": [
+        "introduction"
+      ]
     },
     {
       "group": "API Documentation",
-      "pages": ["api-reference/introduction"]
+      "pages": [
+        "api-reference/introduction"
+      ]
     },
     {
       "group": "Endpoint Examples",
@@ -67,7 +72,6 @@
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/octolane_app",
-  
     "website": "https://www.octolane.com"
   }
 }
