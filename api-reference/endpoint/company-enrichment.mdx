@@ -94,3 +94,20 @@ curl --location --request POST 'https://enrich.octolane.com/v1/company' \
 ```
 
 </ResponseExample>
+
+### Error Handling
+If an error occurs, the API will return a JSON object with a `success` field set to `false`,
+a `statusCode` field set to relevant http status code and a `message` field containing a description 
+of the error.
+
+Example:
+```json
+{
+  "message": "Company not found",
+  "success": false,
+  "statusCode": 404
+}
+```
+
+### Rate Limit
+This endpoint is rate-limited to **100** requests per **60 minutes**.
