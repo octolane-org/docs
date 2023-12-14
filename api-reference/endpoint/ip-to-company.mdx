@@ -1,7 +1,7 @@
 ---
-title: "Company Enrichment API"
-api: "POST https://enrich.octolane.com/v1/company"
-description: "This API endpoint is used to fetch company enrichment data."
+title: "IP to Company API"
+api: "GET https://enrich.octolane.com/v1/ip-to-company"
+description: "This API endpoint is used to fetch company data from IP address."
 ---
 
 ### Headers
@@ -10,24 +10,15 @@ description: "This API endpoint is used to fetch company enrichment data."
   Your API key. This is required for authentication.
 </ParamField>
 
-### Body
-The request body must be a JSON object containing the following fields:
+### Query Parameters
+The query params must contain the following fields:
 
-<ParamField body="domain" type="string">
-  The domain of the company. This is a required field.
-</ParamField>
-
-<ParamField body="company_name" type="string" required={false}>
-  The name of the company. This is an optional field.
+<ParamField query="ip" type="string">
+  The IP address. This is a required field.
 </ParamField>
 
 Example:
-```json
-{
-  "domain": "example.com",
-  "company_name": "Example Company" // optional
-}
-```
+`/ip-to-company?ip=x.x.x.x`
 
 ### Response
 The response will be a JSON object containing the enrichment data for the company.
@@ -38,7 +29,7 @@ as `domain`, `company_name`, `industry`, `founded_at`, `primary_location`, `link
 Example:
 ```json
 {
-  "message": "Company enrichment data fetched successfully",
+  "message": "IP to Company enrichment data fetched successfully",
   "success": true,
   "statusCode": 200,
   "data": {
@@ -60,12 +51,9 @@ Example:
 <RequestExample>
 
 ```bash Example Request
-curl --location --request POST 'https://enrich.octolane.com/v1/company' \
+curl --location --request GET 'https://enrich.octolane.com/v1/ip-to-company?ip=x.x.x.x' \
 --header 'Content-Type: application/json' \
---header 'x-api-key: <token>' \
---data-raw '{
-  "domain": "octolane.com"
-}'
+--header 'x-api-key: <token>'
 ```
 
 </RequestExample>
@@ -74,7 +62,7 @@ curl --location --request POST 'https://enrich.octolane.com/v1/company' \
 
 ```json Response
 {
-  "message": "Company enrichment data fetched successfully",
+  "message": "IP to Company enrichment data fetched successfully",
   "success": true,
   "statusCode": 200,
   "data": {
@@ -103,7 +91,7 @@ of the error.
 Example:
 ```json
 {
-  "message": "Company not found",
+  "message": "Company not found with this ip",
   "success": false,
   "statusCode": 404
 }

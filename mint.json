@@ -72,7 +72,8 @@
       "pages": [
         "api-reference/endpoint/company-enrichment",
         "api-reference/endpoint/people-search",
-        "api-reference/endpoint/find-email"
+        "api-reference/endpoint/find-email",
+        "api-reference/endpoint/ip-to-company"
       ]
     }
   ],
