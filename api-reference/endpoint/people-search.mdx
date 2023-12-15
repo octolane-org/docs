@@ -74,18 +74,111 @@ curl --location --request POST 'https://enrich.octolane.com/v1/people' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: <token>' \
 --data-raw '{
-  "seniority": ["Senior", "Manager"],
-  "job_roles": ["Engineer", "Product Manager"],
-  "company_domain": "example.com",
+  "seniority": ["Manager"],
+  "job_roles": ["Founder"],
+  "company_domain": "octolane.com",
   "keyword": "software"
 }'
+```
+
+```python Python
+import requests
+
+url = "https://enrich.octolane.com/v1/people"
+
+headers = {
+  "Content-Type": "application/json",
+  "x-api-key": "<token>"
+}
+
+body = {
+  "seniority": ["Manager"],
+  "job_roles": ["Founder"],
+  "company_domain": "octolane.com",
+  "keyword": "software"
+}
+
+response = requests.post(url, headers=headers, json=body)
+
+print(response.text)
+```
+
+```javascript Node
+const axios = require("axios");
+
+const url = "https://enrich.octolane.com/v1/people";
+
+const headers = {
+  "Content-Type": "application/json",
+  "x-api-key": "<token>"
+};
+
+const body = {
+  "seniority": ["Manager"],
+  "job_roles": ["Founder"],
+  "company_domain": "octolane.com",
+  "keyword": "software"
+};
+
+async function fetchData() {
+  try {
+    const response = await axios.post(url, body, { headers });
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+fetchData();
+```
+
+```go Go
+package main
+
+import (
+	"bytes"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func main() {
+	url := "https://enrich.octolane.com/v1/people"
+	data := []byte(`{
+    "seniority": ["Manager"],
+    "job_roles": ["Founder"],
+    "company_domain": "octolane.com",
+    "keyword": "software"
+	}`)
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		return
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("x-api-key", "<token>")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making request:", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	body, _ := ioutil.ReadAll(resp.Body)
+
+	fmt.Println("Response:", string(body))
+}
 ```
 
 </RequestExample>
 
 <ResponseExample>
 
-```json Response
+```json 200
 {
   "message": "People search enrichment data fetched successfully",
   "success": true,
@@ -103,6 +196,14 @@ curl --location --request POST 'https://enrich.octolane.com/v1/people' \
     "current_company": "Example Company",
     "current_company_domain": "example.com"
   }
+}
+```
+
+```json 404
+{
+  "message": "Could not find people for this domain and person",
+  "success": false,
+  "statusCode": 404
 }
 ```
 
