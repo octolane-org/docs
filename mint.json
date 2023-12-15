@@ -12,7 +12,7 @@
   },
   "colors": {
     "primary": "#171618",
-    "light": "#000",
+    "light": "#0D9373",
     "dark": "#0D9373",
     "anchors": {
       "from": "#171618",
@@ -51,6 +51,11 @@
       "name": "Website",
       "icon": "browser",
       "url": "https://octolane.com"
+    },
+    {
+      "name": "Talk to Founders",
+      "icon": "calendar-days",
+      "url": "https://cal.com/octolane/20min"
     }
   ],
   "navigation": [
@@ -70,10 +75,10 @@
     {
       "group": "Endpoint Examples",
       "pages": [
+        "api-reference/endpoint/ip-to-company",
         "api-reference/endpoint/company-enrichment",
         "api-reference/endpoint/people-search",
-        "api-reference/endpoint/find-email",
-        "api-reference/endpoint/ip-to-company"
+        "api-reference/endpoint/find-email"
       ]
     }
   ],

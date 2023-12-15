@@ -22,10 +22,10 @@ The request body must be a JSON object containing the following fields:
 </ParamField>
 
 Example:
-```json
+```json Request Body
 {
-  "domain": "example.com",
-  "company_name": "Example Company" // optional
+  "domain": "octolane.com",
+  "company_name": "Octolane AI" // optional
 }
 ```
 
@@ -36,29 +36,29 @@ as `domain`, `company_name`, `industry`, `founded_at`, `primary_location`, `link
 `twitter_url`, `twitter_followers`, `estimated_annual_revenue`, `employee_size_range`, `tags`.
 
 Example:
-```json
+```json Response
 {
   "message": "Company enrichment data fetched successfully",
   "success": true,
   "statusCode": 200,
   "data": {
-    "domain": "example.com",
-    "company_name": "Example Company",
+    "domain": "octolane.com",
+    "company_name": "Octolane AI",
     "industry": "Technology",
-    "founded_at": "2000",
+    "founded_at": "2024",
     "primary_location": "San Francisco, CA",
-    "linkedin_url": "https://linkedin.com/example",
-    "twitter_url": "https://twitter.com/example",
-    "twitter_followers": 10000,
-    "estimated_annual_revenue": 1000000,
-    "employee_size_range": "100-500",
-    "tags": ["technology", "software"]
+    "linkedin_url": "https://www.linkedin.com/company/octolane",
+    "twitter_url": "https://twitter.com/octolane_app",
+    "twitter_followers": 40,
+    "estimated_annual_revenue": null,
+    "employee_size_range": "1-10",
+    "tags": ["technology", "software", "ai", "machine learning", "b2b data"]
   }
 }
 ```
 
 <RequestExample>
-    ```bash Example Request
+    ```bash cURL
       curl --location --request POST 'https://enrich.octolane.com/v1/company' \
       --header 'Content-Type: application/json' \
       --header 'x-api-key: <token>' \
@@ -163,7 +163,7 @@ Example:
     "twitter_url": "https://twitter.com/octolane_app",
     "twitter_followers": 40,
     "estimated_annual_revenue": null,
-    "employee_size_range": "2",
+    "employee_size_range": "1-10",
     "tags": ["technology", "software", "ai", "machine learning", "b2b data"]
   }
 }

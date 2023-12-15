@@ -26,11 +26,11 @@ The body of the request should be a JSON object with the following properties:
 </ParamField>
 
 Example:
-```json
+```json Request Body
 {
-  "domain": "example.com",
-  "first_name": "John",
-  "last_name": "Doe"
+  "domain": "octolane.com",
+  "first_name": "One",
+  "last_name": "Chowdhury"
 }
 ```
 
@@ -40,50 +40,132 @@ The exact fields in the response can vary, but it will typically include fields 
 `email`, `validation`, and `other_emails`.
 
 Example:
-```json
-{
-  "message": "Person email searched successfully",
-  "success": true,
-  "statusCode": 200,
-  "data": {
-    "email": "john@example.com",
-    "validation": "valid",
-    "other_emails": [
-      "john.doe@example.com"
-    ]
-  }
-}
-```
-
-<RequestExample>
-
-```bash Example Request
-curl --location --request POST 'https://enrich.octolane.com/v1/find-email' \
---header 'Content-Type: application/json' \
---header 'x-api-key: <token>' \
---data-raw '{
-  "domain": "example.com",
-  "first_name": "John",
-  "last_name": "Doe"
-}'
-```
-
-</RequestExample>
-
-<ResponseExample>
-
 ```json Response
 {
   "message": "Person email searched successfully",
   "success": true,
   "statusCode": 200,
   "data": {
-    "email": "john@example.com",
+    "email": "one@example.com",
     "validation": "valid",
-    "other_emails": [
-      "john.doe@example.com"
-    ]
+    "other_emails": []
   }
+}
+```
+
+<RequestExample>
+
+```curl cURL
+curl --location --request POST 'https://enrich.octolane.com/v1/find-email' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: <token>' \
+--data-raw '{
+  "domain": "octolane.com",
+  "first_name": "One",
+  "last_name": "Chowdhury"
+}'
+```
+
+```python Python
+import requests
+import json
+
+url = "https://enrich.octolane.com/v1/find-email"
+headers = {
+  "Content-Type": "application/json",
+  "x-api-key": "<token>"
+}
+data = {
+  "domain": "octolane.com",
+  "first_name": "One",
+  "last_name": "Chowdhury"
+}
+
+response = requests.post(url, headers=headers, data=json.dumps(data))
+print(response.text)
+```
+
+```javascript Node
+const axios = require("axios");
+
+const url = 'https://enrich.octolane.com/v1/find-email';
+const headers = {
+  'Content-Type': 'application/json',
+  'x-api-key': '<token>'
+};
+const data = {
+  "domain": "octolane.com",
+  "first_name": "One",
+  "last_name": "Chowdhury"
+};
+
+async function findEmail() {
+  try {
+    const response = await axios.post(url, body, { headers });
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+findEmail();
+```
+
+```go Go
+package main
+
+import (
+	"bytes"
+	"net/http"
+)
+
+func main() {
+	url := "https://enrich.octolane.com/v1/find-email"
+	data := `{
+    "domain": "octolane.com",
+    "first_name": "One",
+    "last_name": "Chowdhury"
+	}`
+
+	req, _ := http.NewRequest("POST", url, bytes.NewBuffer([]byte(data)))
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("x-api-key", "<token>")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+  body, _ := ioutil.ReadAll(resp.Body)
+
+	fmt.Println("Response:", string(body))
+}
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json 200
+{
+  "message": "Person email searched successfully",
+  "success": true,
+  "statusCode": 200,
+  "data": {
+    "email": "one@octolane.com",
+    "validation": "valid",
+    "other_emails": []
+  }
+}
+```
+
+```json 404
+{
+  "message": "Could not find email for this domain and person",
+  "success": false,
+  "statusCode": 404
 }
 ```
 

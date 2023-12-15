@@ -30,11 +30,11 @@ The request body must be a JSON object containing the following fields:
 </ParamField>
 
 Example:
-```json
+```json Request Body
 {
-  "seniority": ["Senior", "Manager"],
-  "job_roles": ["Engineer", "Product Manager"],
-  "company_domain": "example.com",
+  "seniority": ["Manager"],
+  "job_roles": ["Founder"],
+  "company_domain": "octolane.com",
   "keyword": "software"
 }
 ```
@@ -46,24 +46,39 @@ The exact fields in the response can vary, but it will typically include fields 
 `job_title`, `seniority`, `current_company`, and `current_company_domain`.
 
 Example:
-```json
+```json Response
 {
   "message": "People search enrichment data fetched successfully",
   "success": true,
   "statusCode": 200,
-  "data": {
-    "full_name": "John Doe",
-    "first_name": "John",
-    "last_name": "Doe",
-    "linkedin_url": "https://linkedin.com/johndoe",
-    "email": "john@example.com",
-    "email_verified": true,
-    "contact_number": "+1xxxxxxxxxx",
-    "job_title": "Software Engineer",
-    "seniority": "Senior",
-    "current_company": "Example Company",
-    "current_company_domain": "example.com"
-  }
+  "data": [
+    {
+      "full_name": "One Chouwdhury",
+      "first_name": "One",
+      "last_name": "Chouwdhury",
+      "linkedin_url": "https://www.linkedin.com/in/one-chowdhury",
+      "email": "one@octolane.com",
+      "email_verified": true,
+      "contact_number": "+1 (248) 824-9326",
+      "job_title": "Co-Founder & CEO",
+      "seniority": "Senior",
+      "current_company": "Octolane AI",
+      "current_company_domain": "octolane.com"
+    },
+    {
+      "full_name": "Abdul Halim Rafi",
+      "first_name": "Abdul",
+      "last_name": "Halim Rafi",
+      "linkedin_url": "https://www.linkedin.com/in/md-abdul-halim-rafi",
+      "email": "rafi@octolane.com",
+      "email_verified": true,
+      "contact_number": "+1 (248) 824-9326",
+      "job_title": "Co-Founder & CTO",
+      "seniority": "Senior",
+      "current_company": "Octolane AI",
+      "current_company_domain": "octolane.com"
+    }
+  ]
 }
 ```
 
@@ -120,7 +135,7 @@ const body = {
   "keyword": "software"
 };
 
-async function fetchData() {
+async function fetchPeopleSearch() {
   try {
     const response = await axios.post(url, body, { headers });
     console.log(response.data);
@@ -129,7 +144,7 @@ async function fetchData() {
   }
 }
 
-fetchData();
+fetchPeopleSearch();
 ```
 
 ```go Go
@@ -183,19 +198,34 @@ func main() {
   "message": "People search enrichment data fetched successfully",
   "success": true,
   "statusCode": 200,
-  "data": {
-    "full_name": "John Doe",
-    "first_name": "John",
-    "last_name": "Doe",
-    "linkedin_url": "https://linkedin.com/johndoe",
-    "email": "john@example.com",
-    "email_verified": true,
-    "contact_number": "+1xxxxxxxxxx",
-    "job_title": "Software Engineer",
-    "seniority": "Senior",
-    "current_company": "Example Company",
-    "current_company_domain": "example.com"
-  }
+  "data": [
+    {
+      "full_name": "One Chouwdhury",
+      "first_name": "One",
+      "last_name": "Chouwdhury",
+      "linkedin_url": "https://www.linkedin.com/in/one-chowdhury",
+      "email": "one@octolane.com",
+      "email_verified": true,
+      "contact_number": "+1 (248) 824-9326",
+      "job_title": "Co-Founder & CEO",
+      "seniority": "Senior",
+      "current_company": "Octolane AI",
+      "current_company_domain": "octolane.com"
+    },
+    {
+      "full_name": "Abdul Halim Rafi",
+      "first_name": "Abdul",
+      "last_name": "Halim Rafi",
+      "linkedin_url": "https://www.linkedin.com/in/md-abdul-halim-rafi",
+      "email": "rafi@octolane.com",
+      "email_verified": true,
+      "contact_number": "+1 (248) 824-9326",
+      "job_title": "Co-Founder & CTO",
+      "seniority": "Senior",
+      "current_company": "Octolane AI",
+      "current_company_domain": "octolane.com"
+    }
+  ]
 }
 ```
 
