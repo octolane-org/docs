@@ -63,6 +63,7 @@
       "group": "Get Started",
       "pages": [
         "introduction",
+        "company-widget",
         "support"
       ]
     },
