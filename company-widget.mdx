@@ -5,6 +5,8 @@ description: 'Example usage of Octolane AI for IP to company enrichment widget'
 
 ## Get Started
 
+![Octolane AI Company Identify Widget](/images/company-identify-widget.png)
+
 We will be building the company identify widget with custom message. We will be using Next.js (App Router)
 for this example with Tailwind css, Headless UI for smooth transitioning, and heroicons which is completely free. 
 You can use any framework you like.
@@ -154,6 +156,11 @@ export const GET = async (request: Request) => {
   };
 
   const headersList = headers();
+  /** 
+   * You will not see any ip address while working on localhost.
+   * You will need to deploy your app to see the ip address. But, alternatively you can use a 
+   * dummy ip address for testing purpose.
+   */
   const ip = headersList.get("x-forwarded-for");
 
   if (!ip) {
