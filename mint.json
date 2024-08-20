@@ -22,15 +22,10 @@
   "topbarLinks": [
     {
       "name": "Dashboard",
-      "url": "https://octolane.com"
+      "url": "https://octolane.com/dashboard"
     }
   ],
-  "tabs": [
-    {
-      "name": "API References",
-      "url": "api-reference"
-    }
-  ],
+  "tabs": [],
   "anchors": [
     {
       "name": "Get Started",
@@ -38,12 +33,7 @@
       "url": "introduction"
     },
     {
-      "name": "API Guide",
-      "icon": "square-terminal",
-      "url": "api-reference"
-    },
-    {
-      "name": "Slack Support",
+      "name": "Support",
       "icon": "slack",
       "url": "https://docs.octolane.com/support"
     },
@@ -51,11 +41,6 @@
       "name": "Website",
       "icon": "browser",
       "url": "https://octolane.com"
-    },
-    {
-      "name": "Talk to Founders",
-      "icon": "calendar-days",
-      "url": "mailto:one@octolane.com"
     }
   ],
   "navigation": [
@@ -63,29 +48,12 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "company-widget",
         "support"
-      ]
-    },
-    {
-      "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/ip-to-company",
-        "api-reference/endpoint/company-enrichment",
-        "api-reference/endpoint/person-by-email",
-        "api-reference/endpoint/people-search",
-        "api-reference/endpoint/find-email"
       ]
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/octolane_app",
+    "twitter": "https://twitter.com/octolane_ai",
     "website": "https://www.octolane.com"
   },
   "feedback": {
