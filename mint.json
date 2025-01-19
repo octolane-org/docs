@@ -48,7 +48,9 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "support"
+        "support",
+        "snippets/api-authentication",
+        "snippets/api-authentication"
       ]
     }
   ],
