@@ -1,6 +1,7 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Octolane documentation",
+  "theme": "quill",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
