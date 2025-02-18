@@ -48,7 +48,8 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "support"
+        "support",
+        "development"
       ]
     },
     {

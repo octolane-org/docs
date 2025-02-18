@@ -95,4 +95,31 @@ Repeat step 3.
   </Accordion>
 </AccordionGroup>
 
+## Common Deployment Issues
+
+<AccordionGroup>
+  <Accordion title="Failed GitHub Checks">
+    If your GitHub checks are failing:
+    1. Ensure your `mint.json` is valid JSON and properly formatted
+    2. Check that all referenced images and files exist
+    3. Verify all links are working
+    4. Make sure there are no MDX syntax errors
+  </Accordion>
+  
+  <Accordion title="Preview Not Matching Production">
+    If your local preview looks different from production:
+    1. Update your CLI to the latest version
+    2. Clear your local cache by deleting the ~/.mintlify folder
+    3. Ensure you're using Node.js version 18.10.0 or higher
+  </Accordion>
+  
+  <Accordion title="Build Errors">
+    For build errors:
+    1. Check your Node.js version (18.10.0+ required)
+    2. Verify all dependencies are installed
+    3. Look for syntax errors in your MDX files
+    4. Ensure all images and assets are properly referenced
+  </Accordion>
+</AccordionGroup>
+
 Curious about what changed in a CLI version? [Check out the CLI changelog.](/changelog/command-line)
