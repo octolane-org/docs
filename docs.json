@@ -1,5 +1,6 @@
 {
-  "$schema": "https://mintlify.com/schema.json",
+  "$schema": "https://mintlify.com/docs.json",
+   "theme": "maple",
   "name": "Octolane documentation",
   "logo": {
     "dark": "/logo/dark.svg",
@@ -25,18 +26,30 @@
       "url": "https://octolane.com/dashboard"
     }
   ],
+  "tabs": [],
+  "anchors": [
+    {
+      "name": "Get Started",
+      "icon": "book-open-cover",
+      "url": "introduction"
+    },
+    {
+      "name": "Support",
+      "icon": "slack",
+      "url": "https://docs.octolane.com/support"
+    },
+    {
+      "name": "Website",
+      "icon": "browser",
+      "url": "https://octolane.com"
+    }
+  ],
   "navigation": [
     {
-      "group": "Documentation",
+      "group": "Get Started",
       "pages": [
-        {
-          "group": "Get Started",
-          "icon": "book-open-cover",
-          "pages": [
-            "introduction",
-            "support"
-          ]
-        }
+        "introduction",
+        "support"
       ]
     },
     {
