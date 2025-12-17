@@ -1,0 +1,43 @@
+---
+title: "Security & Privacy"
+description: "How Octolane protects customer data"
+---
+
+# Security & Privacy
+
+We’re a self-driving CRM, but we treat your data like production code—tightly controlled and observable.
+
+<CardGroup>
+  <Card title="SOC 2 Type II" icon="shield-check">
+    Octolane is SOC 2 Type II compliant. Independent auditors validate our controls annually.
+  </Card>
+  <Card title="Encryption" icon="lock">
+    Data in transit: TLS 1.2+. Data at rest: AES-256. Secrets stored via managed KMS with strict rotation.
+  </Card>
+  <Card title="Data handling" icon="database">
+    We process Gmail and Calendar data to extract signals, store only what’s needed to power automations, and minimize retention.
+  </Card>
+</CardGroup>
+
+## What we store vs process
+
+- Store: normalized activity metadata, enrichment results, and CRM field updates tied to your workspace.  
+- Process (not persist by default): raw Gmail/Calendar payloads are streamed, parsed, and discarded after extraction unless you opt into retention for audit.
+
+## Access controls
+
+- Least-privilege scopes for Gmail and Calendar; no blanket mailbox downloads.  
+- SSO and MFA encouraged for workspace admins; role-based access for data visibility.  
+- Admin controls to revoke integrations instantly.
+
+## Compliance and trust
+
+- SOC 2 Type II (see [Security](https://www.octolane.com/security) for details).  
+- Vendor due diligence and data processing agreements for subprocessors.
+
+## Your controls
+
+- Revoke integrations at any time; data deletion on request.  
+- Export your data when needed.  
+- Report an issue: [security@octolane.com](mailto:security@octolane.com).
+
