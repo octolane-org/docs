@@ -41,42 +41,37 @@
     ]
   },
   "navigation": {
-    "dropdowns": [
+    "pages": [
       {
-        "dropdown": "Documentation",
+        "group": "Get Started",
         "pages": [
-          {
-            "group": "Get Started",
-            "pages": [
-              "index",
-              "introduction",
-              "quickstart"
-            ]
-          },
-          {
-            "group": "Features",
-            "pages": [
-              "features/auto-updating",
-              "features/contact-enrichment",
-              "features/natural-language"
-            ]
-          },
-          {
-            "group": "Guides",
-            "pages": [
-              "integrations",
-              "company-widget",
-              "development",
-              "security",
-              "support"
-            ]
-          },
-          {
-            "group": "Changelog",
-            "pages": [
-              "changelog"
-            ]
-          }
+          "index",
+          "introduction",
+          "quickstart"
+        ]
+      },
+      {
+        "group": "Features",
+        "pages": [
+          "features/auto-updating",
+          "features/contact-enrichment",
+          "features/natural-language"
+        ]
+      },
+      {
+        "group": "Guides",
+        "pages": [
+          "integrations",
+          "company-widget",
+          "development",
+          "security",
+          "support"
+        ]
+      },
+      {
+        "group": "Changelog",
+        "pages": [
+          "changelog"
         ]
       }
     ]
