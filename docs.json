@@ -1,17 +1,15 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-   "theme": "maple",
-  "name": "Octolane documentation",
+   "theme": "mint",
+  "name": "Octolane",
 
   "favicon": "/favicon.svg",
   "modeToggle": {
     "default": "light",
-    "isHidden": true
+    "strict": true
   },
   "colors": {
-    "primary": "#171618",
-    "light": "#0D9373",
-    "dark": "#0D9373"
+    "primary": "#111111"
   },
   "topbarLinks": [
     {
