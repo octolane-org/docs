@@ -41,10 +41,10 @@
     ]
   },
   "navigation": {
-    "dropdowns": [
+    "languages": [
       {
-        "dropdown": "Documentation",
-        "pages": [
+        "language": "en",
+        "groups": [
           {
             "group": "Get Started",
             "pages": [
