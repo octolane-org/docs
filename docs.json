@@ -1,73 +1,93 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-   "theme": "mint",
+  "theme": "mint",
   "name": "Octolane",
-
+  "description": "Self-driving CRM that updates itself from Gmail and Calendar",
   "favicon": "/favicon.svg",
-  "modeToggle": {
+  "appearance": {
     "default": "light",
     "strict": true
   },
   "colors": {
     "primary": "#111111"
   },
-  "topbarLinks": [
-    {
-      "name": "Dashboard",
-      "url": "https://octolane.com/dashboard"
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg",
+    "href": "https://octolane.com"
+  },
+  "styling": {
+    "codeblocks": {
+      "theme": {
+        "light": "github-light",
+        "dark": "github-light"
+      }
     }
-  ],
-  "tabs": [],
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Dashboard",
+        "href": "https://octolane.com/dashboard"
+      },
+      {
+        "label": "Support",
+        "href": "https://docs.octolane.com/support"
+      },
+      {
+        "label": "Website",
+        "href": "https://octolane.com"
+      }
+    ]
+  },
   "navigation": {
-    "products": [],
-    "languages": [],
-    "versions": [],
-    "tabs": [],
-    "dropdowns": [],
-    "anchors": [
+    "dropdowns": [
       {
-        "name": "Get Started",
-        "icon": "book-open-cover",
-        "url": "introduction"
-      },
-      {
-        "name": "Support",
-        "icon": "slack",
-        "url": "https://docs.octolane.com/support"
-      },
-      {
-        "name": "Website",
-        "icon": "browser",
-        "url": "https://octolane.com"
-      }
-    ],
-    "groups": [
-      {
-        "name": "Get Started",
+        "dropdown": "Documentation",
         "pages": [
-          "introduction",
-          "support"
-        ]
-      },
-      {
-        "name": "Changelog",
-        "pages": [
-          "changelog"
+          {
+            "group": "Get Started",
+            "pages": [
+              "index",
+              "introduction",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Features",
+            "pages": [
+              "features/auto-updating",
+              "features/contact-enrichment",
+              "features/natural-language"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "integrations",
+              "company-widget",
+              "development",
+              "security",
+              "support"
+            ]
+          },
+          {
+            "group": "Changelog",
+            "pages": [
+              "changelog"
+            ]
+          }
         ]
       }
-    ],
-    "pages": []
+    ]
   },
-  "footerSocials": {
-    "twitter": "https://twitter.com/octolane_ai",
-    "website": "https://www.octolane.com"
+  "footer": {
+    "socials": {
+      "x": "https://twitter.com/octolane_ai",
+      "website": "https://www.octolane.com"
+    }
   },
-  "feedback": {
-    "thumbsRating": true,
-    "suggestEdit": true,
-    "raiseIssue": true
-  },
-  "analytics": {
+  "integrations": {
     "koala": {
       "publicApiKey": "pk_9bd45074f60eff79cf4e1042027522a2f56a"
     },
