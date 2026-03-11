@@ -1,0 +1,150 @@
+---
+title: "Use Octolane with Claude"
+sidebarTitle: "Use with Claude"
+description: "Connect Octolane to Claude Desktop or Claude.ai so you can manage your CRM, query your pipeline, and command your AI sales agents directly from Claude."
+---
+
+# Use Octolane with Claude
+
+Claude is the best AI assistant for working with Octolane. It handles multi-step CRM queries naturally, asks clarifying questions when needed, and presents data in clean, readable formats.
+
+## Claude Desktop setup
+
+<Steps>
+
+<Step title="Open your config file">
+
+Find your Claude Desktop configuration file:
+
+| OS | Path |
+|-----|------|
+| Mac | `~/Library/Application Support/Claude/claude_desktop_config.json` |
+| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
+| Linux | `~/.config/Claude/claude_desktop_config.json` |
+
+Create the file if it doesn't exist.
+
+</Step>
+
+<Step title="Add the Octolane MCP server">
+
+Paste this configuration (replace `your-api-key` with your actual key from **Settings > Integrations > API**):
+
+```json
+{
+  "mcpServers": {
+    "octolane": {
+      "url": "https://mcp.octolane.com/mcp",
+      "headers": {
+        "X-API-Key": "your-api-key"
+      }
+    }
+  }
+}
+```
+
+If you already have other MCP servers configured, add the `"octolane"` entry inside the existing `"mcpServers"` object.
+
+</Step>
+
+<Step title="Restart Claude Desktop">
+
+Quit Claude Desktop completely and reopen it. You should see the Octolane tools available in the tools panel.
+
+</Step>
+
+</Steps>
+
+## Claude.ai setup
+
+In Claude.ai, go to **Settings > MCP Servers > Add Server** and enter:
+
+- **Name:** Octolane
+- **URL:** `https://mcp.octolane.com/mcp`
+- **Headers:** `X-API-Key: your-api-key`
+
+The Octolane tools are available immediately in your next conversation.
+
+## Example prompts
+
+Here are prompts that work well with Claude + Octolane. Copy and paste any of these to get started.
+
+### Pipeline review
+
+```
+Show me all open deals. For each one, tell me the stage, value, owner,
+and how many days since the last activity. Flag any that look stale.
+```
+
+### Website visitor intelligence
+
+```
+What companies visited our pricing page this week? Show me the ones
+that match our ICP, sorted by match score. Include company size and
+industry for each.
+```
+
+### Meeting prep
+
+```
+I have a call with Stripe tomorrow. Pull up everything we know about
+them - the deal status, all contacts we've talked to, recent email
+activity, and any action items from past meetings.
+```
+
+### Deal creation
+
+```
+Create a deal for my meeting with Notion next Tuesday. It's a $85K
+annual contract, they're at the proposal stage. Main contact is
+sarah@notion.so.
+```
+
+### Pipeline analytics
+
+```
+What's our pipeline value this quarter compared to last quarter?
+Break it down by stage. Which deals are most likely to close this month?
+```
+
+### Lead qualification
+
+```
+A new lead just came in - john@linearapp.com. What do we know about
+their company? How do they score against our ICP? Do we have any
+existing contacts or deals with them?
+```
+
+### Stale deal sweep
+
+```
+Show me all deals that haven't had any activity in the last 2 weeks.
+For each one, tell me who owns it, what stage it's in, and when the
+last email or meeting was.
+```
+
+## Tips for best results
+
+<AccordionGroup>
+
+<Accordion title="Be specific about what you want">
+Instead of "Show me deals," try "Show me open deals worth more than $50K in the negotiation stage." The more specific your query, the more useful the response.
+</Accordion>
+
+<Accordion title="Ask follow-up questions">
+Claude remembers context within a conversation. Start with "Show me stale deals" then follow up with "Draft a summary of the top 3 for my team standup" without repeating the original query.
+</Accordion>
+
+<Accordion title="Combine data sources">
+Ask Claude to cross-reference Signal visitors with your existing pipeline: "Are any of this week's website visitors already in our pipeline? What about visitors from companies similar to our best customers?"
+</Accordion>
+
+<Accordion title="Use natural dates">
+Claude handles relative dates well. Say "deals closing this month," "last week's website visitors," or "meetings scheduled for tomorrow" instead of specific dates.
+</Accordion>
+
+<Accordion title="Request specific formats">
+Ask for the output format you want: "Show me this as a table," "Give me bullet points," or "Summarize in 2 sentences." Claude adapts to your preferred format.
+</Accordion>
+
+</AccordionGroup>

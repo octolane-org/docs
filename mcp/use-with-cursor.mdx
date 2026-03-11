@@ -1,0 +1,176 @@
+---
+title: "Use Octolane with Cursor"
+sidebarTitle: "Use with Cursor"
+description: "Connect Octolane to Cursor so you can query your CRM, manage deals, and trigger agents while you code."
+---
+
+# Use Octolane with Cursor
+
+Query your CRM, check deal status, and log notes without leaving your editor. Useful for developers who manage customer relationships, founders who code and sell, or anyone who wants CRM access in their development workflow.
+
+## Setup
+
+<Steps>
+
+<Step title="Create the config file">
+
+Create `.cursor/mcp.json` in your project root or your global Cursor config directory:
+
+```json
+{
+  "mcpServers": {
+    "octolane": {
+      "url": "https://mcp.octolane.com/mcp",
+      "headers": {
+        "X-API-Key": "your-api-key"
+      }
+    }
+  }
+}
+```
+
+Replace `your-api-key` with your key from **Settings > Integrations > API** in Octolane.
+
+<Warning>
+Add `.cursor/mcp.json` to your `.gitignore` so your API key doesn't end up in version control.
+</Warning>
+
+</Step>
+
+<Step title="Restart Cursor">
+
+Restart Cursor to pick up the new MCP configuration. The Octolane tools will be available in Cursor's AI chat.
+
+</Step>
+
+<Step title="Verify">
+
+Open Cursor's AI chat and ask:
+
+```
+What Octolane tools are available?
+```
+
+You should see the full list of Octolane MCP tools.
+
+</Step>
+
+</Steps>
+
+## Why use Octolane in Cursor
+
+### Check customer context while building
+
+When you're working on a feature request from a specific customer, pull up their deal to see the full context without switching to a browser:
+
+```
+Pull up the deal with Linear. What did they ask for in our last meeting?
+What are their action items?
+```
+
+### Log notes without context-switching
+
+Just finished a customer call? Log it from Cursor:
+
+```
+Add a note to the Stripe deal: "Call with Sarah - they want to proceed
+with enterprise plan. Need SOC 2 report before procurement. Timeline is
+end of Q1. Budget approved by CFO."
+```
+
+### Morning pipeline check during standup
+
+Run a quick pipeline check before your team standup:
+
+```
+Show me all my deals that changed stage this week. What's stale?
+What meetings do I have today?
+```
+
+### Check Signal between deploys
+
+While waiting for a deploy, check who's been visiting your site:
+
+```
+Any interesting companies visit our site today? Show me ones that
+match our ICP and aren't already in our pipeline.
+```
+
+### Quick data lookups
+
+Need a customer's email or company details while writing code?
+
+```
+What's the email for our main contact at Notion?
+```
+
+```
+How big is Ramp? What's their tech stack?
+```
+
+## Example workflows for developers
+
+<AccordionGroup>
+
+<Accordion title="Pre-standup pipeline review">
+
+```
+Show me pipeline changes from this week:
+- New deals created
+- Deals that changed stage
+- Stale deals (no activity in 14+ days)
+- Deals closing this month
+
+Keep it brief - just names, values, and what changed.
+```
+
+</Accordion>
+
+<Accordion title="Customer debugging context">
+
+```
+A customer at acme-corp.com reported a bug. Pull up everything we
+know about them - their deal, contacts, recent conversations, and
+what plan they're on.
+```
+
+</Accordion>
+
+<Accordion title="Quick deal creation after a call">
+
+```
+Just had a call with the CTO of newstartup.io. Create a deal -
+$30K annual, they're interested in the Pro plan. Stage is
+"Meeting Scheduled". Main contact is alex@newstartup.io.
+Add a note: "Inbound via website. Evaluating us vs HubSpot.
+Decision in 2 weeks."
+```
+
+</Accordion>
+
+<Accordion title="End-of-day deal update">
+
+```
+Update the Stripe deal: move to Negotiation stage, update value
+to $150K (they want to add 20 more seats). Close date is April 30.
+```
+
+</Accordion>
+
+<Accordion title="Signal check for prospecting">
+
+```
+Show me companies that visited our docs this week with 50+ employees.
+Are any of them already in our CRM? For the ones that aren't, show me
+their ICP score and company details.
+```
+
+</Accordion>
+
+</AccordionGroup>
+
+## Tips
+
+- Use Cursor's Agent mode for multi-step CRM workflows (pipeline review + deal updates + note creation in one go)
+- Keep queries focused - "Show me stale deals" works better than "Give me a full analysis of our entire pipeline health"
+- You can reference CRM data in your code comments: ask about a customer's requirements, then use the context while building their feature

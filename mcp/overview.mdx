@@ -1,0 +1,95 @@
+---
+title: "Octolane MCP Server"
+sidebarTitle: "Overview"
+description: "Connect Claude, ChatGPT, Cursor, Windsurf, or any MCP client to your Octolane CRM - search deals, manage pipeline, trigger agents, and run your sales process through natural language."
+---
+
+# Octolane MCP Server
+
+Other CRM MCP servers let you read and write records. Octolane's MCP gives you a window into a self-driving sales team.
+
+Connect your AI assistant to Octolane and you get more than CRUD operations on a database. You can query your pipeline in natural language, see which companies are visiting your website right now via Signal, get full deal intelligence with activity timelines, and create records that your agents immediately act on - enriching contacts, detecting deals, and drafting follow-ups automatically.
+
+No other CRM offers this.
+
+## Hosted MCP server
+
+The Octolane MCP server is hosted and ready to use:
+
+```
+https://mcp.octolane.com/mcp
+```
+
+Authenticate with your API key in the `X-API-Key` header. Same key you use for the REST API. No SDKs to install, no local servers to run.
+
+## What you can do
+
+<CardGroup cols={2}>
+
+<Card title="Search & query" icon="magnifying-glass">
+  Search deals, contacts, and companies across your CRM. Get pipeline overviews with deal counts and values per stage. Pull activity feeds for any record.
+</Card>
+
+<Card title="Create & update" icon="plus">
+  Create opportunities, contacts, accounts, and notes. Update deal stages, values, close dates, and custom fields. Records are automatically enriched and picked up by agents.
+</Card>
+
+<Card title="Agent commands" icon="microchip-ai">
+  Review Signal website visitors and their ICP scores. Ask natural language questions about your pipeline. Get deal intelligence that would take 10 clicks in a traditional CRM.
+</Card>
+
+<Card title="Pipeline intelligence" icon="chart-line">
+  Ask about deal status, forecasts, stale deals, and at-risk opportunities. Get pipeline value by stage, conversion rates, and rep performance - all through conversation.
+</Card>
+
+</CardGroup>
+
+## Why Octolane's MCP is different
+
+Most CRM MCP servers are a thin wrapper around a REST API. You can create a contact, update a deal, maybe search for records. That's useful, but it's just data access.
+
+Octolane's MCP connects your AI assistant to a CRM that thinks for itself:
+
+- **Records come alive.** Create a contact via MCP and Octolane's agents immediately enrich it with job title, company size, funding data, and social profiles. Create a deal and the Follow-Up Agent starts monitoring the conversation for stale threads. You're not just writing to a database - you're activating a sales team.
+
+- **Signal intelligence.** Ask "What companies visited our pricing page this week?" and get real-time website visitor data from Signal, scored against your ideal customer profile. No other CRM MCP server gives you this.
+
+- **Natural language pipeline queries.** Ask "Which deals are at risk?" or "What's our pipeline value this quarter vs last quarter?" and get instant answers without building reports or writing filters.
+
+- **Full deal context.** Pull up a deal and get the complete picture: stage, value, associated contacts, email threads, meeting transcripts, agent actions, and next steps. Everything your AI assistant needs to help you sell.
+
+## Supported clients
+
+Octolane MCP works with any client that supports the Model Context Protocol:
+
+| Client | Status | Setup guide |
+|--------|--------|-------------|
+| Claude Desktop | Supported | [Use with Claude](/mcp/use-with-claude) |
+| Claude.ai | Supported | [Use with Claude](/mcp/use-with-claude) |
+| ChatGPT | Supported | [Use with ChatGPT](/mcp/use-with-chatgpt) |
+| Cursor | Supported | [Use with Cursor](/mcp/use-with-cursor) |
+| Windsurf | Supported | [Quickstart](/mcp/quickstart) |
+| Cline | Supported | [Quickstart](/mcp/quickstart) |
+| Any MCP client | Supported | [Quickstart](/mcp/quickstart) |
+
+## Get started
+
+<CardGroup cols={2}>
+
+<Card title="Quickstart" icon="bolt" href="/mcp/quickstart">
+  Connect your AI assistant to Octolane in under 2 minutes.
+</Card>
+
+<Card title="Tools reference" icon="wrench" href="/mcp/tools-reference">
+  Full reference for every MCP tool with parameters and examples.
+</Card>
+
+<Card title="Examples & workflows" icon="lightbulb" href="/mcp/examples">
+  Real-world examples of running your sales process from an AI assistant.
+</Card>
+
+<Card title="Authentication" icon="key" href="/mcp/authentication">
+  API key setup, OAuth, scopes, and security best practices.
+</Card>
+
+</CardGroup>

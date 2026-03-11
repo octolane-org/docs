@@ -1,0 +1,99 @@
+---
+title: "API Reference"
+sidebarTitle: "Introduction"
+description: "Push data into Octolane via the Inbound API - create opportunities, accounts, contacts, and notes with simple API calls."
+---
+
+The Octolane Inbound API lets you push data into your CRM from any source - your outbound tools, marketing platforms, custom scripts, or internal systems. Create opportunities, accounts, contacts, and notes with simple REST calls.
+
+## Base URL
+
+```
+https://enrich.octolane.com/v1
+```
+
+## Authentication
+
+Include your API key in every request as a header:
+
+```
+X-API-Key: your-api-key
+```
+
+Your API key automatically identifies your organization - no extra configuration needed. Find your API key in **Settings → Integrations → API**.
+
+## Core objects
+
+Octolane has four objects you can create via the API:
+
+| Object | What it does |
+|--------|-------------|
+| **Opportunity** | A deal or potential deal in your pipeline |
+| **Account** | A company, identified by domain (e.g., `acme.com`) |
+| **Contact** | A person, identified by email |
+| **Note** | A text note attached to accounts and/or contacts |
+
+<Tip>
+Accounts and contacts are created automatically when you create an opportunity - you don't need to create them separately unless you want to.
+</Tip>
+
+## Key behaviors
+
+**No duplicates.** Accounts and contacts are automatically deduplicated. Creating the same account or contact twice returns the existing record instead of creating a duplicate.
+
+**Auto-creation.** When you create an opportunity with a domain and email, Octolane automatically creates the associated account and contact for you.
+
+**Multiple contacts per company.** You can link multiple email contacts under one account. They'll all be associated with the same company domain.
+
+**Dates.** All dates are Unix timestamps in milliseconds. For example, Feb 11, 2026 = `1771286400000`.
+
+## Error handling
+
+If something goes wrong, you'll get a clear error response:
+
+| Status Code | What it means |
+|------------|---------------|
+| `400` | Bad request - check your input fields |
+| `401` | Invalid or missing API key |
+| `404` | Resource not found (e.g., wrong `pipeline_id`) |
+| `429` | Too many requests - slow down and retry |
+| `500` | Something went wrong on our end - contact support |
+
+Error responses follow this format:
+
+```json
+{
+  "success": false,
+  "statusCode": 400,
+  "message": "Validation error",
+  "errors": {
+    "pipeline_id": "Pipeline id must be a valid uuid"
+  }
+}
+```
+
+## Endpoints
+
+<CardGroup cols={2}>
+
+<Card title="Create Opportunity" icon="handshake" href="/api-reference/create-opportunity">
+  Create a deal with associated account and contacts in one call.
+</Card>
+
+<Card title="Create Account" icon="building" href="/api-reference/create-account">
+  Create a company record by domain.
+</Card>
+
+<Card title="Create Contact" icon="user" href="/api-reference/create-contact">
+  Create a person record by email.
+</Card>
+
+<Card title="Create Note" icon="note-sticky" href="/api-reference/create-note">
+  Attach notes to accounts and contacts.
+</Card>
+
+</CardGroup>
+
+## Need help?
+
+Reach out at [one@octolane.com](mailto:one@octolane.com) - we're happy to ship custom endpoints if you need something specific.

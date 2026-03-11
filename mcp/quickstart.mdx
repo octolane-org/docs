@@ -1,0 +1,200 @@
+---
+title: "MCP Quickstart"
+sidebarTitle: "Quickstart"
+description: "Connect your AI assistant to Octolane in under 2 minutes. Works with Claude, ChatGPT, Cursor, and any MCP client."
+---
+
+# MCP Quickstart
+
+Get your AI assistant talking to your Octolane CRM in 4 steps.
+
+<Steps>
+
+<Step title="Get your API key">
+
+Go to **Settings > Integrations > API** in your Octolane dashboard and copy your API key.
+
+If you don't have one yet, click **Generate API key**. The key is scoped to your workspace and works for both the REST API and MCP.
+
+<Tip>
+Your API key gives full access to your workspace data. Keep it secret. Don't commit it to version control.
+</Tip>
+
+</Step>
+
+<Step title="Add the MCP server to your client">
+
+Add the Octolane MCP server configuration to your AI client. Pick your client below and paste the config:
+
+<Tabs>
+
+<Tab title="Claude Desktop">
+
+Open your Claude Desktop config file:
+
+- **Mac:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux:** `~/.config/Claude/claude_desktop_config.json`
+
+Add the Octolane server:
+
+```json
+{
+  "mcpServers": {
+    "octolane": {
+      "url": "https://mcp.octolane.com/mcp",
+      "headers": {
+        "X-API-Key": "your-api-key"
+      }
+    }
+  }
+}
+```
+
+Restart Claude Desktop after saving.
+
+</Tab>
+
+<Tab title="Claude.ai">
+
+In Claude.ai, go to **Settings > MCP Servers > Add Server** and enter:
+
+- **Name:** Octolane
+- **URL:** `https://mcp.octolane.com/mcp`
+- **Headers:** `X-API-Key: your-api-key`
+
+</Tab>
+
+<Tab title="ChatGPT">
+
+In ChatGPT, go to **Settings > MCP (Beta) > Add Server** and enter:
+
+- **Name:** Octolane
+- **URL:** `https://mcp.octolane.com/mcp`
+- **Authentication:** API Key
+- **Header:** `X-API-Key`
+- **Key:** your API key
+
+</Tab>
+
+<Tab title="Cursor">
+
+Create or edit `.cursor/mcp.json` in your project root (or global config):
+
+```json
+{
+  "mcpServers": {
+    "octolane": {
+      "url": "https://mcp.octolane.com/mcp",
+      "headers": {
+        "X-API-Key": "your-api-key"
+      }
+    }
+  }
+}
+```
+
+Restart Cursor after saving.
+
+</Tab>
+
+<Tab title="Windsurf">
+
+Add to your Windsurf MCP config:
+
+```json
+{
+  "mcpServers": {
+    "octolane": {
+      "url": "https://mcp.octolane.com/mcp",
+      "headers": {
+        "X-API-Key": "your-api-key"
+      }
+    }
+  }
+}
+```
+
+</Tab>
+
+<Tab title="Other clients">
+
+Any MCP-compatible client can connect using:
+
+- **Server URL:** `https://mcp.octolane.com/mcp`
+- **Authentication:** API key via `X-API-Key` header
+
+Refer to your client's documentation for where to add MCP server configurations.
+
+</Tab>
+
+</Tabs>
+
+</Step>
+
+<Step title="Verify the connection">
+
+Open your AI client and ask:
+
+```
+What tools do you have from Octolane?
+```
+
+You should see a list of available tools including `search_deals`, `get_pipeline`, `get_signal_visitors`, and others. If you see them, you're connected.
+
+<Warning>
+If the tools don't show up, double-check your API key and make sure you restarted your client after adding the config.
+</Warning>
+
+</Step>
+
+<Step title="Try your first command">
+
+Now talk to your CRM. Try any of these:
+
+```
+Show me all open deals
+```
+
+```
+What companies visited our website this week?
+```
+
+```
+What's our pipeline value by stage?
+```
+
+```
+Pull up everything we know about Acme Corp
+```
+
+That's it. Your AI assistant now has full access to your Octolane CRM - including your pipeline, contacts, Signal data, and agent activity.
+
+</Step>
+
+</Steps>
+
+## What happens next
+
+Every record you create through MCP is immediately picked up by your Octolane agents:
+
+- **New contacts** are automatically enriched with job title, company size, funding data, and social profiles
+- **New deals** are monitored by the Follow-Up Agent for stale conversations
+- **New companies** are enriched and matched against your ICP criteria
+- **Signal data** is scored and qualified in real-time
+
+You're not just writing to a database. You're activating a self-driving sales team.
+
+## Next steps
+
+<CardGroup cols={2}>
+
+<Card title="Tools reference" icon="wrench" href="/mcp/tools-reference">
+  See every available MCP tool with parameters and example responses.
+</Card>
+
+<Card title="Examples & workflows" icon="lightbulb" href="/mcp/examples">
+  Real-world workflows for pipeline reviews, meeting prep, and lead qualification.
+</Card>
+
+</CardGroup>

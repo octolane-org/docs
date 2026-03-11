@@ -1,0 +1,153 @@
+---
+title: "Create Opportunity"
+sidebarTitle: "Create Opportunity"
+description: "Create a deal in your Octolane pipeline with associated account and contacts in a single API call."
+api: "POST https://enrich.octolane.com/v1/inbound/opportunities"
+---
+
+This is the main endpoint you'll use. It creates a deal and automatically sets up the associated account and contacts - all in one call.
+
+If you send the same deal twice (same domain + pipeline + name), Octolane updates the contacts instead of creating a duplicate.
+
+## Request
+
+<ParamField header="X-API-Key" type="string" required>
+  Your Octolane API key.
+</ParamField>
+
+<ParamField header="Content-Type" type="string" required>
+  Must be `application/json`.
+</ParamField>
+
+### Body parameters
+
+<ParamField body="pipeline_id" type="string" required>
+  Your pipeline ID (UUID format). Find this in your Octolane dashboard or ask the team.
+</ParamField>
+
+<ParamField body="opportunity" type="object" required>
+  The deal details.
+
+  <Expandable title="opportunity fields">
+    <ParamField body="name" type="string">
+      Deal name. Auto-generated from the account domain if left blank.
+    </ParamField>
+
+    <ParamField body="stage_id" type="string">
+      Stage ID in the pipeline (UUID format). Defaults to the first stage if not provided.
+    </ParamField>
+
+    <ParamField body="deal_size" type="number">
+      Deal value in dollars.
+    </ParamField>
+
+    <ParamField body="close_date" type="number">
+      Expected close date as a Unix timestamp in milliseconds.
+    </ParamField>
+
+    <ParamField body="next_action_date" type="number">
+      Next follow-up date as a Unix timestamp in milliseconds.
+    </ParamField>
+
+    <ParamField body="next_step" type="string">
+      What happens next (e.g., "Schedule demo").
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="related_objects" type="object" required>
+  Associated accounts, contacts, and deal owner.
+
+  <Expandable title="related_objects fields">
+    <ParamField body="account_domain" type="string">
+      Company domain (e.g., `acme.com`). Octolane creates or finds the matching account.
+    </ParamField>
+
+    <ParamField body="primary_contact_email" type="string">
+      Main contact's email address. Octolane creates or finds the matching contact.
+    </ParamField>
+
+    <ParamField body="additional_contact_emails" type="string[]">
+      Array of additional contact email addresses to associate with this deal.
+    </ParamField>
+
+    <ParamField body="owner_email" type="string">
+      Email of the team member who owns this deal in Octolane.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+## Example request
+
+```bash
+curl -X POST "https://enrich.octolane.com/v1/inbound/opportunities" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your-api-key" \
+  -d '{
+    "pipeline_id": "your-pipeline-id",
+    "opportunity": {
+      "name": "Acme Corp Deal",
+      "deal_size": 50000,
+      "next_step": "Schedule demo call"
+    },
+    "related_objects": {
+      "account_domain": "acme.com",
+      "primary_contact_email": "john@acme.com",
+      "additional_contact_emails": ["jane@acme.com"]
+    }
+  }'
+```
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
+
+<ResponseField name="statusCode" type="number">
+  HTTP status code.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  <Expandable title="data fields">
+    <ResponseField name="opportunity_id" type="string">
+      UUID of the created opportunity.
+    </ResponseField>
+
+    <ResponseField name="name" type="string">
+      Name of the opportunity.
+    </ResponseField>
+
+    <ResponseField name="amount" type="number">
+      Deal size in dollars.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
+
+```json 200
+{
+  "success": true,
+  "statusCode": 200,
+  "data": {
+    "opportunity_id": "770e8400-e29b-41d4-a716-446655440000",
+    "name": "Acme Corp Deal",
+    "amount": 50000
+  },
+  "message": "Opportunity created successfully"
+}
+```
+
+```json 400
+{
+  "success": false,
+  "statusCode": 400,
+  "message": "Validation error",
+  "errors": {
+    "pipeline_id": "Pipeline id must be a valid uuid"
+  }
+}
+```

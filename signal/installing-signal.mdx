@@ -1,0 +1,52 @@
+---
+title: "Installing Signal"
+sidebarTitle: "Installing Signal"
+description: "Step-by-step guide to install the Octolane Signal tracking script on your website via code snippet or Google Tag Manager."
+---
+
+Add the Signal tracking script to your website to start identifying which companies are visiting. Installation takes under 5 minutes.
+
+## Option 1: Direct code snippet
+
+Add the following script to the `<head>` section of every page on your website:
+
+```html
+<script>
+  (function(o,c,t,l,a,n,e){
+    // Your Octolane Signal script
+    // Replace WORKSPACE_ID with your actual workspace ID
+    o._octolane=o._octolane||[];
+    var s=c.createElement('script');
+    s.async=1;s.src='https://signal.octolane.com/s.js?id=WORKSPACE_ID';
+    c.head.appendChild(s);
+  })(window,document);
+</script>
+```
+
+Find your workspace-specific script in **Settings → Signal → Install**.
+
+## Option 2: Google Tag Manager
+
+1. Open Google Tag Manager and go to your website's container
+2. Create a new **Custom HTML Tag**
+3. Paste the Signal script from **Settings → Signal → Install**
+4. Set the trigger to **All Pages**
+5. Publish the container
+
+## Option 3: WordPress
+
+Install the Signal script using a header/footer injection plugin, or add it directly to your theme's `header.php` file.
+
+## Verifying installation
+
+After installing the script:
+
+1. Visit your own website in a browser
+2. Go to **Signal** in your Octolane dashboard
+3. You should see your own visit appear within a few minutes
+
+If it's not working, check that the script is loading in your browser's developer tools (Network tab → filter for "octolane").
+
+<Note>
+Signal only identifies companies - not individual people. It uses IP intelligence and behavioral data to determine which business a visitor is associated with. Personal visitors from residential IP addresses are not tracked.
+</Note>
