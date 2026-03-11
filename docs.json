@@ -33,71 +33,75 @@
       {
         "label": "Support",
         "href": "https://docs.octolane.com/support"
-      },
-      {
-        "label": "Website",
-        "href": "https://octolane.com"
       }
     ]
   },
   "navigation": {
     "tabs": [
       {
-        "tab": "Documentation",
+        "tab": "Guides",
         "groups": [
           {
             "group": "Get Started",
+            "icon": "rocket",
             "pages": [
               "get-started/what-is-octolane",
-              "get-started/how-octolane-works",
-              "get-started/how-octolane-finds-deals",
               "get-started/getting-started",
-              "get-started/quickstart",
+              "get-started/how-octolane-works",
               "get-started/import-migration"
             ]
           },
           {
-            "group": "Agents",
+            "group": "Agents — Your Self-Driving Sales Team",
+            "icon": "users",
             "pages": [
               "agents/overview",
-              "agents/signal-agent",
-              "agents/deal-finder",
-              "agents/form-submission",
-              "agents/follow-up",
-              "agents/outreach",
-              "agents/meeting-recorder",
+              {
+                "group": "Your Agents",
+                "expanded": false,
+                "pages": [
+                  "agents/signal-agent",
+                  "agents/deal-finder",
+                  "agents/form-submission",
+                  "agents/follow-up",
+                  "agents/outreach",
+                  "agents/meeting-recorder"
+                ]
+              },
               "agents/ai-chat",
               "agents/approving-actions"
             ]
           },
           {
-            "group": "Your CRM",
-            "pages": [
-              "your-crm/accounts-contacts",
-              "your-crm/opportunities",
-              "your-crm/pipeline-management",
-              "your-crm/activity-feed",
-              "your-crm/views-filters-search",
-              "your-crm/ai-enrichment",
-              "your-crm/ai-notes",
-              "your-crm/ai-meeting-notes",
-              "your-crm/ai-reporting",
-              "your-crm/custom-ai-fields",
-              "your-crm/custom-data-model"
-            ]
-          },
-          {
-            "group": "Signal",
+            "group": "Signal — Website Visitor Intelligence",
+            "icon": "radar",
             "pages": [
               "signal/what-is-signal",
               "signal/installing-signal",
               "signal/identifying-qualifying-visitors",
-              "signal/visitor-to-deal",
-              "signal/signal-and-pipeline"
+              "signal/visitor-to-deal"
             ]
           },
           {
-            "group": "Integrations",
+            "group": "Using Your CRM",
+            "icon": "table-columns",
+            "pages": [
+              "your-crm/pipeline-management",
+              "your-crm/opportunities",
+              "your-crm/accounts-contacts",
+              "your-crm/custom-data-model",
+              "your-crm/custom-ai-fields",
+              "your-crm/ai-enrichment",
+              "your-crm/activity-feed",
+              "your-crm/ai-notes",
+              "your-crm/ai-meeting-notes",
+              "your-crm/views-filters-search",
+              "your-crm/ai-reporting"
+            ]
+          },
+          {
+            "group": "Integrations & Data Sources",
+            "icon": "plug",
             "pages": [
               "integrations/overview",
               "integrations/gmail-google-calendar",
@@ -108,30 +112,8 @@
             ]
           },
           {
-            "group": "Comparisons",
-            "pages": [
-              "comparisons/octolane-vs-hubspot",
-              "comparisons/octolane-vs-salesforce",
-              "comparisons/octolane-vs-pipedrive",
-              "comparisons/octolane-vs-attio"
-            ]
-          },
-          {
-            "group": "Use Cases",
-            "pages": [
-              "use-cases/for-founders",
-              "use-cases/for-sales-teams",
-              "use-cases/for-agencies"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "MCP",
-        "icon": "plug",
-        "groups": [
-          {
             "group": "MCP",
+            "icon": "code",
             "pages": [
               "mcp/overview",
               "mcp/quickstart",
@@ -141,6 +123,43 @@
               "mcp/use-with-cursor",
               "mcp/use-with-claude",
               "mcp/use-with-chatgpt"
+            ]
+          },
+          {
+            "group": "Comparisons",
+            "icon": "scale-balanced",
+            "pages": [
+              "comparisons/octolane-vs-hubspot",
+              "comparisons/octolane-vs-salesforce",
+              "comparisons/octolane-vs-pipedrive",
+              "comparisons/octolane-vs-attio"
+            ]
+          },
+          {
+            "group": "Use Cases",
+            "icon": "lightbulb",
+            "pages": [
+              "use-cases/for-founders",
+              "use-cases/for-sales-teams",
+              "use-cases/for-agencies"
+            ]
+          },
+          {
+            "group": "Account & Settings",
+            "icon": "gear",
+            "pages": [
+              "account/workspace-settings",
+              "account/team-permissions",
+              "account/plans-pricing",
+              "account/security-privacy"
+            ]
+          },
+          {
+            "group": "Support",
+            "icon": "life-ring",
+            "pages": [
+              "support/faq",
+              "support/contact"
             ]
           }
         ]
@@ -153,32 +172,10 @@
             "group": "API Reference",
             "pages": [
               "api-reference/introduction",
+              "api-reference/create-opportunity",
               "api-reference/create-account",
               "api-reference/create-contact",
-              "api-reference/create-note",
-              "api-reference/create-opportunity"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Account",
-        "icon": "gear",
-        "groups": [
-          {
-            "group": "Account",
-            "pages": [
-              "account/workspace-settings",
-              "account/team-permissions",
-              "account/plans-pricing",
-              "account/security-privacy"
-            ]
-          },
-          {
-            "group": "Support",
-            "pages": [
-              "support/faq",
-              "support/contact"
+              "api-reference/create-note"
             ]
           }
         ]
