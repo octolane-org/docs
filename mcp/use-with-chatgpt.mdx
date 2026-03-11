@@ -1,0 +1,108 @@
+---
+title: "Use Octolane with ChatGPT"
+sidebarTitle: "Use with ChatGPT"
+description: "Connect Octolane to ChatGPT so you can manage your CRM and AI sales agents through OpenAI's assistant."
+---
+
+# Use Octolane with ChatGPT
+
+Connect Octolane to ChatGPT to manage your pipeline, query deals, and access Signal visitor data directly from OpenAI's assistant.
+
+## Setup
+
+<Steps>
+
+<Step title="Open ChatGPT settings">
+
+In ChatGPT, go to **Settings > MCP (Beta) > Add Server**.
+
+<Note>
+MCP support in ChatGPT requires a Plus or Team subscription. If you don't see the MCP option, make sure you're on a supported plan and have beta features enabled.
+</Note>
+
+</Step>
+
+<Step title="Add the Octolane server">
+
+Enter the following details:
+
+| Field | Value |
+|-------|-------|
+| Name | Octolane |
+| URL | `https://mcp.octolane.com/mcp` |
+| Authentication | API Key |
+| Header name | `X-API-Key` |
+| Key | Your API key from **Settings > Integrations > API** |
+
+</Step>
+
+<Step title="Start using it">
+
+Open a new conversation and try:
+
+```
+What's our pipeline value by stage this quarter?
+```
+
+ChatGPT will use the Octolane tools to fetch your pipeline data and present it in a readable format.
+
+</Step>
+
+</Steps>
+
+## Example prompts
+
+### Quick pipeline check
+
+```
+Show me a summary of our sales pipeline - how many open deals,
+total value, and which stage has the most deals.
+```
+
+### Signal visitors
+
+```
+What companies visited our website today? Show me the top 5
+by ICP match score with company details.
+```
+
+### Deal lookup
+
+```
+What's the status of our deal with Acme Corp? When was the
+last activity and what's the next step?
+```
+
+### Create a record
+
+```
+Create a new contact: Jane Smith, jane@example.com, VP of Sales
+at Example Corp. Add a note that we met at SaaStr conference.
+```
+
+### Pipeline comparison
+
+```
+Compare our pipeline this quarter to last quarter. Are we ahead
+or behind? Which stages have the biggest changes?
+```
+
+## ChatGPT vs Claude for Octolane
+
+Both work well. A few differences:
+
+| Feature | ChatGPT | Claude |
+|---------|---------|--------|
+| Multi-step queries | Good | Excellent |
+| Data formatting | Tables and lists | Tables, lists, and structured summaries |
+| Follow-up questions | Good | Excellent - better context retention |
+| Tool chaining | Calls tools sequentially | Chains tools and cross-references results |
+
+Claude tends to handle complex CRM queries (like "cross-reference Signal visitors with existing pipeline") more naturally. ChatGPT is great for straightforward lookups and quick pipeline checks.
+
+## Limitations
+
+- ChatGPT's MCP support is in beta and may change
+- Tool calling is sequential (one at a time), which can make complex queries slower than Claude
+- File attachments from MCP responses aren't supported yet
+- Conversation context for MCP tools resets with each new chat

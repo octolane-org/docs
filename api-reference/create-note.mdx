@@ -1,0 +1,108 @@
+---
+title: "Create Note"
+sidebarTitle: "Create Note"
+description: "Attach notes to accounts and contacts in Octolane - store conversation context, meeting notes, or any info linked to a deal."
+api: "POST https://enrich.octolane.com/v1/inbound/notes"
+---
+
+Attach notes to accounts and contacts. Use this to store context from conversations, meeting notes, lead source details, or any other info you want linked to a record.
+
+## Request
+
+<ParamField header="X-API-Key" type="string" required>
+  Your Octolane API key.
+</ParamField>
+
+<ParamField header="Content-Type" type="string" required>
+  Must be `application/json`.
+</ParamField>
+
+### Body parameters
+
+<ParamField body="note" type="object" required>
+  The note content.
+
+  <Expandable title="note fields">
+    <ParamField body="title" type="string" required>
+      Note title.
+    </ParamField>
+
+    <ParamField body="content" type="string">
+      The note body. Supports plain text. You can also use this field to store custom tags or metadata.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="account_domains" type="string[]">
+  Array of company domains to attach the note to (e.g., `["acme.com"]`).
+</ParamField>
+
+<ParamField body="contact_emails" type="string[]">
+  Array of contact emails to attach the note to (e.g., `["john@acme.com"]`).
+</ParamField>
+
+<Note>
+Include at least one of `account_domains` or `contact_emails` so the note is attached to a record. You can include both to link the note to both the company and the person.
+</Note>
+
+## Example request
+
+```bash
+curl -X POST "https://enrich.octolane.com/v1/inbound/notes" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your-api-key" \
+  -d '{
+    "note": {
+      "title": "Instantly Lead - First Contact",
+      "content": "Reached out via cold email. Replied interested in demo."
+    },
+    "account_domains": ["acme.com"],
+    "contact_emails": ["john@acme.com"]
+  }'
+```
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  <Expandable title="data fields">
+    <ResponseField name="note_id" type="string">
+      UUID of the created note.
+    </ResponseField>
+
+    <ResponseField name="title" type="string">
+      Note title.
+    </ResponseField>
+
+    <ResponseField name="content" type="string">
+      Note body content.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
+
+```json 200
+{
+  "success": true,
+  "data": {
+    "note_id": "bb0e8400-e29b-41d4-a716-446655440000",
+    "title": "Instantly Lead - First Contact",
+    "content": "Reached out via cold email. Replied interested in demo."
+  },
+  "message": "Note created successfully"
+}
+```
+
+## Common use cases
+
+**Storing outbound context.** When a lead from Instantly or Apollo replies, push the conversation context into Octolane as a note so your agents have full history.
+
+**Meeting notes via API.** After a call, push a summary note attached to the contact and account.
+
+**Lead source tagging.** Use the note title or content to tag where a lead came from (e.g., "Source: Instantly Cold Campaign Q1").

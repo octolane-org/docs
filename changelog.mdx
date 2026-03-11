@@ -1,0 +1,747 @@
+---
+title: "Changelog"
+sidebarTitle: "Changelog"
+description: "What's new in Octolane - product updates, new features, improvements, and bug fixes. We ship daily."
+rss: true
+---
+
+<Update label="March 8, 2026" description="Comparison docs & expanded documentation" tags={["New Releases"]}>
+  - Published full comparison pages covering Octolane vs HubSpot, Salesforce, Attio, Pipedrive, and Lightfield - each with detailed feature tables, pricing breakdowns, and migration guides so prospects can make informed decisions
+  - Expanded API reference documentation with interactive request/response examples that you can run directly from the docs page
+  - Added custom `llms.txt` file for better AI search engine discoverability - Octolane docs now surface accurately in ChatGPT, Perplexity, and other AI-powered search tools
+</Update>
+
+<Update label="March 7, 2026" description="Follow-Up Agent: Custom timing rules" tags={["Improvements"]}>
+  - You can now set per-pipeline timing rules for when the Follow-Up Agent drafts follow-ups - for example, 3 days for hot deals in your SMB pipeline but 2 weeks for enterprise deals where longer sales cycles are normal
+  - Added an "urgency" indicator to every item in the approval queue, calculated based on deal value, time since last contact, and how many previous follow-ups have been sent - so you can prioritize the most important drafts first
+  - The timing rules editor supports business-days-only mode, which skips weekends and holidays when calculating follow-up windows
+  - Added a "Preview timing" button that shows you when the next follow-up would fire for every active deal in the selected pipeline
+</Update>
+
+<Update label="March 6, 2026" description="AI Chat improvements" tags={["Improvements"]}>
+  - AI Chat now understands multi-step instructions like "Find all stale deals over $10K and draft follow-ups for each one" - it breaks the request into steps, executes them sequentially, and shows you the results with a summary of what it did
+  - Response times for pipeline queries improved by 2x on large datasets (1,000+ deals) through query optimization and caching of frequently accessed pipeline snapshots
+  - AI Chat now remembers context within a session - you can say "now filter those to just enterprise deals" without repeating the original query
+  - Added support for date-relative queries like "deals created in the last 2 weeks" and "meetings scheduled for next week" with accurate timezone handling
+  - Chat responses now include inline links to the specific deals, contacts, or companies mentioned, so you can jump directly to any record from the chat
+</Update>
+
+<Update label="March 5, 2026" description="Signal: Page-level tracking" tags={["Improvements"]}>
+  - Signal now shows exactly which pages a visiting company viewed during their session - not just that they visited your site, but which product pages, pricing pages, case studies, and blog posts they spent time on
+  - New "Pages Viewed" column in the Signal dashboard with time-on-page data for each URL, so you can see whether a visitor spent 30 seconds or 10 minutes on your pricing page
+  - Page-level data feeds into the ICP scoring engine - visitors who view high-intent pages (pricing, demo request, comparison pages) now receive a higher qualification score automatically
+  - Added a "Session replay" timeline view on individual visitor records that shows the chronological order of pages visited with timestamps
+  - Signal now tracks scroll depth on each page, giving you a rough sense of whether visitors actually read the content or bounced quickly
+</Update>
+
+<Update label="March 4, 2026" description="WhatsApp integration launched" tags={["New Releases"]}>
+  - Sync WhatsApp Business conversations into your CRM automatically - messages appear in the Activity Feed on the relevant contact and deal records within seconds of being sent or received
+  - Deal Finder Agent now detects deals from WhatsApp threads using the same buying-signal detection it uses for email - pricing discussions, demo requests, and contract negotiations in WhatsApp are now surfaced as opportunities
+  - WhatsApp messages are fully searchable in global search, so you can find any conversation by keyword, contact name, or phone number
+  - Two-way sync means messages sent from WhatsApp appear in Octolane, and the Follow-Up Agent can reference WhatsApp conversation history when drafting follow-ups via email
+  - Supports WhatsApp Business API accounts - connect via Settings > Integrations > WhatsApp and authenticate with your business phone number
+</Update>
+
+<Update label="March 3, 2026" description="Approval queue: Bulk actions" tags={["Improvements"]}>
+  - Approve, dismiss, or edit multiple agent actions at once from the approval queue - select items individually with checkboxes or use "Select all" to action everything on the current page
+  - New keyboard shortcuts for power users: `A` to approve the highlighted item, `D` to dismiss, `E` to open the edit view, `J`/`K` to move up and down the list, and `Shift+A` to approve all selected items
+  - Bulk actions respect per-item validation - if one item in a batch can't be approved (e.g., the contact's email is no longer valid), it's skipped and flagged while the rest proceed
+  - Added a "Bulk edit" mode that lets you modify the tone, add a line, or adjust the CTA across multiple draft emails before approving them all at once
+  - The approval queue now shows a daily summary at the top with counts of pending, approved, dismissed, and edited items for the current day
+</Update>
+
+<Update label="March 2, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed Signal dashboard not loading for workspaces with more than 5,000 identified visitors by paginating the initial data load and lazy-loading older visitor records
+  - Resolved an issue where the Follow-Up Agent would occasionally draft follow-ups for threads that had already received a reply within the last hour due to a sync delay between Gmail and the agent's thread state cache
+  - Fixed approval queue notification badge not clearing after approving all items - the badge now updates in real-time via WebSocket instead of polling every 30 seconds
+  - Corrected timezone display in AI Meeting Notes for teams spanning multiple time zones - summaries now use each participant's local timezone instead of defaulting to the workspace timezone
+  - Fixed CSV export failing for deals with custom AI fields containing long text values (over 5,000 characters) by switching to streaming export for large datasets
+  - Resolved duplicate contact creation when the same person appeared in both email and calendar data on the same day - the deduplication window is now 24 hours instead of per-sync-batch
+  - Fixed pipeline stage filter not persisting after page refresh in the Deals view - filter state is now saved to the URL query string so filtered views are bookmarkable
+  - Patched an edge case where the Deal Finder Agent would create a deal from an internal email thread between two people at the same company when one used a personal email alias
+  - Fixed broken "Copy link" button on individual deal records that was generating links with the wrong workspace ID for users who belonged to multiple workspaces
+  - Resolved slow rendering on the Activity Feed when a record had 500+ activity entries by implementing virtual scrolling and only rendering visible items
+</Update>
+
+<Update label="March 1, 2026" description="AI Reporting: Ask anything" tags={["New Releases"]}>
+  - Ask AI Chat for any report in plain English - "Show me pipeline conversion rates by stage this quarter" or "What's our average deal size by industry?" - and get an instant data table with the answer
+  - Reports now include visual charts alongside data tables - bar charts for comparisons, line charts for trends over time, and funnel charts for pipeline conversion analysis
+  - Reports can be pinned to your dashboard as widgets so you see them every time you log in, and they update automatically as your data changes
+  - Export any AI-generated report to CSV or PDF with one click for sharing with stakeholders who don't have Octolane access
+  - Scheduled reports are now available - set up any report to be emailed to you or your team daily, weekly, or monthly at a specific time
+</Update>
+
+<Update label="February 28, 2026" description="Inbound API launched" tags={["New Releases"]}>
+  - New REST API for pushing data into Octolane from any external source - your outbound tools, marketing platforms, landing pages, custom scripts, or internal systems can now create records in your CRM programmatically
+  - Four endpoints available at launch: Create Opportunity, Create Account, Create Contact, and Create Note - each with comprehensive validation, error messages, and rate limiting
+  - Automatic deduplication on every endpoint - safe to call multiple times with the same data without creating duplicate records. Deduplication is based on email for contacts, domain for accounts, and a combination of name + account for opportunities
+  - Published full API reference documentation with request/response examples in cURL, Python, JavaScript, and Ruby, plus a Postman collection for quick testing
+  - API keys are scoped to your organization and can be found in Settings > Integrations > API. Rate limited to 100 requests per minute per key with clear error responses when limits are hit
+</Update>
+
+<Update label="February 27, 2026" description="Improvements" tags={["Improvements"]}>
+  - Redesigned the workspace dashboard with a new layout that puts pipeline health, agent activity, and upcoming meetings front and center - everything you need to see in the first 5 seconds after logging in
+  - The global search bar now supports advanced operators: use `stage:negotiation` to filter deals by stage, `owner:me` to show only your records, and `created:last-week` for time-based filtering
+  - Improved email sync speed for large Gmail accounts - initial sync for accounts with 50,000+ emails now completes 3x faster by parallelizing the message fetch and processing pipeline
+  - Added a "Quick create" keyboard shortcut (`Ctrl+K` / `Cmd+K`) that opens a modal for creating deals, contacts, or companies from anywhere in the app without navigating away from your current view
+  - Pipeline board cards now show a mini activity timeline with the last 3 interactions, so you can see recent context without clicking into the deal
+  - Improved the onboarding checklist to track progress across all setup steps and show estimated time remaining for each uncompleted step
+</Update>
+
+<Update label="February 26, 2026" description="LinkedIn integration" tags={["New Releases"]}>
+  - Connect your LinkedIn account to enrich contacts with profile data including current job title, company, location, headline, number of connections, and profile photo - all pulled from their public LinkedIn profile
+  - LinkedIn data now feeds into the Outreach Agent for more personalized cold outreach - the agent references the prospect's headline, recent posts, and mutual connections when drafting messages
+  - Sync LinkedIn connections and saved leads into your CRM automatically - no more manually copying prospect information from LinkedIn into your deal records
+  - LinkedIn profile links are added to enriched contact records and open in a new tab so you can quickly check a prospect's full profile before a call
+  - The integration respects LinkedIn's rate limits and queues enrichment requests intelligently to avoid any issues with your LinkedIn account
+</Update>
+
+<Update label="February 25, 2026" description="Custom AI Fields" tags={["New Releases"]}>
+  - Create fields that fill themselves in - describe what you want to track in plain English (e.g., "Extract the prospect's budget range from email conversations") and Octolane extracts the information from your email threads, meeting transcripts, and notes automatically
+  - Supports deal, contact, and company objects - add AI fields to any record type and they'll populate as relevant data flows in through email sync, calendar sync, and agent activity
+  - Example fields teams are creating: budget range, buying timeline, competitor mentions, decision maker name, technical requirements, contract renewal date, pain points discussed, and preferred communication channel
+  - AI fields update continuously - as new emails come in or meetings happen, the field values are refined with the latest information. You can see the source data that each field value was extracted from
+  - Custom AI Fields work with saved views and filters - create a view like "Deals where budget > $50K and buying timeline is this quarter" using AI-extracted data that no human had to enter
+</Update>
+
+<Update label="February 24, 2026" description="Follow-Up Agent: Tone matching improvements" tags={["Improvements"]}>
+  - Significantly improved voice matching - the Follow-Up Agent now better captures your email style by analyzing greeting patterns (do you say "Hi" or "Hey" or jump straight in?), sign-off preferences, average sentence length, use of bullet points vs. paragraphs, and level of formality
+  - Added "Preview as sent" view in the approval queue that renders the draft exactly as the recipient would see it - including your email signature, formatting, and thread context - so you can review with full confidence
+  - The agent now adapts its tone based on the relationship stage - more formal for first-touch prospects, more casual for contacts you've been emailing for weeks
+  - Voice learning now processes your last 200 sent emails (up from 50) for more accurate style matching, and retrains weekly as your writing style evolves
+  - Added a "Tone calibration" page in Settings where you can review sample drafts and rate them, giving the agent direct feedback to improve faster
+</Update>
+
+<Update label="February 23, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added bulk actions to the Contacts list - select multiple contacts and merge them, add them to a deal, export to CSV, or delete them in one action
+  - The deal detail page now shows a "Relationship map" visualization that displays all contacts associated with a deal, their roles (decision maker, champion, blocker), and communication frequency with each person
+  - Improved the email threading algorithm to handle complex reply chains more accurately - forwarded emails, emails with modified subject lines, and cross-platform threads (Gmail to Outlook) are now grouped correctly 95% of the time, up from 80%
+  - Added a "Last contacted" column to the pipeline board that shows how many days since the last outbound email or meeting, with color coding: green (< 3 days), yellow (3-7 days), red (> 7 days)
+  - The Settings page now has a searchable interface - type any keyword to find the setting you're looking for instead of navigating through tabs
+  - Improved error messages across the app - when something goes wrong, you now see a plain-English explanation of what happened and what to do next, instead of generic "Something went wrong" messages
+</Update>
+
+<Update label="February 22, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed ICP scoring not recalculating after updating scoring criteria in Settings - scores now refresh within 5 minutes of any criteria change for all previously identified visitors
+  - Resolved an issue where enrichment would stall on contacts with non-Latin characters in their name (e.g., Chinese, Arabic, or Cyrillic names) by improving the Unicode handling in the enrichment pipeline
+  - Fixed the Outreach Agent sending drafts to the wrong approval queue when multiple team members were assigned to the same pipeline - drafts now route to the deal owner's queue, or the pipeline default if no owner is set
+  - Corrected "Last activity" timestamp showing future dates for deals synced from imported CSV data when the CSV contained dates in DD/MM/YYYY format instead of MM/DD/YYYY
+  - Fixed custom object relationships not displaying in the sidebar on related records when the relationship was created via API instead of the UI
+  - Resolved search returning stale results for recently merged contacts by invalidating the search index immediately on merge instead of waiting for the next scheduled re-index
+  - Fixed email thread grouping breaking when a CC'd participant replied from a different email alias - the threading engine now matches on both alias and canonical email address
+  - Patched a UI glitch where the pipeline board would briefly show deals in the wrong stage after drag-and-drop due to an optimistic update being overwritten by a stale WebSocket message
+  - Fixed webhook payloads for the Zapier "Deal stage changed" trigger missing custom field values - all custom fields (including AI fields) are now included in the webhook payload
+  - Resolved an issue where the Meeting Recorder would fail to join recurring calendar events that were rescheduled to a different time - the recorder now checks for schedule changes up to 5 minutes before the original start time
+  - Fixed the "Stale deals" saved view not respecting per-pipeline stale thresholds - it was using the global default (14 days) instead of the pipeline-specific setting
+</Update>
+
+<Update label="February 21, 2026" description="Signal: ICP scoring" tags={["Improvements"]}>
+  - Signal now scores every identified company against your ideal customer profile using a weighted scoring model that considers company size, industry, location, tech stack, funding stage, and revenue range
+  - High-priority visitors are flagged in the dashboard with a match percentage (e.g., "92% ICP match") and sorted to the top of the list so you see the best prospects first
+  - Configurable scoring criteria with adjustable weights - increase the weight of "company size" if that's your most important qualification factor, or lower the weight of "location" if you sell globally
+  - Added a "Score breakdown" view on each visitor record that shows exactly why a company received its score - which criteria matched, which didn't, and how many points each criterion contributed
+  - Companies that score above your configurable threshold can automatically trigger the Outreach Agent to draft a personalized message, creating a fully automated inbound-to-outreach pipeline from website visit to first touch
+</Update>
+
+<Update label="February 20, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a weekly pipeline digest email that goes out every Monday morning with a summary of deals created, deals closed, deals at risk, and agent activity from the previous week - configurable per user in notification settings
+  - The contact detail page now shows an "Engagement score" that quantifies how engaged a prospect is based on email response rates, meeting attendance, website visits, and link clicks across all channels
+  - Improved the CSV import process to handle files up to 500MB (up from 50MB) with a progress indicator and the ability to resume interrupted imports without re-uploading the file
+  - Added inline editing to the pipeline board - click any field directly on a deal card to edit it without opening the full deal detail page. Supports deal name, value, stage, owner, and close date
+  - The approval queue now groups related items together - if the Follow-Up Agent drafted follow-ups for 5 deals in the same pipeline, they appear as a collapsible group so you can review and approve them in context
+  - Improved the mobile web experience with a responsive pipeline view that works on tablets and phones - swipe between stages and tap to open deal details
+</Update>
+
+<Update label="February 19, 2026" description="Activity Feed: Agent action labels" tags={["Improvements"]}>
+  - Every agent action in the Activity Feed now shows which agent performed it (e.g., "Deal Finder Agent," "Follow-Up Agent") and a plain-English explanation of why the action was taken (e.g., "Created deal because pricing was discussed in email thread with Sarah at Acme Corp")
+  - Filter the Activity Feed by agent type to see what each one has been doing - useful for auditing agent behavior, understanding patterns, and tuning agent settings based on actual performance
+  - Agent actions are color-coded in the feed: blue for informational actions (enrichment, detection), orange for pending approval items, green for approved actions, and gray for dismissed items
+  - Added a "Why did this happen?" expandable section on each agent action that shows the full reasoning chain - what data the agent looked at, what signals it detected, and how it decided to act
+  - Agent action labels are searchable in global search - search for "Follow-Up Agent" to see all follow-ups it drafted, or "Deal Finder" to see every deal it detected
+</Update>
+
+<Update label="February 18, 2026" description="Pipeline: Auto-stage advancement" tags={["Improvements"]}>
+  - Deals can now automatically advance through pipeline stages based on real signals from your email and calendar activity - when a meeting is booked, the deal moves to "Meeting Scheduled"; when a proposal is discussed, it moves to "Proposal Sent"; when contract terms are negotiated, it advances to "Negotiation"
+  - Configurable per pipeline in Settings > Pipeline > Automation Rules - you define which signals trigger which stage transitions, and Octolane handles the rest
+  - Each auto-advancement is logged in the Activity Feed with the specific signal that triggered it, so you always know why a deal changed stages
+  - Manual stage changes always take priority - if you drag a deal to a different stage, auto-advancement won't override your decision until the next qualifying signal occurs
+  - Added a "Stage history" timeline on each deal that shows every stage transition (manual and automatic) with timestamps and the reason for each change
+</Update>
+
+<Update label="February 17, 2026" description="Improvements" tags={["Improvements"]}>
+  - Redesigned the company detail page with a new layout that puts the most important information above the fold: company overview, key contacts, open deals, recent activity, and enrichment data
+  - The Signal dashboard now shows a "Returning visitors" indicator for companies that have visited your site more than once, with visit frequency and the date of their first visit
+  - Added a "Smart suggestions" feature to the deal creation form that auto-fills company name, contacts, and deal value based on email and calendar context when you start typing a contact's name
+  - Improved the notification system to batch multiple notifications into a single digest when several events happen within a 5-minute window, reducing notification noise by an average of 40%
+  - The AI Chat response format now adapts to the type of question - data queries return tables, status questions return summaries, and action requests return confirmation dialogs
+  - Added a dark mode option for the approval queue that follows your system preference, with improved contrast ratios for better readability in low-light environments
+</Update>
+
+<Update label="February 16, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Deal health" score to every open deal, calculated from a combination of email response velocity, meeting frequency, stage duration, and how the deal compares to your historical win patterns
+  - The Follow-Up Agent now includes a "Suggested next step" in each draft that appears as a subtle PS line - e.g., "P.S. Would it help to loop in your [role] for the next call?" based on typical deal patterns at the current stage
+  - Improved contact deduplication to catch more edge cases: contacts with typos in their name, contacts who changed companies, and contacts with multiple email addresses across different providers
+  - The pipeline board now supports multiple sort options beyond stage: sort by deal value (high to low), last activity (most recent first), close date (soonest first), or deal health score
+  - Added a "Team activity" view in the sidebar that shows a combined feed of all activity across all team members, filterable by person, agent, or activity type
+  - The API now returns pagination headers (`X-Total-Count`, `Link`) for all list endpoints, making it easier to paginate through large result sets programmatically
+</Update>
+
+<Update label="February 15, 2026" description="Outreach Agent launched" tags={["New Releases"]}>
+  - New agent that drafts personalized cold outreach to qualified prospects identified by Signal, the Deal Finder Agent, or manual selection - each message is unique, referencing the prospect's company, role, recent activity, and relevant pain points
+  - Messages are personalized based on company profile data (size, industry, tech stack), browsing behavior (which pages they visited on your site), and any existing interactions in your CRM
+  - All outreach drafts go through your approval queue before sending - nothing goes out without your review. You can edit the message, change the subject line, or dismiss it entirely
+  - The Outreach Agent supports multi-step sequences - after the initial outreach, it can draft a follow-up 3-5 days later if there's no response, with escalating messaging that stays professional
+  - Configure outreach rules per pipeline: who gets outreach, what tone to use, which email address to send from, and daily send limits to protect your domain reputation
+  - The agent automatically excludes contacts who have opted out, contacts at companies you're already in active deals with, and contacts who have been contacted within a configurable cooldown period
+</Update>
+
+<Update label="February 14, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed auto-stage advancement incorrectly triggering on internal calendar events (e.g., team standups, 1:1s) by improving the event classification model to distinguish between internal and external meetings with 99% accuracy
+  - Resolved an issue where bulk-dismissing items in the approval queue would sometimes skip every other item due to a race condition in the batch processing logic
+  - Fixed AI Enrichment failing silently for companies with recently expired domains - the enrichment engine now falls back to cached data and flags the record for manual review
+  - Corrected the deal value calculation when currency was set to EUR or GBP - a floating-point rounding error was causing values to be off by up to $0.02 on large deals
+  - Fixed Signal script not loading on sites using strict Content Security Policy headers by updating the script to comply with CSP Level 3 directives without requiring `unsafe-inline`
+  - Resolved the Follow-Up Agent drafting follow-ups for deals that were already marked as Closed-Won due to a timing issue where the deal status update hadn't propagated to the agent's state
+  - Fixed broken pagination on the Contacts list when filtering by custom AI field values - the filter was being applied after pagination instead of before, resulting in inconsistent page sizes
+  - Patched an issue where disconnecting and reconnecting Gmail would create duplicate activity entries for emails received during the reconnection window
+  - Fixed the Zapier "Form submission received" trigger not firing for submissions from embedded forms loaded in iframes on third-party domains
+  - Resolved calendar sync missing events from shared Google Calendars that the user had "View only" access to - these events are now synced as read-only records
+  - Fixed the AI Chat "How many deals..." query returning incorrect counts when deals spanned multiple pipelines due to a SQL aggregation bug in the query engine
+  - Corrected the Activity Feed timestamp sorting for events that happened within the same second by adding a sub-second tiebreaker based on event creation order
+</Update>
+
+<Update label="February 13, 2026" description="AI Enrichment: Funding data" tags={["Improvements"]}>
+  - Contact and company enrichment now includes full funding history - every round (seed, Series A, B, C, etc.), the investors involved, the amount raised, and the date of each round
+  - Total funding raised is displayed prominently on company records and can be used as a filter in saved views (e.g., "Companies that raised $10M+ in the last year")
+  - Data is sourced from the live web using multiple public sources, not a static database - so you get funding rounds that were announced last week, not last quarter
+  - Funding data feeds into ICP scoring - if your ideal customer is a Series A-C startup, companies matching that profile receive higher qualification scores in Signal
+  - Added a "Funding timeline" visualization on company detail pages that shows each funding round on a timeline with investor logos
+</Update>
+
+<Update label="February 12, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Snooze" action to the approval queue - defer a draft to review later (1 hour, 4 hours, tomorrow, next week) without dismissing it permanently
+  - The pipeline board now shows a conversion rate between each stage, calculated from your historical deal data - e.g., "72% of deals that reach Proposal move to Negotiation"
+  - Improved the AI Meeting Notes summary format to include a dedicated "Objections raised" section that captures pushback, concerns, and unresolved questions from the call
+  - Added keyboard navigation to the pipeline board - use arrow keys to navigate between deals and stages, Enter to open a deal, and Escape to close
+  - The contact enrichment engine now detects when someone has changed jobs and automatically updates their job title, company, and LinkedIn data - you'll see a notification in the Activity Feed when this happens
+  - Improved the email sync retry logic for temporary Gmail API failures - instead of retrying immediately and hitting rate limits, the sync now uses exponential backoff with jitter
+</Update>
+
+<Update label="February 11, 2026" description="Form Submission Agent launched" tags={["New Releases"]}>
+  - New agent that captures every inbound form submission from your website instantly - no more checking form inboxes, no more leads sitting unnoticed for hours
+  - Qualifies every lead against your ICP criteria automatically as soon as the submission comes in, using the email domain, company data, and any form field values to determine fit
+  - Routes qualified leads to the right pipeline stage based on configurable rules - e.g., demo requests go to "Demo Scheduled," pricing inquiries go to "Qualification," and general inquiries go to "New Lead"
+  - Can trigger the Follow-Up Agent to draft an immediate response or the Outreach Agent to start a personalized sequence - turning a cold form submission into a warm conversation in minutes
+  - Supports any form provider: native HTML forms, Typeform, HubSpot Forms, Webflow Forms, and any form that can POST data or send a webhook
+  - All form submissions are logged in the Activity Feed with the full form data, qualification decision, and routing action taken
+</Update>
+
+<Update label="February 10, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Quick reply" feature to the Activity Feed - respond to an email directly from the feed without opening your email client, with your Octolane signature and threading handled automatically
+  - The Signal dashboard now shows geographic heatmaps of visitor locations, so you can see which regions your website traffic is coming from and identify emerging markets
+  - Improved deal card rendering on the pipeline board with a new compact mode that shows 50% more deals on screen at once - toggle between compact and expanded views with a button in the toolbar
+  - Added a "Recent searches" dropdown to the global search bar that shows your last 10 searches for quick re-access
+  - The Follow-Up Agent now considers the prospect's timezone when suggesting send times - drafts are queued to send during the recipient's business hours, not yours
+  - Improved the loading performance of the Contacts page for workspaces with 10,000+ contacts by implementing server-side pagination and lazy-loading enrichment data
+</Update>
+
+<Update label="February 9, 2026" description="14-day free trial" tags={["Improvements"]}>
+  - Extended the free trial from 7 days to 14 days on the Pro plan, giving new teams more time to connect their data sources, see agents in action, and evaluate the platform with real pipeline data
+  - No credit card required to start your trial - sign up with Google and start using Octolane immediately. You'll only be asked for payment information when the trial ends and you choose to continue
+  - Trial accounts get full access to every feature, every agent, and every integration - nothing is gated or limited during the trial period
+  - Added a trial progress dashboard that shows how much of Octolane you've explored and suggests next steps to get the most value from your remaining trial days
+</Update>
+
+<Update label="February 8, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed Form Submission Agent not qualifying leads when the ICP criteria included tech stack filters - the agent was checking tech stack data before enrichment had completed, so the data wasn't available yet. It now waits for enrichment to finish before running qualification
+  - Resolved an issue where the deal detail page would flash blank content when switching between deals quickly due to a React state management bug that left stale data in the component cache
+  - Fixed AI Notes occasionally attributing quotes to the wrong participant in multi-person email threads when two participants had the same first name
+  - Corrected the "Deals closed this month" metric on the dashboard to respect the workspace timezone setting instead of always using UTC, which was causing off-by-one-day errors for teams in Asia-Pacific timezones
+  - Fixed custom field reordering not saving on the company detail page - the save request was being sent but the response wasn't updating the local state, so changes appeared to revert on refresh
+  - Resolved the Meeting Recorder failing to generate transcripts for calls shorter than 2 minutes by lowering the minimum audio duration threshold from 120 seconds to 30 seconds
+  - Fixed the Outreach Agent using the wrong sender name when the connected Gmail had a display name different from the Octolane profile name - the agent now uses the name configured in Octolane settings
+  - Patched an edge case where importing a CSV with empty rows between data rows would create ghost contact records with no name or email, which then appeared in search results as blank entries
+  - Fixed saved view sharing not working for team members added to the workspace after the view was created - the permission model now automatically grants access to new team members for shared views
+  - Resolved Signal visitor count discrepancies between the dashboard summary widget (which was counting unique sessions) and the full Signal page (which was counting unique companies) - both now consistently show unique companies
+</Update>
+
+<Update label="February 7, 2026" description="Meeting Recorder: Action item extraction" tags={["Improvements"]}>
+  - Meeting Recorder now extracts specific, actionable next steps from call transcripts using contextual understanding of the conversation - not just "follow up" but "Send the enterprise pricing PDF to Sarah by Friday"
+  - Action items are automatically linked to the relevant deal record and assigned to the participant who committed to doing them, based on who said what during the call
+  - The Follow-Up Agent can now monitor whether extracted action items are addressed within a configurable timeframe - if someone promised to send a proposal by Friday and hasn't by Saturday, the agent flags it
+  - Action items appear in a dedicated "Action Items" tab on the deal detail page with status tracking: pending, in progress, completed, or overdue
+  - Each action item includes a link to the exact timestamp in the meeting transcript where it was discussed, so you can review the original context with one click
+</Update>
+
+<Update label="February 6, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Deal timeline" visualization to the deal detail page that shows every interaction, stage change, and agent action on a horizontal timeline with zoom controls for different time ranges
+  - The Contacts page now supports multi-column sorting - sort by company name first, then by last activity date within each company group
+  - Improved the AI Chat's ability to handle ambiguous company names - when you ask about "Acme" and there are multiple companies matching, the chat now asks you to clarify instead of guessing
+  - Added a "Do not contact" flag for individual contacts that prevents all agents from including them in outreach, follow-ups, or deal creation. The flag syncs with your CRM-wide do-not-contact list
+  - The Meeting Recorder now supports custom vocabulary - add industry-specific terms, product names, and acronyms to a dictionary so transcription accuracy improves for your specific domain
+  - Improved the deal creation flow to auto-populate the close date with a suggested date based on your average sales cycle length for the selected pipeline
+</Update>
+
+<Update label="February 5, 2026" description="Custom Data Model: Custom objects" tags={["New Releases"]}>
+  - Create custom objects beyond the defaults (deals, contacts, companies) to model your business exactly how it works - examples include Products, Subscriptions, Projects, Partnerships, Locations, or any entity unique to your workflow
+  - Define relationships between objects with full flexibility: one-to-many (a company has many subscriptions), many-to-many (a deal involves multiple products), and self-referential (a contact refers another contact)
+  - Custom objects work with AI Fields and enrichment - add an AI field to your "Products" object that extracts pricing mentions from email threads, or enrich your "Locations" object with geographic data
+  - Custom objects appear in global search, saved views, and the Activity Feed - they're first-class citizens in Octolane, not an afterthought
+  - Added a visual data model editor in Settings > Data Model that shows all objects and their relationships as a diagram, with drag-and-drop editing for adding fields and relationships
+</Update>
+
+<Update label="February 4, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added email open tracking to the Activity Feed - when you send an email through Octolane (or via an approved Follow-Up or Outreach Agent draft), you'll see when the recipient opens it and how many times
+  - The pipeline board now supports swimlanes - group deals by owner, by company, or by any custom field, with each group displayed as a horizontal lane across stages
+  - Improved the AI Enrichment engine's handling of small companies (< 10 employees) that have minimal web presence - it now checks additional sources including social media profiles and press mentions
+  - Added a "Compare periods" feature to AI Reporting that lets you compare this month vs. last month, this quarter vs. last quarter, or any two custom date ranges side by side
+  - The Outreach Agent now supports A/B testing - create two message variants and the agent will automatically split your prospect list and track which variant gets better response rates
+  - Improved the workspace invitation flow to allow bulk inviting via a comma-separated list of email addresses or by pasting directly from a spreadsheet
+</Update>
+
+<Update label="February 3, 2026" description="Zapier integration expanded" tags={["Improvements"]}>
+  - New triggers added: "Deal stage changed" fires whenever a deal moves to a new stage (manually or automatically), "Signal company identified" fires when Signal detects a new company visiting your website, and "Form submission received" fires when the Form Submission Agent captures a new lead
+  - New actions added: "Update deal stage" lets you move a deal to a specific stage from any Zapier workflow, and "Add note to record" lets you attach notes to deals, contacts, or companies from external tools
+  - 12 total triggers and actions now available, up from 5 at the initial Zapier launch - covering the most common automation use cases requested by customers
+  - Added support for Zapier's "Search" step type - you can now look up existing deals, contacts, or companies by name, email, or domain and use the results in subsequent Zap steps
+  - Improved error handling in Zapier actions to return clear, actionable error messages instead of generic failures, making it easier to debug Zaps that aren't working as expected
+</Update>
+
+<Update label="February 2, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Pipeline velocity" metric to the dashboard that shows average days per stage and total cycle time, with trend arrows indicating whether deals are moving faster or slower compared to the previous period
+  - The Follow-Up Agent now supports "Quiet mode" - you can pause it for specific deals without turning it off entirely, useful for deals where you're intentionally waiting for the prospect to make an internal decision
+  - Improved the contact enrichment accuracy for people at large companies (1,000+ employees) by cross-referencing multiple data sources to find the correct person instead of just matching on name and company
+  - Added a "Related deals" section to the contact detail page that shows all deals a contact is associated with across all pipelines, with status indicators for each
+  - The API now supports batch operations - create up to 100 contacts, accounts, or notes in a single request, reducing API call volume for high-throughput integrations
+  - Improved the loading time of the Settings page by 60% through code splitting and lazy-loading of integration configuration panels
+</Update>
+
+<Update label="February 1, 2026" description="Signal: Google Tag Manager support" tags={["Improvements"]}>
+  - Install Signal via Google Tag Manager with a one-click setup that doesn't require any changes to your website's codebase - just paste the Octolane tag ID into GTM and publish
+  - No code changes needed on your site - the Signal script is loaded through GTM's container, which means marketing teams can install Signal without involving engineering
+  - GTM-based installations support all Signal features: company identification, page-level tracking, ICP scoring, and real-time notifications
+  - Added a "Verify installation" tool in Settings > Signal that checks whether the script is loading correctly on your site and identifies common configuration issues
+  - Compatible with GTM's consent mode - Signal respects consent preferences set through your cookie banner or consent management platform
+</Update>
+
+<Update label="January 31, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed GTM-based Signal installations not sending page view events on single-page applications (React, Next.js, Vue) - the script now hooks into the browser's History API to detect client-side navigation
+  - Resolved the approval queue showing a stale item count after switching between workspaces without refreshing the page
+  - Fixed AI Chat returning "No data found" for queries about contacts created via API - the API-created records weren't being indexed in the search engine used by AI Chat until the next scheduled reindex
+  - Corrected the pipeline funnel chart showing stages in the wrong order after reordering stages in Settings - the chart was using the original stage creation order instead of the user-defined order
+  - Fixed an issue where the Follow-Up Agent would draft a follow-up immediately after a deal was created (within minutes) instead of waiting for the configured delay period, because the "last activity" timestamp was being set to the Unix epoch
+  - Resolved email sync occasionally skipping attachments larger than 10MB due to a timeout in the Gmail API fetch - the sync now retries with a longer timeout and downloads large attachments in chunks
+  - Fixed the "Export to CSV" button on the Signal dashboard exporting visitor data without company enrichment columns (company size, industry, funding) - all enrichment fields are now included in the export
+  - Patched a race condition where the Deal Finder Agent and Form Submission Agent could both create a deal from the same inbound signal if the form submission and email arrived within the same processing window
+  - Fixed the custom data model editor crashing when adding a relationship field to a custom object with a name longer than 64 characters
+  - Resolved an issue where revoking a team member's workspace access didn't remove their pending items from the approval queue, causing approved items to be sent from a deactivated account
+  - Fixed the Activity Feed "Email sent" entries not linking to the actual email thread in Gmail - the link now opens the correct thread in Gmail in a new tab
+</Update>
+
+<Update label="January 30, 2026" description="AI Chat: Instruct agents via chat" tags={["Improvements"]}>
+  - You can now give instructions to agents directly through AI Chat using natural language - the chat interprets your request, identifies which agent should handle it, and dispatches the task
+  - Example instructions: "Draft outreach to the last 5 companies that visited our pricing page" triggers the Outreach Agent to create personalized drafts for those specific companies
+  - "Follow up with everyone who hasn't replied in 2 weeks" tells the Follow-Up Agent to scan for stale conversations meeting that criteria and queue drafts for your review
+  - Agent instructions are logged in the Activity Feed so you can see exactly what you asked for and what the agent did in response
+  - The chat confirms what it's about to do before executing - "I'll have the Outreach Agent draft messages for these 5 companies. Proceed?" - so you stay in control
+</Update>
+
+<Update label="January 29, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Company timeline" view that shows every interaction your team has had with a company across all contacts, deals, and channels on a single chronological timeline
+  - The Meeting Recorder now generates a "Key moments" index for each recording - clickable timestamps for when specific topics were discussed, making it easy to jump to the pricing discussion or the objection handling section
+  - Improved the saved views system to support nested filter logic (AND/OR groups) - create complex filters like "(Stage is Negotiation OR Stage is Proposal) AND (Deal value > $25K) AND (Last activity < 7 days ago)"
+  - Added a "Duplicate check" warning when creating a deal manually - if a deal with a similar name and company already exists, Octolane warns you before creating a potential duplicate
+  - The Outreach Agent now supports sending from team aliases (e.g., sales@yourcompany.com) in addition to individual email addresses
+  - Improved the API documentation with a "Try it" button on each endpoint page that lets you make live API calls from the docs using your API key
+</Update>
+
+<Update label="January 28, 2026" description="Deal Finder: Multi-source detection" tags={["Improvements"]}>
+  - Deal Finder now scans connected web analytics, marketing tools, and support platforms in addition to email and calendar - if a prospect fills out a form on your marketing site, starts a support conversation, or engages with your content marketing, the Deal Finder can detect the opportunity
+  - Deals detected from support-to-sales handoffs: when a support conversation reveals a sales opportunity (e.g., a customer asking about upgrading or a prospect reaching out through support by mistake), the Deal Finder creates an opportunity and routes it to the right pipeline
+  - Marketing engagement signals like repeated content downloads, webinar attendance, and newsletter engagement patterns are now factored into deal detection alongside direct communication signals
+  - Each detected deal shows which source(s) triggered the detection in the deal detail page, so you can see whether it came from email, calendar, Signal, a form, support, or a combination
+  - Added a "Source attribution" report in AI Reporting that shows which data sources are generating the most deals and which sources produce the highest-value opportunities
+</Update>
+
+<Update label="January 27, 2026" description="Never Miss a Deal launch" tags={["New Releases"]}>
+  - Major product launch on Product Hunt (#3 Product of the Day) and Bookface (YC's internal community) - introducing Octolane's core value proposition: a CRM that finds deals, follows up, and keeps your pipeline updated without manual data entry
+  - New onboarding flow designed for speed: connect your Gmail and Google Calendar, and see your first auto-detected deal in under 5 minutes. The Deal Finder Agent processes your recent email history immediately on connect
+  - Added a demo environment that prospects can explore before signing up - pre-populated with sample deals, contacts, and agent activity so you can see exactly how Octolane works with real-looking data
+  - Launched the referral program: invite a friend, both of you get an extra month free on any paid plan
+  - Published customer case studies from 3 early adopters with specific metrics: average 12 hours/week saved on CRM data entry, 3x more deals detected vs. manual logging, and 40% faster follow-up response times
+</Update>
+
+<Update label="January 26, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added email template support to the Follow-Up Agent - create templates for common follow-up scenarios (post-demo, post-proposal, post-trial) and the agent will use them as a starting point, then personalize with conversation context
+  - The pipeline board now shows a "Win probability" percentage on each deal card, calculated from historical patterns (stage, deal size, time in stage, engagement level) using a lightweight ML model trained on your own data
+  - Improved the global search to support natural language queries like "deals closing this month" and "contacts at companies with 100+ employees" in addition to keyword search
+  - Added a "Workspace health" page in Settings that shows sync status for all connected integrations, agent uptime, and any issues that need attention - a single place to verify everything is running smoothly
+  - The Meeting Recorder now detects and labels different conversation segments: introduction, discovery, demo, objection handling, pricing discussion, and next steps - visible in the transcript view
+  - Improved the deal CSV import to handle HubSpot's multi-value fields (e.g., deals with multiple associated contacts) by creating all necessary contact records and associations automatically
+</Update>
+
+<Update label="January 25, 2026" description="AI Meeting Notes: Summary improvements" tags={["Improvements"]}>
+  - Meeting summaries now include key decisions made during the call (e.g., "Agreed to proceed with the Enterprise plan"), open questions that weren't resolved (e.g., "Need to confirm budget approval timeline with CFO"), and sentiment indicators showing the overall tone of the meeting
+  - Summaries are 60% shorter on average with no loss of detail - we redesigned the summarization model to focus on actionable information and remove conversational filler, pleasantries, and repetitive discussion
+  - Added a "Summary vs. Full transcript" toggle on the meeting detail page so you can switch between the concise summary and the complete word-for-word transcript
+  - Meeting summaries now highlight mentions of competitors, pricing objections, and timeline commitments with colored annotations so they stand out visually
+  - Summaries are now generated within 2 minutes of the meeting ending, down from 5-10 minutes previously
+</Update>
+
+<Update label="January 24, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed meeting summaries occasionally truncating the last 30 seconds of a call because the recording stop signal arrived before the final audio buffer was fully processed
+  - Resolved an issue where the Deal Finder Agent would not detect deals from forwarded email threads because the forwarding headers were stripping the original sender metadata
+  - Fixed the global search bar not returning results for meeting transcript content - transcripts are now fully indexed and searchable within 5 minutes of generation
+  - Corrected the "Win rate" metric on the dashboard counting deals that were moved to "Closed-Lost" and then reopened as both a loss and a win, inflating the denominator
+  - Fixed Signal do-not-track list not applying retroactively to already-identified visitors from excluded domains - existing records from excluded domains are now archived automatically
+  - Resolved an issue where connecting a second Gmail account would temporarily pause sync on the first account for up to 30 minutes due to a scheduling conflict in the sync worker pool
+  - Fixed the approval queue "Edit and approve" flow losing the edited content if the browser tab was backgrounded for more than 5 minutes, because the draft autosave wasn't running for inactive tabs
+  - Patched the Outreach Agent generating outreach messages for companies that already had an active deal in any pipeline, not just the pipeline the agent was configured for
+  - Fixed custom AI fields not populating for deals created via the Inbound API - the API-created deals weren't being queued for AI field processing
+  - Resolved the Activity Feed showing "Unknown agent" for actions taken by the Form Submission Agent due to a missing agent ID mapping in the display layer
+</Update>
+
+<Update label="January 23, 2026" description="Signal: Do-not-track list" tags={["Improvements"]}>
+  - Exclude specific domains or IP ranges from Signal tracking - useful for filtering out your own team's visits, partner companies, competitors you don't want to track, or any other domains you want to ignore
+  - Personal email domains (gmail.com, outlook.com, yahoo.com, hotmail.com, and 50+ others) are excluded by default, since Signal only identifies companies - not individual consumers
+  - The do-not-track list supports wildcards - add `*.internal.example.com` to exclude all subdomains of your internal tools
+  - IP range exclusions support CIDR notation for blocking entire network ranges, useful for excluding office IP addresses or VPN exit nodes
+  - Changes to the do-not-track list take effect within 5 minutes and apply to all future visits - previously identified visitors from excluded domains are optionally archived
+</Update>
+
+<Update label="January 22, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Contact roles" feature for deals - assign roles like "Decision Maker," "Champion," "Technical Evaluator," "Blocker," or custom roles to contacts associated with a deal, so your team knows who to focus on
+  - The Outreach Agent now supports LinkedIn messaging as a channel in addition to email - draft personalized LinkedIn connection requests or InMails for prospects where email outreach hasn't gotten a response
+  - Improved the CSV import error handling to show line-by-line validation results with specific error messages (e.g., "Row 47: Invalid email format") instead of a generic "Import failed" message
+  - Added a "Recently viewed" section to the sidebar that shows your last 10 viewed records for quick navigation back to deals, contacts, or companies you were just working with
+  - The AI Chat now supports chart generation - ask "Show me a chart of deals closed per month this year" and get an inline visualization directly in the chat
+  - Improved the calendar sync to detect and handle "tentative" meeting acceptances differently from "accepted" - tentative meetings are synced but flagged, and the Meeting Recorder won't auto-join until the meeting is fully accepted
+</Update>
+
+<Update label="January 21, 2026" description="Pipeline: Stale deal indicators" tags={["Improvements"]}>
+  - Deals with no activity for a configurable period (default: 14 days) now show a visual "stale" indicator on the pipeline board - a yellow warning icon and a subtle background highlight that makes stale deals immediately visible
+  - Stale deals automatically surface in a dedicated "At Risk" saved view that you can access from the sidebar, showing all deals across all pipelines that have gone quiet past their threshold
+  - The Follow-Up Agent can be configured to automatically trigger for stale deals - when a deal crosses the stale threshold, the agent drafts a follow-up and queues it in your approval queue without manual intervention
+  - Configurable stale thresholds per pipeline - your enterprise pipeline might use 21 days while your SMB pipeline uses 7 days, reflecting different expected sales cycle cadences
+  - Added an "At risk" count to the dashboard that updates in real-time, so you can see at a glance how many deals need attention today
+</Update>
+
+<Update label="January 20, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Meeting prep" feature that auto-generates a briefing document before each upcoming meeting - includes the deal summary, recent activity, contact background, open action items, and suggested talking points based on the deal stage
+  - The pipeline board now supports custom card colors based on rules you define - e.g., color deals red if they're stale, green if they have a meeting scheduled this week, or blue if the deal value is above a threshold
+  - Improved the AI Enrichment engine's accuracy for non-US companies by adding regional data sources for Europe (Companies House, Handelsregister), Asia-Pacific (ACRA, ABN Lookup), and Latin America
+  - Added a "Bulk update" feature to saved views - select multiple deals and change their stage, owner, or any field in one action
+  - The Follow-Up Agent now detects out-of-office replies and pauses follow-ups for that contact until their return date, instead of continuing to send follow-ups to an empty inbox
+  - Improved the notification delivery reliability for email digests - switched to a dedicated transactional email provider with 99.9% delivery rate
+</Update>
+
+<Update label="January 19, 2026" description="AI Enrichment: Tech stack detection" tags={["Improvements"]}>
+  - Company enrichment now includes a detected technology stack - see which CRM, marketing tools, analytics platforms, cloud providers, and development frameworks a company uses, sourced from public signals like job postings, website metadata, and DNS records
+  - Tech stack data is displayed on the company detail page in a visual grid with logos for each detected technology, making it easy to scan at a glance
+  - Use tech stack data in filters and saved views - create a view of "Companies using Salesforce" to target prospects who might be considering a switch, or "Companies using HubSpot" for competitive displacement campaigns
+  - Tech stack information feeds into the Outreach Agent's personalization - when drafting outreach, the agent can reference specific tools the prospect uses and position Octolane as an alternative or complement
+  - Tech stack detection runs automatically for all companies in your CRM and refreshes monthly to catch tool changes
+</Update>
+
+<Update label="January 18, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed tech stack detection returning outdated results for companies that recently migrated platforms - the detection engine now checks for recent changes by comparing current website metadata against cached data from the previous scan
+  - Resolved stale deal indicators not appearing on deals that had only agent-generated activity (enrichment, AI notes) but no human interaction - the stale threshold now only resets on human-initiated actions like emails, meetings, or manual updates
+  - Fixed the pipeline board scrolling to the wrong position after closing a deal detail modal - the scroll position is now preserved and restored correctly
+  - Corrected an issue where AI Enrichment would overwrite manually entered job titles with less accurate web data - manual edits are now locked and won't be overwritten unless you explicitly re-run enrichment
+  - Fixed the Zapier integration not retrying failed webhook deliveries after transient network errors - webhooks now retry up to 5 times with exponential backoff over 24 hours
+  - Resolved the Follow-Up Agent ignoring deals in custom pipeline stages that weren't part of the default stage set - the agent now works with any stage name, regardless of whether it's a default or custom stage
+  - Fixed the "At Risk" saved view showing deals from archived pipelines that should no longer appear in active views
+  - Patched an edge case where merging two companies would orphan deals associated with the secondary record - deals are now automatically reassigned to the surviving company record
+  - Fixed the contact detail page not showing LinkedIn profile data for contacts enriched before the LinkedIn integration was connected - historical contacts are now backfilled with LinkedIn data on connection
+  - Resolved an issue where the calendar sync would create duplicate meeting records for all-day events spanning multiple days by treating each day as a separate event
+  - Fixed the Signal dashboard "Top pages" widget counting URL fragments (#section) and query parameters (?utm_source=...) as separate pages instead of grouping them under the base URL
+</Update>
+
+<Update label="January 17, 2026" description="Meeting Recorder: Zoom and Teams support" tags={["New Releases"]}>
+  - Meeting Recorder now supports Zoom and Microsoft Teams in addition to Google Meet - all three platforms work with the same auto-join, transcription, and summary features
+  - Auto-join works across all three platforms based on your connected calendar events - the recorder detects the meeting platform from the calendar event link and joins the appropriate platform automatically
+  - Transcription quality is consistent across platforms, with speaker labels matched to contact records in your CRM regardless of which platform the meeting is on
+  - Platform-specific setup: Zoom requires installing the Octolane Zoom App from the Zoom Marketplace, Teams requires admin consent for the Octolane Teams integration, and Google Meet works automatically via your connected Google account
+  - Recordings, transcripts, and summaries from all platforms are stored identically in Octolane and appear in the same place on deal and contact records
+</Update>
+
+<Update label="January 16, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Contact discovery" feature that scans your email threads to find contacts you've communicated with who aren't yet in your CRM - review and add them with one click
+  - The pipeline board now shows a "Weighted value" column header that multiplies each deal's value by its win probability, giving you a more realistic view of expected revenue per stage
+  - Improved the AI Chat to handle follow-up questions in context - ask "How many deals did we close this month?" then follow up with "Which ones were over $50K?" without re-stating the timeframe
+  - Added email bounce detection to the Activity Feed - when an outreach or follow-up email bounces, it's flagged immediately with the bounce reason (invalid address, full mailbox, domain not found)
+  - The Outreach Agent now supports scheduling sends for specific times - "Send this batch at 9am Tuesday in the recipient's timezone" instead of sending immediately on approval
+  - Improved the workspace billing page to show usage metrics: number of contacts, deals, Signal visitors, and API calls used this billing period vs. plan limits
+</Update>
+
+<Update label="January 15, 2026" description="Views: Saved views" tags={["New Releases"]}>
+  - Save custom filtered and sorted views of your deals, contacts, companies, or any object type and access them from the sidebar for instant access to the data subsets you care about most
+  - Share views with your team so everyone can access common queries without recreating filters - shared views update in real-time as underlying data changes
+  - Pre-built views ship with every workspace: "My open deals" (deals owned by you that aren't closed), "Stale deals" (no activity in 14 days), "Hot leads this week" (contacts who visited the website and engaged with emails), and "Unassigned contacts" (contacts not linked to any deal)
+  - Views support complex filters with multiple conditions, AND/OR logic, and grouping - filter on any standard field, custom field, AI field, or computed field like "days since last activity"
+  - Pin your most-used views to the top of the sidebar for one-click access, and hide views you don't need from the sidebar without deleting them
+</Update>
+
+<Update label="January 14, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Deal summary" auto-generated section at the top of every deal detail page that provides a 2-3 sentence overview of the deal status, key contacts, recent activity, and next steps - updated automatically as new information comes in
+  - The Outreach Agent now detects and avoids contacting people at companies on your do-not-contact list, even if the contact was manually created before the company was added to the list
+  - Improved the email threading display to show collapsed thread views with expand/collapse controls, making it easier to navigate long email conversations with 20+ messages
+  - Added a "Quick filters" bar to the pipeline board with one-click filters for: My deals, Stale deals, High value (> $25K), Closing this month, and Has meeting scheduled
+  - The Meeting Recorder now adds chapter markers to recordings based on topic changes detected in the conversation, so you can skip directly to the section you need
+  - Improved the API rate limiting to use a sliding window algorithm instead of fixed windows, providing more consistent request capacity and avoiding burst-then-wait patterns
+</Update>
+
+<Update label="January 13, 2026" description="Follow-Up Agent: Subject line preservation" tags={["Improvements"]}>
+  - Follow-Up Agent now preserves the original email subject line when drafting follow-ups, ensuring the follow-up appears in the same email thread as the original conversation instead of starting a new thread
+  - Thread continuity is maintained across email clients - whether the original conversation started in Gmail, Outlook, or Apple Mail, the follow-up will thread correctly in the recipient's inbox
+  - The agent intelligently decides when to use "Re:" threading vs. starting a fresh thread - if the conversation is more than 30 days old, it starts a new thread with a reference to the previous discussion instead of bumping an ancient email chain
+  - Subject line formatting is preserved exactly as the original: capitalization, brackets, tags, and prefixes are all maintained
+  - Added a "Change subject" option in the approval queue for cases where you want the follow-up to start a new thread intentionally
+</Update>
+
+<Update label="January 12, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Contact insights" panel to the contact detail page that shows communication patterns: average response time, preferred communication channel (email vs. calendar vs. WhatsApp), most active hours, and engagement trend over the last 30 days
+  - The pipeline board now supports drag-and-drop between pipelines - move a deal from your "Inbound" pipeline to your "Enterprise" pipeline without recreating it
+  - Improved the AI Notes auto-generation to include context about which agent created each note and what triggered it, making the note history more transparent and auditable
+  - Added "Quick actions" to the contact list: hover over any contact to see buttons for "Send email," "Create deal," "Add note," or "View company" without clicking into the full contact detail page
+  - The Signal dashboard now shows a "Visitor trend" sparkline for each identified company, showing their visit frequency over the last 30 days at a glance
+  - Improved the date picker across the app to support natural language input - type "next Friday" or "2 weeks from now" instead of clicking through a calendar widget
+</Update>
+
+<Update label="January 11, 2026" description="Accounts: Automatic merging" tags={["Improvements"]}>
+  - Octolane now detects when the same company enters your CRM from multiple sources (email, Signal, form submission, API, CSV import) and merges the records automatically, keeping the most complete data from each source
+  - The merge logic preserves all associated deals, contacts, notes, and activity from both records - nothing is lost. The surviving record gets the combined history of both
+  - Manual merge is also available for edge cases where automatic detection doesn't catch a duplicate - search for the duplicate, select "Merge with..." and choose which fields to keep from each record
+  - Automatic merge candidates are shown in a review queue before merging, so you can approve or skip each suggested merge if you prefer manual control
+  - Merge history is logged in the Activity Feed so you can always see which records were combined and when
+</Update>
+
+<Update label="January 10, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed automatic account merging creating circular references when three or more records for the same company existed simultaneously - the merge engine now processes candidates sequentially instead of in parallel
+  - Resolved the Follow-Up Agent using the wrong subject line format for threads originally started in Microsoft Outlook, which uses a different Re: format than Gmail
+  - Fixed saved views not updating their result count badge in real-time when deals moved between stages - the count now updates via WebSocket within 2 seconds of any change
+  - Corrected an issue where the Meeting Recorder would attempt to join a cancelled meeting that hadn't been removed from the calendar due to a sync delay between Google Calendar and Octolane
+  - Fixed bulk contact import via CSV silently dropping rows with email addresses containing plus-addressing (e.g., user+tag@example.com) - these are now accepted as valid email addresses
+  - Resolved the deal timeline showing email activity from unrelated contacts who happened to share the same company domain but were not associated with the deal
+  - Fixed the global search returning contacts from deactivated team members' private (unshared) views - private views are now excluded from other users' search results
+  - Patched the AI Chat crashing with an unhandled error when asked about deals with no associated contacts - it now returns a helpful response explaining that no contacts are linked
+  - Fixed the Activity Feed infinite scroll stopping at 100 entries on mobile browsers (Safari on iOS specifically) due to a scroll event listener being throttled too aggressively
+  - Resolved the Outreach Agent not respecting the "Don't contact on weekends" setting for recipients in non-US time zones - the weekend check now uses the recipient's timezone, not the workspace timezone
+  - Fixed the pipeline "Total value" header not recalculating after changing the deal currency setting from USD to another currency - it was showing the old values until a full page reload
+  - Corrected an issue where reconnecting a Gmail account after a token expiration would re-trigger the Deal Finder Agent on emails that had already been processed, creating duplicate deal suggestions
+</Update>
+
+<Update label="January 9, 2026" description="AI Chat launched" tags={["New Releases"]}>
+  - Talk to your CRM in plain English - ask questions, get summaries, request actions, and navigate your data using conversational language instead of clicking through menus and filters
+  - Ask questions like "What's the latest with the Acme deal?" and get a comprehensive answer including the current stage, last activity, next steps, associated contacts, and deal value - all in one response
+  - Get summaries: "How many deals did we close this month?" returns a data table with deal names, values, close dates, and a total, along with a comparison to the previous month
+  - Available from the sidebar in every view - click the chat icon or use the keyboard shortcut `Ctrl+/` / `Cmd+/` to open AI Chat from anywhere in the app
+  - Chat history is saved per workspace so you can scroll back through previous questions and answers
+  - AI Chat is context-aware - if you're viewing a specific deal or contact page, the chat knows what you're looking at and you can ask questions like "When was the last meeting with this company?" without specifying which company
+</Update>
+
+<Update label="January 8, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Company health score" that aggregates engagement signals across all contacts at a company - email response rates, meeting frequency, website visits, and deal progress - into a single score visible on the company detail page
+  - The Follow-Up Agent now generates 3 draft variants for each follow-up (short, medium, detailed) so you can pick the one that fits the situation best from the approval queue
+  - Improved the email sync to handle Google Workspace accounts with custom SMTP routing - emails sent through third-party SMTP services are now correctly attributed to the sender's Octolane account
+  - Added a "Notes" tab to the AI Chat sidebar where you can pin important chat responses for future reference without searching through chat history
+  - The pipeline board now shows a "Time in stage" indicator on each deal card, displayed as a progress bar that fills up as the deal approaches the average time deals spend in that stage
+  - Improved the contact search to support partial phone number matching - searching for the last 4 digits of a phone number now returns matching contacts
+</Update>
+
+<Update label="January 7, 2026" description="Signal: Real-time notifications" tags={["Improvements"]}>
+  - Get notified instantly when a high-value company visits your website - notifications arrive within 60 seconds of Signal identifying the visitor, giving you the opportunity to engage while they're still browsing
+  - Notifications are available via in-app alerts (badge + sound), email (immediate or batched), and browser push notifications - configure each channel separately in your notification preferences
+  - Configurable thresholds let you control which visitors trigger notifications: set it to Tier 1 ICP matches only for a focused alert stream, or all identified visitors if you want maximum visibility
+  - Each notification includes the company name, ICP match score, pages viewed, and a direct link to the visitor's Signal record so you can take action immediately
+  - Added a "Notify team" option that sends Signal notifications to a specific Slack channel or email distribution list in addition to individual team members
+</Update>
+
+<Update label="January 6, 2026" description="Improvements" tags={["Improvements"]}>
+  - Added a "Deal aging" report to AI Reporting that shows the distribution of deal ages by stage, helping you identify bottlenecks where deals tend to get stuck
+  - The Outreach Agent now supports follow-up sequences with up to 5 steps - configure the number of follow-ups, timing between each step, and escalation strategy (different angle each time vs. short bump)
+  - Improved the CSV export to include all custom fields, AI fields, and enrichment data - previously, exports only included standard fields
+  - Added a "Merge suggestions" page that proactively identifies potential duplicate contacts and companies in your CRM and lets you review and merge them in bulk
+  - The Meeting Recorder now includes a "Highlights reel" - a 2-minute auto-generated clip of the most important moments from the meeting, identified by topic changes and speaker emphasis
+  - Improved the API error responses to include a `suggestion` field with specific guidance on how to fix the error, reducing debugging time for integration developers
+</Update>
+
+<Update label="January 5, 2026" description="Web analytics integration" tags={["New Releases"]}>
+  - Connect your web analytics tools (Google Analytics, Mixpanel, Amplitude, PostHog) to Octolane and see which pages prospects viewed, how they found your site (referral source, UTM parameters), session duration, and engagement metrics
+  - Analytics data is displayed on contact and company records alongside CRM data, giving you a complete picture of each prospect's journey from first website visit to closed deal
+  - Data feeds into Signal's scoring engine - prospects who visit high-intent pages (pricing, demo, comparison pages) multiple times receive higher ICP scores and are prioritized for outreach
+  - Web analytics data feeds into the Deal Finder Agent's detection model - a prospect who views your pricing page 3 times in a week generates a stronger deal signal than a single blog visit
+  - Added a "Marketing attribution" view that shows which channels (organic, paid, social, referral) are driving the most qualified website visitors and which eventually convert to deals
+</Update>
+
+<Update label="January 4, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed Signal real-time notifications firing multiple times for the same visitor session when the visitor navigated between pages - notifications are now deduplicated per company per 24-hour window
+  - Resolved web analytics integration not importing historical data for the first 24 hours after connecting due to a date range calculation error in the initial sync query
+  - Fixed the AI Chat sidebar overlapping the deal detail panel on screens narrower than 1280px by implementing a responsive layout that stacks the chat below the detail panel on smaller screens
+  - Corrected an issue where the email notification for Signal alerts included a broken "View in dashboard" link that pointed to the wrong workspace subdomain for users with custom domain configurations
+  - Fixed the Activity Feed not showing web analytics events for anonymous visitors who later became known contacts - events are now retroactively linked when the visitor's identity is resolved
+  - Resolved the Deal Finder Agent creating deals from newsletter subscription confirmation emails by improving the email classification model to distinguish transactional emails from sales conversations
+  - Fixed a memory leak in the Signal tracking script that caused progressive slowdowns on long-lived single-page applications where users kept the tab open for hours without refreshing
+  - Patched the calendar sync failing for Google Workspace accounts with more than 50 shared calendars by implementing paginated calendar enumeration instead of fetching all calendars in a single API call
+  - Fixed the contact enrichment queue getting stuck in a retry loop when a contact's company domain returned a permanent DNS error (NXDOMAIN) - permanent failures are now marked as "Enrichment unavailable" and skipped
+  - Resolved the approval queue email digest including dismissed items from the previous day alongside pending items, making the digest confusing
+  - Fixed the pipeline board drag-and-drop not working on Safari 17 due to a compatibility issue with the drag event API - Safari 17 and 18 are now fully supported
+  - Corrected the "Deals created" chart on the dashboard double-counting deals that were auto-merged within the same reporting period
+</Update>
+
+<Update label="January 3, 2026" description="Import: HubSpot and Salesforce field mapping" tags={["Improvements"]}>
+  - Improved the CSV import process with automatic field mapping that recognizes HubSpot and Salesforce column naming conventions - field names like `hs_deal_stage`, `sf_opportunity_amount`, and `hubspot_owner_id` are automatically mapped to their Octolane equivalents
+  - Custom fields from HubSpot and Salesforce exports are detected during import and you're prompted to create matching custom fields in Octolane before the import runs, so no data is lost
+  - Added a preview step that shows the first 10 rows of your import with the proposed field mapping, so you can verify everything looks correct before committing
+  - Import now handles HubSpot's multi-association format (deals with multiple contacts) by creating all contact records and linking them to the deal automatically
+  - Added a post-import summary report showing how many records were created, how many were skipped as duplicates, and how many had validation warnings
+</Update>
+
+<Update label="December 30, 2025" description="Meeting Recorder launched" tags={["New Releases"]}>
+  - Built-in meeting recorder that joins your Google Meet calls automatically based on calendar events - no need to invite a separate bot, install a Chrome extension, or remember to press record
+  - Full transcription with speaker labels that are matched to contact records in your CRM - so you can see exactly what each participant said, linked to their contact page
+  - AI-generated meeting summaries with a structured format: attendees, key discussion points, decisions made, action items, and suggested next steps - all attached to the relevant deal record automatically
+  - Recordings are stored securely and accessible from the deal detail page, with playback controls and timestamp links from the transcript
+  - Meeting Recorder respects privacy settings - you can configure whether to record all external meetings, only meetings with prospects, or only specific calendar types
+</Update>
+
+<Update label="December 28, 2025" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed Meeting Recorder not joining calls when the calendar event title contained special characters (emojis, brackets, or non-ASCII characters) by improving the event title parser
+  - Resolved transcription failing for meetings with more than 6 participants speaking simultaneously due to the speaker diarization model running out of channels - increased the maximum speaker count to 15
+  - Fixed the meeting summary not generating for calls under 5 minutes - short meetings now generate a brief summary instead of being skipped entirely
+  - Corrected speaker label assignment when a participant joined from a phone number instead of their Google account - phone participants are now labeled with their phone number and can be manually mapped to contacts
+  - Fixed the Signal Agent not identifying visitors using IPv6 addresses - the IP-to-company lookup database now supports both IPv4 and IPv6 addresses
+  - Resolved an issue where the Follow-Up Agent would re-draft a follow-up for a thread that had already been approved and sent, because the sent status update was being processed asynchronously
+  - Fixed the deal detail page crashing with a React rendering error when viewing a deal with more than 20 associated contacts - the contact list now uses virtual scrolling
+  - Patched the email sync skipping emails in threads with more than 100 messages by increasing the per-thread message fetch limit from 100 to 500
+  - Fixed the approval queue sort order resetting to "Newest first" after each approval action instead of preserving the user's selected sort order
+  - Resolved the calendar sync creating phantom 0-minute events from Google Calendar reminder notifications that were incorrectly interpreted as calendar events
+</Update>
+
+<Update label="December 27, 2025" description="Signal Agent launched" tags={["New Releases"]}>
+  - Signal identifies companies visiting your website in real-time using IP intelligence and behavioral data - see which businesses are browsing your site, which pages they're viewing, and how long they're spending
+  - Every identified company is automatically enriched with firmographic data: company name, domain, size, industry, location, funding stage, and social profiles
+  - Qualification scoring against your ideal customer profile ranks visitors by fit - see at a glance which visitors match your target market and which are unlikely prospects
+  - Signal only identifies companies, not individual people - personal visitors from residential IP addresses are not tracked, and the system is fully compliant with GDPR and CCPA
+  - Install Signal by adding a lightweight tracking script to your website's `<head>` tag - takes under 2 minutes and starts identifying visitors immediately
+</Update>
+
+<Update label="December 24, 2025" description="Follow-Up Agent: Voice learning" tags={["Improvements"]}>
+  - Follow-Up Agent now learns your writing style from your sent emails - it analyzes your greeting patterns, sentence structure, word choice, emoji usage, sign-off style, and overall tone to create a voice profile that gets more accurate over time
+  - Matches your tone across different contexts - casual with colleagues you email frequently, more formal with new prospects, and professional with executives
+  - Better voice matching with every email you send - the model retrains weekly using your latest sent emails, so it adapts as your writing style evolves
+  - Added a "Voice profile" page in Settings that shows what the agent has learned about your writing style, with example outputs and the ability to provide direct feedback
+  - You can override the learned voice for specific pipelines - e.g., use a more formal tone for enterprise deals and a casual tone for startup prospects
+</Update>
+
+<Update label="December 21, 2025" description="Pipeline: Custom stages" tags={["New Releases"]}>
+  - Customize your pipeline stages to match how your team actually sells - rename, add, remove, and reorder stages to reflect your real sales process instead of conforming to a generic template
+  - Drag-and-drop reordering makes it easy to restructure your pipeline - changes take effect immediately and existing deals stay in their current stage
+  - Default stages provided for quick setup: New Lead, Contacted, Meeting Scheduled, Proposal, Negotiation, Closed-Won, Closed-Lost - customize from there or start from scratch
+  - Support for multiple pipelines with different stage configurations - run separate pipelines for inbound vs. outbound, SMB vs. enterprise, or different product lines
+  - Each stage can have a configurable win probability percentage used for weighted pipeline value calculations and forecasting
+</Update>
+
+<Update label="December 20, 2025" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed custom pipeline stages not syncing to the mobile web view after reordering on desktop - stage order is now consistent across all devices within 5 seconds of saving
+  - Resolved the Follow-Up Agent voice learning not processing sent emails from connected email aliases (e.g., sales@yourcompany.com) - aliases are now included in the training data alongside the primary email address
+  - Fixed the Signal Agent incorrectly identifying bot traffic from known web crawlers (Googlebot, Bingbot, GPTBot) as company visits by adding a comprehensive bot detection layer
+  - Corrected an issue where the enrichment queue would stall when processing a batch of 100+ new contacts simultaneously - the queue now processes in parallel batches of 20 with automatic retry for failed items
+  - Fixed the deal value field not accepting decimal values in certain locales (German, French, Brazilian Portuguese) that use a comma as the decimal separator instead of a period
+  - Resolved the email sync duplicating attachment references when the same file was forwarded multiple times within a single email thread
+  - Fixed the sidebar navigation highlight state not updating when navigating between deal records using keyboard shortcuts (`J`/`K` to move up/down)
+  - Patched the Follow-Up Agent generating follow-ups in English for email threads conducted entirely in other languages - the agent now detects the conversation language and drafts in the same language
+  - Fixed the pipeline board not reflecting stage changes made via the Inbound API until a manual page refresh - changes from the API now appear in real-time via WebSocket
+  - Resolved an issue where deleting a custom stage would move associated deals to "No stage" instead of the configured fallback stage
+  - Fixed the calendar sync not respecting the "Business hours only" filter for meetings scheduled in the user's secondary timezone
+</Update>
+
+<Update label="December 18, 2025" description="AI Enrichment launched" tags={["New Releases"]}>
+  - Automatic enrichment for every contact and company that enters your CRM - from email, calendar, Signal, form submissions, API, or CSV import - with no manual data entry required
+  - Data sourced from the live web in real-time: job titles, company name, company size, industry, location, social profiles (LinkedIn, Twitter), and company description - not a stale database that was last updated months ago
+  - Enrichment refreshes periodically (configurable: weekly, monthly, or quarterly) to keep records current - when a contact changes jobs or a company raises a new round, your CRM reflects it automatically
+  - Enrichment results are displayed on contact and company detail pages with source attribution, so you can see where each piece of data came from
+  - Manual override is always available - if you know something the enrichment engine doesn't, your manual edits take priority and won't be overwritten
+</Update>
+
+<Update label="December 16, 2025" description="Improvements" tags={["Improvements"]}>
+  - Added a "Getting started" checklist to the dashboard for new workspaces that tracks setup progress: connect email, connect calendar, install Signal, invite team members, create first pipeline - with estimated time for each step
+  - The email sync now shows a detailed progress indicator during initial sync: number of emails processed, contacts discovered, and estimated time remaining
+  - Improved the deal creation form to suggest pipeline and stage based on the context of how the deal was detected - deals from Signal go to the "New Lead" stage, deals from email with pricing discussions go to "Proposal"
+  - Added a "Recently modified" sort option to all list views (deals, contacts, companies) that surfaces records changed in the last 24 hours at the top
+  - The API now supports filtering on all standard and custom fields - pass filter parameters in the query string to narrow results without fetching everything and filtering client-side
+  - Improved the workspace invitation email design with a clearer call-to-action and a preview of the workspace they're joining
+</Update>
+
+<Update label="December 15, 2025" description="Deal Finder Agent launched" tags={["New Releases"]}>
+  - The Deal Finder Agent scans your email and calendar activity to detect deals automatically - when it identifies buying signals like pricing discussions, demo requests, RFP responses, or contract negotiations, it creates an opportunity in your pipeline with full context
+  - Creates opportunities in your pipeline with associated contacts (automatically linked), deal value (estimated from the conversation when possible), and a summary of why the agent believes this is a deal
+  - Deduplication built in - if the same deal is signaled by multiple emails, calendar events, or data sources, the agent recognizes it as one opportunity instead of creating duplicates
+  - The agent processes your email history on first connect, so you'll see deals detected from recent conversations within the first few hours of setup
+  - Each detected deal includes a confidence score and the specific signals that triggered detection, so you can quickly verify and accept or dismiss the suggestion
+</Update>
+
+<Update label="December 14, 2025" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed AI Enrichment returning stale LinkedIn data for contacts who had recently changed jobs - the enrichment engine now checks the "last updated" timestamp on LinkedIn profiles and re-fetches if the cached data is older than 30 days
+  - Resolved the Deal Finder Agent creating duplicate deals when the same opportunity was discussed in separate email threads with overlapping participants - the deduplication now considers contact overlap, not just email subject similarity
+  - Fixed the enrichment progress indicator showing 100% before all contacts in a batch were actually processed - the progress bar now reflects real-time processing status from the enrichment queue
+  - Corrected an issue where company size data from enrichment would overwrite more accurate data that was entered manually by the user - manual edits now have a "locked" flag that prevents automatic overwriting
+  - Fixed the deal creation notification email not including the detected deal value when the Deal Finder Agent estimated a value from the conversation
+  - Resolved the Activity Feed not updating in real-time when enrichment completed for a contact currently being viewed - enrichment results now push to the UI via WebSocket
+  - Fixed the contact merge dialog not showing all available merge candidates when contacts had different email domains (e.g., personal vs. work email) but the same company and name
+  - Patched the enrichment retry logic to use exponential backoff instead of retrying immediately, which was causing rate limiting on upstream data sources
+  - Fixed social profile links in enrichment results opening in the same browser tab instead of a new tab
+  - Resolved an issue where the Deal Finder Agent would process calendar events from before the user's Octolane account creation date, detecting "deals" from historical meetings that were no longer relevant
+</Update>
+
+<Update label="December 12, 2025" description="Follow-Up Agent launched" tags={["New Releases"]}>
+  - The Follow-Up Agent monitors all active email conversations associated with open deals and detects when threads have gone quiet - no human review needed, no reminders to set, no conversations falling through the cracks
+  - Drafts follow-up emails in your voice using tone analysis of your sent emails - the result reads like you wrote it, not like a template or a bot
+  - One-tap approval from the approval queue: read the draft, tap Approve, and the email sends from your connected Gmail account. Or tap Edit to modify the draft before sending
+  - Nothing sends without your explicit permission - the agent drafts and queues, you review and approve. Full control, zero risk of embarrassing automated emails going out
+  - Configurable follow-up timing: set how long a conversation should be quiet before the agent drafts a follow-up (default: 7 days, configurable from 1-30 days)
+  - The agent excludes conversations where the last message was from you (you're waiting for their reply, not the other way around)
+</Update>
+
+<Update label="December 10, 2025" description="Multi-inbox support" tags={["New Releases"]}>
+  - Connect multiple Gmail accounts to a single Octolane workspace - useful for teams where each rep has their own Gmail account, or for founders who use both a personal and company email for sales conversations
+  - All connected accounts feed into the same unified CRM - contacts, deals, and activity from every inbox appear in one place, regardless of which email account the conversation happened on
+  - Per-account visibility settings let you control who on your team can see email activity from each connected account - useful for privacy when mixing personal and work inboxes
+  - Email sync runs independently per account, so a temporary issue with one Gmail connection doesn't affect the others
+  - The Follow-Up Agent and Deal Finder Agent work across all connected inboxes simultaneously
+</Update>
+
+<Update label="December 8, 2025" description="Approval queue launched" tags={["New Releases"]}>
+  - Central queue for reviewing all agent actions before they take effect - every email draft, deal suggestion, outreach message, and contact update from any agent appears here for your review
+  - Approve, edit, or dismiss any action with one tap - approve sends the email or commits the change, edit opens the draft for modification, and dismiss rejects the action and records your decision
+  - Notification badges show pending item counts in the sidebar and browser tab title, so you always know when agents need your attention
+  - The queue is sorted by urgency (deal value, time sensitivity) by default, with options to sort by agent type, date, or custom criteria
+  - Full audit trail - every approval, edit, and dismissal is logged with timestamps, so you can review your decision history at any time
+</Update>
+
+<Update label="December 7, 2025" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed multi-inbox sync failing when one of the connected Gmail accounts had a pending 2FA re-verification - the sync now continues for all other accounts and shows a clear warning for the account that needs re-authentication
+  - Resolved the approval queue badge count including items from other team members' queues for workspace admins - admins now see only their own queue by default, with an option to toggle "Show all team items"
+  - Fixed the Follow-Up Agent not detecting stale threads when the last message in the thread was a calendar invite (not a regular email message) - calendar invites are now recognized as thread activity
+  - Corrected an issue where per-account visibility settings would reset to "Visible to all" after a workspace admin made changes to the billing configuration
+  - Fixed the Activity Feed showing raw HTML tags in email body previews for messages with complex formatting (tables, images, colored text) - HTML is now stripped and rendered as clean text in previews
+  - Resolved the deal detail page not loading contacts associated through a secondary email address that was different from the contact's primary email
+  - Fixed the email sync progress bar getting stuck at 95% for Gmail accounts with large sent folders (10,000+ emails) due to a timeout in the sent folder scan
+  - Patched the approval queue "Dismiss" action not recording the dismissal reason in the audit log - dismissed items now log both the timestamp and optional reason
+  - Fixed the notification badge persisting after all items were actioned when using Firefox, caused by a WebSocket event being dropped on Firefox's strict same-origin policy
+  - Resolved an issue where connecting a second inbox would temporarily show contacts from the first inbox as "Unassigned" in the contacts list for about 60 seconds while the contact ownership index rebuilt
+  - Fixed the workspace settings page not saving changes when the browser had strict third-party cookie policies enabled, by switching the save mechanism from cookie-based sessions to bearer tokens
+</Update>
+
+<Update label="December 6, 2025" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed initial Gmail sync timing out for accounts with more than 50,000 emails in the inbox by implementing chunked processing that handles the sync in batches of 5,000 emails
+  - Resolved the onboarding wizard skipping the calendar connection step on mobile browsers (iOS Safari and Chrome on Android) due to a viewport height calculation error in the step navigation
+  - Fixed the pipeline board not rendering correctly when the browser window was resized during the initial loading animation
+  - Corrected an issue where the first deal created in a new workspace would not appear in the pipeline view until a full page refresh, because the WebSocket connection wasn't established until after the first page load
+  - Fixed the contact search returning results from a previously connected (now disconnected) email account that should have been removed from the search index
+  - Resolved the Settings page layout breaking when the workspace name exceeded 40 characters by adding text truncation with a tooltip showing the full name
+  - Fixed email threading logic incorrectly grouping unrelated emails with identical subject lines (e.g., "Introduction" or "Quick question") into the same thread - threading now requires both subject match and participant overlap
+  - Patched the signup flow not validating email domains correctly for new Google Workspace accounts with recently registered domains
+  - Fixed the dashboard widgets not loading for users who had not yet connected any data sources - empty states now show helpful prompts to connect email, calendar, or install Signal
+  - Resolved an issue where the "Getting Started" checklist would not mark the "Connect email" step as complete even after successfully connecting Gmail, due to a race condition between the OAuth callback and the checklist status check
+</Update>

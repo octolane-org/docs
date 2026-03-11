@@ -1,0 +1,153 @@
+---
+title: "MCP Authentication"
+sidebarTitle: "Authentication"
+description: "How to authenticate with the Octolane MCP server using your API key or OAuth."
+---
+
+# MCP Authentication
+
+The Octolane MCP server supports API key authentication (recommended for personal use) and OAuth 2.0 (for building integrations that access other users' workspaces).
+
+## API key authentication
+
+The simplest way to connect. Use the same API key you'd use for the REST API.
+
+### Get your API key
+
+1. Go to your Octolane dashboard
+2. Navigate to **Settings > Integrations > API**
+3. Click **Generate API key** (or copy your existing one)
+
+### Use it in your MCP config
+
+Pass the key in the `X-API-Key` header:
+
+```json
+{
+  "mcpServers": {
+    "octolane": {
+      "url": "https://mcp.octolane.com/mcp",
+      "headers": {
+        "X-API-Key": "oct_live_abc123def456..."
+      }
+    }
+  }
+}
+```
+
+The API key identifies your workspace and gives full access to all MCP tools. One key per workspace.
+
+## OAuth 2.0
+
+<Note>
+OAuth support for MCP is coming soon. If you're building an integration that needs OAuth, email us at [one@octolane.com](mailto:one@octolane.com) and we'll get you early access.
+</Note>
+
+OAuth will allow third-party applications to request access to a user's Octolane workspace with specific scopes:
+
+| Scope | Access |
+|-------|--------|
+| `crm:read` | Search and read deals, contacts, companies, activity |
+| `crm:write` | Create and update deals, contacts, companies, notes |
+| `signal:read` | Read Signal website visitor data |
+| `pipeline:read` | Query pipeline data and ask natural language questions |
+| `pipeline:write` | Update deal stages and pipeline configuration |
+
+OAuth flow will follow the standard authorization code grant with PKCE.
+
+## Scopes and permissions
+
+API key authentication gives full access to all MCP tools. The key inherits the permissions of the workspace it belongs to.
+
+| Tool category | Required permission |
+|---------------|-------------------|
+| Search & query | Read access to CRM data |
+| Create & update | Write access to CRM data |
+| `get_signal_visitors` | Signal enabled on your workspace |
+| `ask_pipeline` | Read access to CRM data |
+
+All team members with API access can generate keys. Workspace admins can revoke any key from **Settings > Integrations > API**.
+
+## Security best practices
+
+<AccordionGroup>
+
+<Accordion title="Never commit API keys to version control">
+Add your MCP config file to `.gitignore`. If you accidentally commit a key, revoke it immediately in Settings and generate a new one.
+
+```gitignore
+# Cursor MCP config
+.cursor/mcp.json
+
+# Claude Desktop config is in your home directory,
+# so it's not in your repo by default
+```
+</Accordion>
+
+<Accordion title="Use environment variables when possible">
+Some MCP clients support environment variable substitution. If yours does:
+
+```json
+{
+  "mcpServers": {
+    "octolane": {
+      "url": "https://mcp.octolane.com/mcp",
+      "headers": {
+        "X-API-Key": "${OCTOLANE_API_KEY}"
+      }
+    }
+  }
+}
+```
+</Accordion>
+
+<Accordion title="Rotate keys periodically">
+Generate a new API key every 90 days as a best practice. Old keys can be revoked without downtime - generate the new key first, update your configs, then revoke the old one.
+</Accordion>
+
+<Accordion title="One key per use case">
+If you use Octolane MCP in multiple places (Claude, Cursor, a custom integration), consider generating separate keys for each so you can revoke access to one without affecting the others.
+</Accordion>
+
+<Accordion title="Monitor API usage">
+Check your API usage in **Settings > Integrations > API** to see request counts and spot any unexpected activity. Unusual spikes may indicate a compromised key.
+</Accordion>
+
+</AccordionGroup>
+
+## Rate limits
+
+The MCP server shares rate limits with the REST API:
+
+| Limit | Value |
+|-------|-------|
+| Requests per minute | 100 per API key |
+| Concurrent connections | 10 per API key |
+| Max response size | 5 MB |
+
+When you hit a rate limit, the server returns a `429` status with a `Retry-After` header. Most MCP clients handle this automatically.
+
+## Troubleshooting
+
+<AccordionGroup>
+
+<Accordion title="Tools not showing up in my AI client">
+- Verify your API key is correct - copy it fresh from Settings
+- Make sure you restarted your AI client after adding the config
+- Check that the config JSON is valid (no trailing commas, correct nesting)
+- Try the server URL directly in a browser to verify it's reachable
+</Accordion>
+
+<Accordion title="401 Unauthorized errors">
+- Your API key may have been revoked - check Settings > Integrations > API
+- Make sure the header name is exactly `X-API-Key` (case-sensitive)
+- Verify there are no extra spaces or newlines in the key value
+</Accordion>
+
+<Accordion title="429 Too Many Requests">
+- You're hitting the rate limit (100 requests/minute)
+- Wait for the duration specified in the `Retry-After` header
+- If you consistently hit limits, contact us about higher rate limits for your workspace
+</Accordion>
+
+</AccordionGroup>

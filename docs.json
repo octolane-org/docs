@@ -1,0 +1,224 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Octolane",
+  "description": "Self-driving CRM that updates itself from Gmail and Calendar",
+  "favicon": "/favicon.svg",
+  "appearance": {
+    "default": "light",
+    "strict": true
+  },
+  "colors": {
+    "primary": "#111111"
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg",
+    "href": "https://octolane.com"
+  },
+  "styling": {
+    "codeblocks": {
+      "theme": {
+        "light": "github-light",
+        "dark": "github-light"
+      }
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "chatgpt",
+      "claude",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Dashboard",
+        "href": "https://octolane.com/dashboard"
+      },
+      {
+        "label": "Support",
+        "href": "/support/contact"
+      }
+    ]
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Get Started",
+            "icon": "rocket",
+            "pages": [
+              "get-started/what-is-octolane",
+              "get-started/getting-started",
+              "get-started/how-octolane-works",
+              "get-started/import-migration"
+            ]
+          },
+          {
+            "group": "AI CRM Agents",
+            "icon": "microchip-ai",
+            "pages": [
+              "agents/overview",
+              {
+                "group": "Your Agents",
+                "expanded": false,
+                "pages": [
+                  "agents/signal-agent",
+                  "agents/deal-finder",
+                  "agents/form-submission",
+                  "agents/follow-up",
+                  "agents/outreach",
+                  "agents/meeting-recorder"
+                ]
+              },
+              "agents/ai-chat",
+              "agents/approving-actions"
+            ]
+          },
+          {
+            "group": "Signal & Leads",
+            "icon": "tower-broadcast",
+            "pages": [
+              "signal/what-is-signal",
+              "signal/installing-signal",
+              "signal/identifying-qualifying-visitors",
+              "signal/visitor-to-deal"
+            ]
+          },
+          {
+            "group": "Using Your CRM",
+            "icon": "wand-sparkles",
+            "pages": [
+              "your-crm/pipeline-management",
+              "your-crm/opportunities",
+              "your-crm/accounts-contacts",
+              "your-crm/custom-data-model",
+              "your-crm/custom-ai-fields",
+              "your-crm/ai-enrichment",
+              "your-crm/activity-feed",
+              "your-crm/ai-notes",
+              "your-crm/ai-meeting-notes",
+              "your-crm/views-filters-search",
+              "your-crm/ai-reporting"
+            ]
+          },
+          {
+            "group": "Integrations & Data",
+            "icon": "plug",
+            "pages": [
+              "integrations/overview",
+              "integrations/gmail-google-calendar",
+              "integrations/linkedin",
+              "integrations/whatsapp",
+              "integrations/web-analytics",
+              "integrations/zapier"
+            ]
+          },
+          {
+            "group": "Use Cases",
+            "icon": "briefcase",
+            "pages": [
+              "use-cases/for-founders",
+              "use-cases/for-sales-teams",
+              "use-cases/for-agencies"
+            ]
+          },
+          {
+            "group": "Comparisons",
+            "icon": "scale-balanced",
+            "pages": [
+              "comparisons/octolane-vs-hubspot",
+              "comparisons/octolane-vs-salesforce",
+              "comparisons/octolane-vs-attio",
+              "comparisons/octolane-vs-pipedrive"
+            ]
+          },
+          {
+            "group": "Account & Settings",
+            "icon": "gear",
+            "pages": [
+              "account/workspace-settings",
+              "account/team-permissions",
+              "account/plans-pricing",
+              "account/security-privacy"
+            ]
+          },
+          {
+            "group": "Support",
+            "icon": "headset",
+            "pages": [
+              "support/faq",
+              "support/contact"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/create-opportunity",
+              "api-reference/create-account",
+              "api-reference/create-contact",
+              "api-reference/create-note"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "MCP",
+        "groups": [
+          {
+            "group": "MCP",
+            "pages": [
+              "mcp/overview",
+              "mcp/quickstart",
+              "mcp/tools-reference",
+              "mcp/use-with-claude",
+              "mcp/use-with-chatgpt",
+              "mcp/use-with-cursor",
+              "mcp/authentication",
+              "mcp/examples"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "groups": [
+          {
+            "group": "Changelog",
+            "pages": [
+              "changelog"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/octolane",
+      "linkedin": "https://www.linkedin.com/company/octolane",
+      "website": "https://www.octolane.com"
+    }
+  },
+  "integrations": {
+    "koala": {
+      "publicApiKey": "pk_9bd45074f60eff79cf4e1042027522a2f56a"
+    },
+    "posthog": {
+      "apiKey": "phc_Y6nqlO2Mrux6D8cb0RGehskJW1IiVsAYJNKwtWCbqou"
+    }
+  }
+}

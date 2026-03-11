@@ -1,0 +1,92 @@
+---
+title: "Create Contact"
+sidebarTitle: "Create Contact"
+description: "Create a person record in Octolane by email. Automatically creates the associated company account from the email domain."
+api: "POST https://enrich.octolane.com/v1/inbound/contacts"
+---
+
+Creates a person record by email. If the contact already exists, returns the existing record. Octolane also auto-creates the associated company account from the email domain.
+
+<Note>
+You usually don't need to call this directly. When you [create an opportunity](/api-reference/create-opportunity) with a `primary_contact_email`, the contact is created automatically.
+</Note>
+
+## Request
+
+<ParamField header="X-API-Key" type="string" required>
+  Your Octolane API key.
+</ParamField>
+
+<ParamField header="Content-Type" type="string" required>
+  Must be `application/json`.
+</ParamField>
+
+### Body parameters
+
+<ParamField body="email" type="string" required>
+  Contact's email address. This is how Octolane identifies and deduplicates contacts.
+</ParamField>
+
+<ParamField body="first_name" type="string">
+  Contact's first name.
+</ParamField>
+
+<ParamField body="last_name" type="string">
+  Contact's last name.
+</ParamField>
+
+## Example request
+
+```bash
+curl -X POST "https://enrich.octolane.com/v1/inbound/contacts" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your-api-key" \
+  -d '{
+    "email": "john@acme.com",
+    "first_name": "John",
+    "last_name": "Doe"
+  }'
+```
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  <Expandable title="data fields">
+    <ResponseField name="people_id" type="string">
+      UUID of the contact.
+    </ResponseField>
+
+    <ResponseField name="email" type="string">
+      Contact's email address.
+    </ResponseField>
+
+    <ResponseField name="first_name" type="string">
+      Contact's first name.
+    </ResponseField>
+
+    <ResponseField name="last_name" type="string">
+      Contact's last name.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
+
+```json 200
+{
+  "success": true,
+  "data": {
+    "people_id": "aa0e8400-e29b-41d4-a716-446655440000",
+    "email": "john@acme.com",
+    "first_name": "John",
+    "last_name": "Doe"
+  },
+  "message": "Contact created successfully"
+}
+```

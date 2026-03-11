@@ -1,0 +1,75 @@
+---
+title: "Create Account"
+sidebarTitle: "Create Account"
+description: "Create a company record in Octolane by domain. If the account already exists, returns the existing record."
+api: "POST https://enrich.octolane.com/v1/inbound/accounts"
+---
+
+Creates a company record by domain. If the account already exists, it returns the existing one - totally safe to call multiple times without creating duplicates.
+
+<Note>
+You usually don't need to call this directly. When you [create an opportunity](/api-reference/create-opportunity) with an `account_domain`, the account is created automatically.
+</Note>
+
+## Request
+
+<ParamField header="X-API-Key" type="string" required>
+  Your Octolane API key.
+</ParamField>
+
+<ParamField header="Content-Type" type="string" required>
+  Must be `application/json`.
+</ParamField>
+
+### Body parameters
+
+<ParamField body="domain" type="string" required>
+  Company domain (e.g., `acme.com`). This is how Octolane identifies and deduplicates companies.
+</ParamField>
+
+## Example request
+
+```bash
+curl -X POST "https://enrich.octolane.com/v1/inbound/accounts" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your-api-key" \
+  -d '{ "domain": "acme.com" }'
+```
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Whether the request succeeded.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  <Expandable title="data fields">
+    <ResponseField name="company_id" type="string">
+      UUID of the account.
+    </ResponseField>
+
+    <ResponseField name="domain" type="string">
+      Company domain.
+    </ResponseField>
+
+    <ResponseField name="name" type="string">
+      Company name (auto-enriched from the domain).
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Human-readable status message.
+</ResponseField>
+
+```json 200
+{
+  "success": true,
+  "data": {
+    "company_id": "990e8400-e29b-41d4-a716-446655440000",
+    "domain": "acme.com",
+    "name": "Acme"
+  },
+  "message": "Account created successfully"
+}
+```

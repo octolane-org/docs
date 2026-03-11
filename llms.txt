@@ -1,0 +1,80 @@
+# Octolane Documentation
+
+> Octolane is the world's first self-driving CRM. It connects to your email, calendar, website, and 250+ data sources to automatically find deals, follow up, enrich contacts, and keep your pipeline updated without manual data entry.
+
+## Get Started
+- [What is Octolane](https://docs.octolane.com/get-started/what-is-octolane): The world's first self-driving CRM - connects to email, calendar, website, and 250+ data sources to find deals, follow up, and keep your pipeline updated automatically.
+- [Getting Started](https://docs.octolane.com/get-started/getting-started): Connect Gmail and Google Calendar, install Signal on your website, and see your first auto-detected deal in under 10 minutes.
+- [How Octolane Works](https://docs.octolane.com/get-started/how-octolane-works): How Octolane's agents read your email and calendar, detect deals, create contacts, enrich data, and follow up automatically.
+- [Import & Migration](https://docs.octolane.com/get-started/import-migration): Switch from HubSpot, Salesforce, Pipedrive, or a spreadsheet in minutes with CSV import and automatic field mapping.
+
+## AI CRM Agents
+- [Agents Overview](https://docs.octolane.com/agents/overview): 6 AI agents that handle specific jobs in your sales process - finding leads, qualifying prospects, following up, and recording meetings. They coordinate with each other 24/7.
+- [Signal Agent](https://docs.octolane.com/agents/signal-agent): Identifies companies visiting your website in real-time using IP intelligence and behavioral data.
+- [Deal Finder Agent](https://docs.octolane.com/agents/deal-finder): Scans email, calendar, and 250+ data sources to detect deals automatically from buying signals.
+- [Form Submission Agent](https://docs.octolane.com/agents/form-submission): Captures inbound form leads instantly, qualifies them against ICP criteria, and routes to the right pipeline stage.
+- [Follow-Up Agent](https://docs.octolane.com/agents/follow-up): Monitors conversations and drafts follow-up emails in your voice when threads go quiet.
+- [Outreach Agent](https://docs.octolane.com/agents/outreach): Drafts personalized cold outreach to qualified prospects identified by Signal or other agents.
+- [Meeting Recorder](https://docs.octolane.com/agents/meeting-recorder): Joins calls, transcribes conversations, generates summaries, and extracts action items automatically.
+- [AI Chat](https://docs.octolane.com/agents/ai-chat): Talk to your CRM in plain English - ask questions, get summaries, give instructions to agents.
+- [Approving Actions](https://docs.octolane.com/agents/approving-actions): Review, approve, or override agent actions from a single approval queue.
+
+## Signal & Leads
+- [What is Signal](https://docs.octolane.com/signal/what-is-signal): Website visitor identification that shows which companies are browsing your site, which pages they view, and how they score against your ICP.
+- [Installing Signal](https://docs.octolane.com/signal/installing-signal): Add the Signal tracking script to your website or install via Google Tag Manager.
+- [Identifying & Qualifying Visitors](https://docs.octolane.com/signal/identifying-qualifying-visitors): How Signal identifies companies, scores them against your ICP, and surfaces high-intent visitors.
+- [Visitor to Deal](https://docs.octolane.com/signal/visitor-to-deal): How website visitors become deals in your pipeline through Signal and agent coordination.
+
+## Using Your CRM
+- [Pipeline Management](https://docs.octolane.com/your-crm/pipeline-management): Custom pipeline stages, drag-and-drop management, and auto-stage advancement based on real conversation signals.
+- [Opportunities](https://docs.octolane.com/your-crm/opportunities): Deal records with full context - associated contacts, activity timeline, agent actions, and AI-extracted fields.
+- [Accounts & Contacts](https://docs.octolane.com/your-crm/accounts-contacts): Company and contact records automatically created and enriched from email, calendar, and web data.
+- [Custom Data Model](https://docs.octolane.com/your-crm/custom-data-model): Create custom objects and fields to model your business exactly how it works.
+- [Custom AI Fields](https://docs.octolane.com/your-crm/custom-ai-fields): Fields that fill themselves in - describe what to track in plain English and Octolane extracts it from conversations.
+- [AI Enrichment](https://docs.octolane.com/your-crm/ai-enrichment): Automatic contact and company enrichment with job titles, company size, funding, tech stack, and social profiles from the live web.
+- [Activity Feed](https://docs.octolane.com/your-crm/activity-feed): Chronological feed of all interactions - emails, meetings, agent actions, enrichment updates, and notes.
+- [AI Notes](https://docs.octolane.com/your-crm/ai-notes): Auto-generated notes from emails, meetings, and agent activity attached to the right records.
+- [AI Meeting Notes](https://docs.octolane.com/your-crm/ai-meeting-notes): Post-call summaries with key decisions, action items, and follow-up tasks.
+- [Views, Filters & Search](https://docs.octolane.com/your-crm/views-filters-search): Saved views, advanced filters, and global search across deals, contacts, companies, emails, and transcripts.
+- [AI Reporting](https://docs.octolane.com/your-crm/ai-reporting): Real-time dashboards for pipeline health, deal velocity, agent performance, and revenue forecasts.
+
+## Integrations & Data
+- [Integrations Overview](https://docs.octolane.com/integrations/overview): Connect Gmail, Google Calendar, LinkedIn, WhatsApp, web analytics, Zapier, and 250+ data sources.
+- [Gmail & Google Calendar](https://docs.octolane.com/integrations/gmail-google-calendar): Two-way email and calendar sync that powers deal detection, contact creation, and activity tracking.
+- [LinkedIn](https://docs.octolane.com/integrations/linkedin): Enrich contacts with LinkedIn profile data and sync prospect information.
+- [WhatsApp](https://docs.octolane.com/integrations/whatsapp): Sync WhatsApp conversations into your CRM and detect deals from messaging threads.
+- [Web Analytics](https://docs.octolane.com/integrations/web-analytics): Connect Google Analytics, Mixpanel, or PostHog to see prospect engagement data.
+- [Zapier](https://docs.octolane.com/integrations/zapier): 12 triggers and actions to connect Octolane with 5,000+ apps.
+
+## Comparisons
+- [Octolane vs HubSpot](https://docs.octolane.com/comparisons/octolane-vs-hubspot): Why teams switch from HubSpot - zero manual data entry, agents that follow up automatically, and a CRM that finds deals for you.
+- [Octolane vs Salesforce](https://docs.octolane.com/comparisons/octolane-vs-salesforce): Salesforce requires months of setup and a dedicated admin. Octolane requires 10 minutes.
+- [Octolane vs Attio](https://docs.octolane.com/comparisons/octolane-vs-attio): Attio is a CRM platform you build on. Octolane is a self-driving sales team that runs itself.
+- [Octolane vs Pipedrive](https://docs.octolane.com/comparisons/octolane-vs-pipedrive): Pipedrive is a visual pipeline tool that still requires manual updates. Octolane automates everything.
+
+## MCP - Connect AI Assistants to Your CRM
+- [Octolane MCP Server](https://docs.octolane.com/mcp/overview): Connect Claude, ChatGPT, Cursor, or any MCP client to manage your CRM, query your pipeline, and command AI sales agents through natural language.
+- [MCP Quickstart](https://docs.octolane.com/mcp/quickstart): Connect your AI assistant to Octolane in under 2 minutes.
+- [MCP Tools Reference](https://docs.octolane.com/mcp/tools-reference): Complete reference for all Octolane MCP tools - search, create, update, trigger agents, and query pipeline.
+- [Use with Claude](https://docs.octolane.com/mcp/use-with-claude): Set up Octolane MCP in Claude Desktop or Claude.ai.
+- [Use with ChatGPT](https://docs.octolane.com/mcp/use-with-chatgpt): Set up Octolane MCP in ChatGPT.
+- [Use with Cursor](https://docs.octolane.com/mcp/use-with-cursor): Set up Octolane MCP in Cursor for developer workflows.
+- [MCP Authentication](https://docs.octolane.com/mcp/authentication): API key and OAuth authentication for the Octolane MCP server.
+- [MCP Examples & Workflows](https://docs.octolane.com/mcp/examples): Real-world examples of running your sales process from any AI assistant.
+
+## API Reference
+- [API Introduction](https://docs.octolane.com/api-reference/introduction): Push data into Octolane via the Inbound API - create opportunities, accounts, contacts, and notes.
+- [Create Opportunity](https://docs.octolane.com/api-reference/create-opportunity): Create a deal with associated account and contacts in one call.
+- [Create Account](https://docs.octolane.com/api-reference/create-account): Create a company record by domain with automatic deduplication.
+- [Create Contact](https://docs.octolane.com/api-reference/create-contact): Create a contact record with automatic enrichment.
+- [Create Note](https://docs.octolane.com/api-reference/create-note): Attach notes to accounts and contacts.
+
+## Account & Settings
+- [Workspace Settings](https://docs.octolane.com/account/workspace-settings): Configure workspace details, agent behavior, approval settings, and custom data model.
+- [Team & Permissions](https://docs.octolane.com/account/team-permissions): Invite team members, manage roles, and control access to data and features.
+- [Plans & Pricing](https://docs.octolane.com/account/plans-pricing): Free plan with unlimited seats, Pro at $49/seat/month, Enterprise at $99/seat/month.
+- [Security & Privacy](https://docs.octolane.com/account/security-privacy): Data security, encryption, compliance, and privacy practices.
+
+## Support
+- [FAQ](https://docs.octolane.com/support/faq): Frequently asked questions about Octolane.
+- [Contact Support](https://docs.octolane.com/support/contact): Email, phone, book a call, or chat with the Octolane team.

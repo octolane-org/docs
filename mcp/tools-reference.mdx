@@ -1,0 +1,643 @@
+---
+title: "MCP Tools Reference"
+sidebarTitle: "Tools Reference"
+description: "Complete reference for all Octolane MCP tools - search, create, update records, trigger agents, and query your pipeline via any MCP client."
+---
+
+# MCP Tools Reference
+
+Every tool available on the Octolane MCP server, organized by category. Each tool includes its parameters, types, and example usage.
+
+<Note>
+All tools are available at `https://mcp.octolane.com/mcp` and require authentication via the `X-API-Key` header.
+</Note>
+
+---
+
+## Search & Query
+
+Tools for finding and retrieving data from your CRM.
+
+### `search_deals`
+
+Search deals by name, stage, value, owner, or any custom field.
+
+<Expandable title="Parameters">
+  <ParamField body="query" type="string" required>
+    Search term to match against deal name, company, or description.
+  </ParamField>
+  <ParamField body="stage" type="string">
+    Filter by pipeline stage (e.g., "Negotiation", "Proposal").
+  </ParamField>
+  <ParamField body="owner" type="string">
+    Filter by deal owner email or name.
+  </ParamField>
+  <ParamField body="min_value" type="number">
+    Minimum deal value.
+  </ParamField>
+  <ParamField body="max_value" type="number">
+    Maximum deal value.
+  </ParamField>
+  <ParamField body="status" type="string">
+    Deal status: `open`, `won`, `lost`. Defaults to `open`.
+  </ParamField>
+  <ParamField body="limit" type="number">
+    Maximum results to return. Defaults to 20, max 100.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "Show me all open deals worth more than $50K"
+
+**Tool call:**
+```json
+{
+  "tool": "search_deals",
+  "arguments": {
+    "status": "open",
+    "min_value": 50000
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "deals": [
+    {
+      "id": "deal_abc123",
+      "name": "Stripe - Enterprise Plan",
+      "stage": "Negotiation",
+      "value": 120000,
+      "owner": "sarah@yourcompany.com",
+      "company": "Stripe",
+      "last_activity": "2026-03-06T14:30:00Z",
+      "days_in_stage": 5
+    },
+    {
+      "id": "deal_def456",
+      "name": "Notion - Annual Contract",
+      "stage": "Proposal",
+      "value": 85000,
+      "owner": "mike@yourcompany.com",
+      "company": "Notion",
+      "last_activity": "2026-03-04T09:15:00Z",
+      "days_in_stage": 12
+    }
+  ],
+  "total": 2
+}
+```
+
+</Expandable>
+
+---
+
+### `search_contacts`
+
+Search contacts by name, email, company, or any field.
+
+<Expandable title="Parameters">
+  <ParamField body="query" type="string" required>
+    Search term to match against name, email, or company.
+  </ParamField>
+  <ParamField body="company" type="string">
+    Filter by company name or domain.
+  </ParamField>
+  <ParamField body="title" type="string">
+    Filter by job title (partial match).
+  </ParamField>
+  <ParamField body="limit" type="number">
+    Maximum results to return. Defaults to 20, max 100.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "Find all contacts at Stripe"
+
+**Tool call:**
+```json
+{
+  "tool": "search_contacts",
+  "arguments": {
+    "company": "Stripe"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "contacts": [
+    {
+      "id": "contact_xyz789",
+      "name": "Sarah Chen",
+      "email": "sarah@stripe.com",
+      "title": "VP of Sales",
+      "company": "Stripe",
+      "phone": "+1 (415) 555-0142",
+      "linkedin": "https://linkedin.com/in/sarachen",
+      "last_contacted": "2026-03-06T14:30:00Z"
+    }
+  ],
+  "total": 1
+}
+```
+
+</Expandable>
+
+---
+
+### `search_companies`
+
+Search companies by name, domain, industry, or size.
+
+<Expandable title="Parameters">
+  <ParamField body="query" type="string" required>
+    Search term to match against company name or domain.
+  </ParamField>
+  <ParamField body="industry" type="string">
+    Filter by industry.
+  </ParamField>
+  <ParamField body="min_size" type="number">
+    Minimum employee count.
+  </ParamField>
+  <ParamField body="max_size" type="number">
+    Maximum employee count.
+  </ParamField>
+  <ParamField body="limit" type="number">
+    Maximum results to return. Defaults to 20, max 100.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "Find SaaS companies with 100-500 employees"
+
+**Tool call:**
+```json
+{
+  "tool": "search_companies",
+  "arguments": {
+    "industry": "SaaS",
+    "min_size": 100,
+    "max_size": 500
+  }
+}
+```
+
+</Expandable>
+
+---
+
+### `get_deal`
+
+Get full details of a specific deal including activity timeline, associated contacts, and agent actions.
+
+<Expandable title="Parameters">
+  <ParamField body="deal_id" type="string" required>
+    The deal ID.
+  </ParamField>
+  <ParamField body="include_activity" type="boolean">
+    Include the full activity timeline. Defaults to true.
+  </ParamField>
+  <ParamField body="include_contacts" type="boolean">
+    Include associated contacts. Defaults to true.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "Pull up the Stripe deal"
+
+**Response includes:** deal details, current stage, value, close date, all associated contacts with roles, full activity timeline (emails, meetings, agent actions, notes), action items, and next steps.
+
+</Expandable>
+
+---
+
+### `get_contact`
+
+Get full details of a contact including enrichment data, communication history, and associated deals.
+
+<Expandable title="Parameters">
+  <ParamField body="contact_id" type="string" required>
+    The contact ID.
+  </ParamField>
+  <ParamField body="include_deals" type="boolean">
+    Include associated deals. Defaults to true.
+  </ParamField>
+  <ParamField body="include_activity" type="boolean">
+    Include communication history. Defaults to true.
+  </ParamField>
+</Expandable>
+
+---
+
+### `get_company`
+
+Get full details of a company including enrichment data, contacts, deals, and Signal visit history.
+
+<Expandable title="Parameters">
+  <ParamField body="company_id" type="string" required>
+    The company ID.
+  </ParamField>
+  <ParamField body="include_contacts" type="boolean">
+    Include all contacts at this company. Defaults to true.
+  </ParamField>
+  <ParamField body="include_deals" type="boolean">
+    Include all deals with this company. Defaults to true.
+  </ParamField>
+  <ParamField body="include_signal" type="boolean">
+    Include Signal website visit data. Defaults to true.
+  </ParamField>
+</Expandable>
+
+---
+
+### `get_pipeline`
+
+Get a pipeline overview with deal counts, values, and conversion rates per stage.
+
+<Expandable title="Parameters">
+  <ParamField body="pipeline_id" type="string">
+    Specific pipeline ID. Returns the default pipeline if omitted.
+  </ParamField>
+  <ParamField body="period" type="string">
+    Time period for metrics: `this_week`, `this_month`, `this_quarter`, `last_quarter`. Defaults to `this_month`.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "What's our pipeline look like this quarter?"
+
+**Tool call:**
+```json
+{
+  "tool": "get_pipeline",
+  "arguments": {
+    "period": "this_quarter"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "pipeline": "Default Pipeline",
+  "period": "this_quarter",
+  "total_value": 847000,
+  "total_deals": 23,
+  "stages": [
+    { "name": "New Lead", "deals": 8, "value": 156000 },
+    { "name": "Meeting Scheduled", "deals": 5, "value": 210000 },
+    { "name": "Proposal", "deals": 4, "value": 185000 },
+    { "name": "Negotiation", "deals": 3, "value": 196000 },
+    { "name": "Closed-Won", "deals": 3, "value": 100000 }
+  ],
+  "at_risk": 4,
+  "stale": 6
+}
+```
+
+</Expandable>
+
+---
+
+### `get_activity_feed`
+
+Get recent activity for a deal, contact, or company.
+
+<Expandable title="Parameters">
+  <ParamField body="record_id" type="string" required>
+    The ID of the deal, contact, or company.
+  </ParamField>
+  <ParamField body="record_type" type="string" required>
+    Type of record: `deal`, `contact`, `company`.
+  </ParamField>
+  <ParamField body="limit" type="number">
+    Maximum activity entries to return. Defaults to 20.
+  </ParamField>
+</Expandable>
+
+---
+
+## Create & Update
+
+Tools for writing data to your CRM. Records created via MCP are immediately picked up by Octolane's agents for enrichment and follow-up.
+
+### `create_deal`
+
+Create a new opportunity in your pipeline. The deal is automatically picked up by agents - contacts are enriched, the Follow-Up Agent starts monitoring, and activity tracking begins.
+
+<Expandable title="Parameters">
+  <ParamField body="name" type="string" required>
+    Deal name (e.g., "Stripe - Enterprise Plan").
+  </ParamField>
+  <ParamField body="value" type="number">
+    Deal value in your workspace currency.
+  </ParamField>
+  <ParamField body="stage" type="string">
+    Pipeline stage. Defaults to the first stage in your default pipeline.
+  </ParamField>
+  <ParamField body="company" type="string">
+    Company name or domain. Creates or links to existing company record.
+  </ParamField>
+  <ParamField body="contact_email" type="string">
+    Primary contact email. Creates or links to existing contact.
+  </ParamField>
+  <ParamField body="close_date" type="string">
+    Expected close date in ISO 8601 format.
+  </ParamField>
+  <ParamField body="notes" type="string">
+    Initial notes to attach to the deal.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "Create a deal for my meeting with Stripe tomorrow - $120K enterprise plan, negotiation stage"
+
+**Tool call:**
+```json
+{
+  "tool": "create_deal",
+  "arguments": {
+    "name": "Stripe - Enterprise Plan",
+    "value": 120000,
+    "stage": "Negotiation",
+    "company": "stripe.com",
+    "contact_email": "sarah@stripe.com",
+    "close_date": "2026-04-15"
+  }
+}
+```
+
+**What happens next:** Octolane creates the deal, links or creates the company and contact records, enriches the contact with LinkedIn data and job title, enriches the company with size/funding/tech stack, and the Follow-Up Agent starts monitoring the email thread for stale conversations.
+
+</Expandable>
+
+---
+
+### `update_deal`
+
+Update any field on an existing deal.
+
+<Expandable title="Parameters">
+  <ParamField body="deal_id" type="string" required>
+    The deal ID.
+  </ParamField>
+  <ParamField body="stage" type="string">
+    New pipeline stage.
+  </ParamField>
+  <ParamField body="value" type="number">
+    Updated deal value.
+  </ParamField>
+  <ParamField body="close_date" type="string">
+    Updated close date.
+  </ParamField>
+  <ParamField body="owner" type="string">
+    New deal owner (email).
+  </ParamField>
+  <ParamField body="custom_fields" type="object">
+    Key-value pairs for custom field updates.
+  </ParamField>
+</Expandable>
+
+---
+
+### `create_contact`
+
+Create a new contact. Automatically enriched with job title, company, social profiles, and more.
+
+<Expandable title="Parameters">
+  <ParamField body="email" type="string" required>
+    Contact email address.
+  </ParamField>
+  <ParamField body="name" type="string">
+    Full name.
+  </ParamField>
+  <ParamField body="phone" type="string">
+    Phone number.
+  </ParamField>
+  <ParamField body="company" type="string">
+    Company name or domain.
+  </ParamField>
+  <ParamField body="title" type="string">
+    Job title.
+  </ParamField>
+</Expandable>
+
+---
+
+### `update_contact`
+
+Update fields on an existing contact.
+
+<Expandable title="Parameters">
+  <ParamField body="contact_id" type="string" required>
+    The contact ID.
+  </ParamField>
+  <ParamField body="name" type="string">
+    Updated name.
+  </ParamField>
+  <ParamField body="title" type="string">
+    Updated job title.
+  </ParamField>
+  <ParamField body="phone" type="string">
+    Updated phone number.
+  </ParamField>
+  <ParamField body="custom_fields" type="object">
+    Key-value pairs for custom field updates.
+  </ParamField>
+</Expandable>
+
+---
+
+### `create_company`
+
+Create a new company record. Automatically enriched with size, industry, funding, tech stack, and social profiles.
+
+<Expandable title="Parameters">
+  <ParamField body="domain" type="string" required>
+    Company domain (e.g., "stripe.com").
+  </ParamField>
+  <ParamField body="name" type="string">
+    Company name. Auto-detected from domain if omitted.
+  </ParamField>
+</Expandable>
+
+---
+
+### `create_note`
+
+Attach a note to a deal, contact, or company.
+
+<Expandable title="Parameters">
+  <ParamField body="record_id" type="string" required>
+    The ID of the deal, contact, or company.
+  </ParamField>
+  <ParamField body="record_type" type="string" required>
+    Type of record: `deal`, `contact`, `company`.
+  </ParamField>
+  <ParamField body="content" type="string" required>
+    Note content (plain text or markdown).
+  </ParamField>
+</Expandable>
+
+---
+
+## Agent Commands
+
+These tools are the differentiator. No other CRM MCP server gives you access to real-time website visitor intelligence or natural language pipeline queries.
+
+### `get_signal_visitors`
+
+Get companies currently visiting or who recently visited your website, with ICP scoring and page-level data from Signal.
+
+<Expandable title="Parameters">
+  <ParamField body="period" type="string">
+    Time period: `today`, `this_week`, `this_month`. Defaults to `this_week`.
+  </ParamField>
+  <ParamField body="min_icp_score" type="number">
+    Minimum ICP match score (0-100). Filter to high-quality visitors.
+  </ParamField>
+  <ParamField body="page_filter" type="string">
+    Filter by page URL path (e.g., "/pricing" to see visitors on your pricing page).
+  </ParamField>
+  <ParamField body="limit" type="number">
+    Maximum results. Defaults to 20, max 100.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "What companies visited our pricing page this week with an ICP score above 80?"
+
+**Tool call:**
+```json
+{
+  "tool": "get_signal_visitors",
+  "arguments": {
+    "period": "this_week",
+    "min_icp_score": 80,
+    "page_filter": "/pricing"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "visitors": [
+    {
+      "company": "Linear",
+      "domain": "linear.app",
+      "icp_score": 94,
+      "employee_count": 120,
+      "industry": "Developer Tools",
+      "funding": "Series B - $52M",
+      "pages_viewed": ["/", "/pricing", "/features", "/pricing"],
+      "total_visits": 4,
+      "first_visit": "2026-03-03T10:22:00Z",
+      "last_visit": "2026-03-07T15:44:00Z",
+      "existing_deal": null,
+      "existing_contacts": []
+    },
+    {
+      "company": "Ramp",
+      "domain": "ramp.com",
+      "icp_score": 87,
+      "employee_count": 800,
+      "industry": "Fintech",
+      "funding": "Series D - $750M",
+      "pages_viewed": ["/pricing", "/vs-hubspot"],
+      "total_visits": 2,
+      "first_visit": "2026-03-05T11:15:00Z",
+      "last_visit": "2026-03-06T09:30:00Z",
+      "existing_deal": null,
+      "existing_contacts": []
+    }
+  ],
+  "total": 2
+}
+```
+
+</Expandable>
+
+---
+
+### `ask_pipeline`
+
+Ask a natural language question about your pipeline and get an instant answer. This tool uses the same AI engine as Octolane's in-app AI Chat.
+
+<Expandable title="Parameters">
+  <ParamField body="question" type="string" required>
+    Your question in plain English.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example questions">
+
+- "Which deals are at risk of going stale?"
+- "What's our pipeline value this quarter vs last quarter?"
+- "How many deals did we close this month?"
+- "Which rep has the most deals in negotiation?"
+- "What's our average deal size by industry?"
+- "Show me deals closing this month that haven't had a meeting in 2 weeks"
+- "What's our win rate for deals over $50K?"
+
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "Which deals are at risk?"
+
+**Tool call:**
+```json
+{
+  "tool": "ask_pipeline",
+  "arguments": {
+    "question": "Which deals are at risk of going stale?"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "answer": "You have 4 deals at risk of going stale:",
+  "deals": [
+    {
+      "name": "Notion - Annual Contract",
+      "value": 85000,
+      "stage": "Proposal",
+      "days_since_last_activity": 14,
+      "owner": "mike@yourcompany.com",
+      "risk_reason": "No email or meeting activity in 14 days. Last interaction was a proposal sent on Feb 22."
+    },
+    {
+      "name": "Figma - Team Plan",
+      "value": 42000,
+      "stage": "Meeting Scheduled",
+      "days_since_last_activity": 11,
+      "owner": "sarah@yourcompany.com",
+      "risk_reason": "Meeting was scheduled but cancelled. No follow-up sent."
+    }
+  ],
+  "suggestion": "The Follow-Up Agent has drafts ready for 2 of these deals. Check your approval queue."
+}
+```
+
+</Expandable>
+
+---
+
+## Rate limits
+
+MCP tools share the same rate limits as the REST API: 100 requests per minute per API key. If you hit the limit, you'll receive a `429` response with a `Retry-After` header.
+
+Most AI assistants handle rate limiting automatically by waiting and retrying.
