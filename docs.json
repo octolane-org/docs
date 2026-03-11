@@ -49,32 +49,119 @@
             "group": "Get Started",
             "pages": [
               "index",
-              "introduction",
-              "quickstart"
+              "get-started/what-is-octolane",
+              "get-started/how-octolane-works",
+              "get-started/how-octolane-finds-deals",
+              "get-started/getting-started",
+              "get-started/quickstart",
+              "get-started/import-migration"
             ]
           },
           {
-            "group": "Features",
+            "group": "Agents",
             "pages": [
-              "features/auto-updating",
-              "features/contact-enrichment",
-              "features/natural-language"
+              "agents/overview",
+              "agents/signal-agent",
+              "agents/deal-finder",
+              "agents/form-submission",
+              "agents/follow-up",
+              "agents/outreach",
+              "agents/meeting-recorder",
+              "agents/ai-chat",
+              "agents/approving-actions"
             ]
           },
           {
-            "group": "Guides",
+            "group": "Your CRM",
             "pages": [
-              "integrations",
-              "company-widget",
-              "development",
-              "security",
-              "support"
+              "your-crm/accounts-contacts",
+              "your-crm/opportunities",
+              "your-crm/pipeline-management",
+              "your-crm/activity-feed",
+              "your-crm/views-filters-search",
+              "your-crm/ai-enrichment",
+              "your-crm/ai-notes",
+              "your-crm/ai-meeting-notes",
+              "your-crm/ai-reporting",
+              "your-crm/custom-ai-fields",
+              "your-crm/custom-data-model"
             ]
           },
           {
-            "group": "Changelog",
+            "group": "Signal",
             "pages": [
-              "changelog"
+              "signal/what-is-signal",
+              "signal/installing-signal",
+              "signal/identifying-qualifying-visitors",
+              "signal/visitor-to-deal",
+              "signal/signal-and-pipeline"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/overview",
+              "integrations/gmail-google-calendar",
+              "integrations/linkedin",
+              "integrations/whatsapp",
+              "integrations/web-analytics",
+              "integrations/zapier"
+            ]
+          },
+          {
+            "group": "MCP",
+            "pages": [
+              "mcp/overview",
+              "mcp/quickstart",
+              "mcp/authentication",
+              "mcp/tools-reference",
+              "mcp/examples",
+              "mcp/use-with-cursor",
+              "mcp/use-with-claude",
+              "mcp/use-with-chatgpt"
+            ]
+          },
+          {
+            "group": "API Reference",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/create-account",
+              "api-reference/create-contact",
+              "api-reference/create-note",
+              "api-reference/create-opportunity"
+            ]
+          },
+          {
+            "group": "Comparisons",
+            "pages": [
+              "comparisons/octolane-vs-hubspot",
+              "comparisons/octolane-vs-salesforce",
+              "comparisons/octolane-vs-pipedrive",
+              "comparisons/octolane-vs-attio"
+            ]
+          },
+          {
+            "group": "Use Cases",
+            "pages": [
+              "use-cases/for-founders",
+              "use-cases/for-sales-teams",
+              "use-cases/for-agencies"
+            ]
+          },
+          {
+            "group": "Account",
+            "pages": [
+              "account/workspace-settings",
+              "account/team-permissions",
+              "account/plans-pricing",
+              "account/security-privacy"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "support/faq",
+              "support/contact"
             ]
           }
         ]
