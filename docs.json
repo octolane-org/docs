@@ -45,6 +45,7 @@
             "group": "Get Started",
             "icon": "rocket",
             "pages": [
+              "get-started/welcome",
               "get-started/what-is-octolane",
               "get-started/getting-started",
               "get-started/how-octolane-works",
@@ -52,8 +53,8 @@
             ]
           },
           {
-            "group": "Agents — Your Self-Driving Sales Team",
-            "icon": "users",
+            "group": "AI Agents",
+            "icon": "robot",
             "pages": [
               "agents/overview",
               {
@@ -73,7 +74,7 @@
             ]
           },
           {
-            "group": "Signal — Website Visitor Intelligence",
+            "group": "Signal",
             "icon": "radar",
             "pages": [
               "signal/what-is-signal",
@@ -100,7 +101,7 @@
             ]
           },
           {
-            "group": "Integrations & Data Sources",
+            "group": "Integrations",
             "icon": "plug",
             "pages": [
               "integrations/overview",
@@ -112,17 +113,12 @@
             ]
           },
           {
-            "group": "MCP",
-            "icon": "code",
+            "group": "Use Cases",
+            "icon": "lightbulb",
             "pages": [
-              "mcp/overview",
-              "mcp/quickstart",
-              "mcp/authentication",
-              "mcp/tools-reference",
-              "mcp/examples",
-              "mcp/use-with-cursor",
-              "mcp/use-with-claude",
-              "mcp/use-with-chatgpt"
+              "use-cases/for-founders",
+              "use-cases/for-sales-teams",
+              "use-cases/for-agencies"
             ]
           },
           {
@@ -131,17 +127,9 @@
             "pages": [
               "comparisons/octolane-vs-hubspot",
               "comparisons/octolane-vs-salesforce",
+              "comparisons/octolane-vs-attio",
               "comparisons/octolane-vs-pipedrive",
-              "comparisons/octolane-vs-attio"
-            ]
-          },
-          {
-            "group": "Use Cases",
-            "icon": "lightbulb",
-            "pages": [
-              "use-cases/for-founders",
-              "use-cases/for-sales-teams",
-              "use-cases/for-agencies"
+              "comparisons/octolane-vs-lightfield"
             ]
           },
           {
@@ -176,6 +164,25 @@
               "api-reference/create-account",
               "api-reference/create-contact",
               "api-reference/create-note"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "MCP",
+        "icon": "code",
+        "groups": [
+          {
+            "group": "MCP",
+            "pages": [
+              "mcp/overview",
+              "mcp/quickstart",
+              "mcp/tools-reference",
+              "mcp/use-with-claude",
+              "mcp/use-with-chatgpt",
+              "mcp/use-with-cursor",
+              "mcp/authentication",
+              "mcp/examples"
             ]
           }
         ]
