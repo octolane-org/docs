@@ -41,14 +41,13 @@
     ]
   },
   "navigation": {
-    "languages": [
+    "tabs": [
       {
-        "language": "en",
+        "tab": "Documentation",
         "groups": [
           {
             "group": "Get Started",
             "pages": [
-              "index",
               "get-started/what-is-octolane",
               "get-started/how-octolane-works",
               "get-started/how-octolane-finds-deals",
@@ -109,29 +108,6 @@
             ]
           },
           {
-            "group": "MCP",
-            "pages": [
-              "mcp/overview",
-              "mcp/quickstart",
-              "mcp/authentication",
-              "mcp/tools-reference",
-              "mcp/examples",
-              "mcp/use-with-cursor",
-              "mcp/use-with-claude",
-              "mcp/use-with-chatgpt"
-            ]
-          },
-          {
-            "group": "API Reference",
-            "pages": [
-              "api-reference/introduction",
-              "api-reference/create-account",
-              "api-reference/create-contact",
-              "api-reference/create-note",
-              "api-reference/create-opportunity"
-            ]
-          },
-          {
             "group": "Comparisons",
             "pages": [
               "comparisons/octolane-vs-hubspot",
@@ -147,7 +123,48 @@
               "use-cases/for-sales-teams",
               "use-cases/for-agencies"
             ]
-          },
+          }
+        ]
+      },
+      {
+        "tab": "MCP",
+        "icon": "plug",
+        "groups": [
+          {
+            "group": "MCP",
+            "pages": [
+              "mcp/overview",
+              "mcp/quickstart",
+              "mcp/authentication",
+              "mcp/tools-reference",
+              "mcp/examples",
+              "mcp/use-with-cursor",
+              "mcp/use-with-claude",
+              "mcp/use-with-chatgpt"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "icon": "square-terminal",
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/create-account",
+              "api-reference/create-contact",
+              "api-reference/create-note",
+              "api-reference/create-opportunity"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Account",
+        "icon": "gear",
+        "groups": [
           {
             "group": "Account",
             "pages": [
@@ -164,6 +181,13 @@
               "support/contact"
             ]
           }
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "icon": "clock-rotate-left",
+        "pages": [
+          "changelog"
         ]
       }
     ]
