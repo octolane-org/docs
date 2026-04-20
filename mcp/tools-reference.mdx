@@ -1,7 +1,7 @@
 ---
 title: "MCP Tools Reference"
 sidebarTitle: "Tools Reference"
-description: "Complete reference for all Octolane MCP tools - search, create, update records, trigger agents, and query your pipeline via any MCP client."
+description: "Complete reference for all 29 Octolane MCP tools - search, create, update records, manage pipeline, access Signal data, and more."
 ---
 
 # MCP Tools Reference
@@ -20,73 +20,56 @@ Tools for finding and retrieving data from your CRM.
 
 ### `search_deals`
 
-Search deals by name, stage, value, owner, or any custom field.
+Search deals with filters for pipeline, stage, account, contact, deal size, close date, and staleness.
 
 <Expandable title="Parameters">
-  <ParamField body="query" type="string" required>
-    Search term to match against deal name, company, or description.
+  <ParamField body="search_query" type="string">
+    Search by deal/opportunity name.
   </ParamField>
-  <ParamField body="stage" type="string">
-    Filter by pipeline stage (e.g., "Negotiation", "Proposal").
+  <ParamField body="pipeline_name" type="string">
+    Filter by pipeline name (e.g., "Sales").
   </ParamField>
-  <ParamField body="owner" type="string">
-    Filter by deal owner email or name.
+  <ParamField body="stage_name" type="string">
+    Filter by stage name (e.g., "Negotiation", "Won").
   </ParamField>
-  <ParamField body="min_value" type="number">
+  <ParamField body="account_name" type="string">
+    Filter by associated company/account name.
+  </ParamField>
+  <ParamField body="contact_name" type="string">
+    Filter by associated contact name.
+  </ParamField>
+  <ParamField body="min_amount" type="number">
     Minimum deal value.
   </ParamField>
-  <ParamField body="max_value" type="number">
+  <ParamField body="max_amount" type="number">
     Maximum deal value.
   </ParamField>
-  <ParamField body="status" type="string">
-    Deal status: `open`, `won`, `lost`. Defaults to `open`.
+  <ParamField body="close_date_from" type="string">
+    Start of close date range (ISO 8601).
   </ParamField>
-  <ParamField body="limit" type="number">
-    Maximum results to return. Defaults to 20, max 100.
+  <ParamField body="close_date_to" type="string">
+    End of close date range (ISO 8601).
+  </ParamField>
+  <ParamField body="days_without_activity" type="integer">
+    Filter to deals with no activity for N days (stale deals).
+  </ParamField>
+  <ParamField body="limit" type="integer">
+    Maximum results to return. Defaults to 10, max 25.
   </ParamField>
 </Expandable>
 
 <Expandable title="Example">
 
-**Prompt:** "Show me all open deals worth more than $50K"
+**Prompt:** "Show me all stale deals worth more than $50K"
 
 **Tool call:**
 ```json
 {
   "tool": "search_deals",
   "arguments": {
-    "status": "open",
-    "min_value": 50000
+    "min_amount": 50000,
+    "days_without_activity": 14
   }
-}
-```
-
-**Response:**
-```json
-{
-  "deals": [
-    {
-      "id": "deal_abc123",
-      "name": "Stripe - Enterprise Plan",
-      "stage": "Negotiation",
-      "value": 120000,
-      "owner": "sarah@yourcompany.com",
-      "company": "Stripe",
-      "last_activity": "2026-03-06T14:30:00Z",
-      "days_in_stage": 5
-    },
-    {
-      "id": "deal_def456",
-      "name": "Notion - Annual Contract",
-      "stage": "Proposal",
-      "value": 85000,
-      "owner": "mike@yourcompany.com",
-      "company": "Notion",
-      "last_activity": "2026-03-04T09:15:00Z",
-      "days_in_stage": 12
-    }
-  ],
-  "total": 2
 }
 ```
 
@@ -96,20 +79,20 @@ Search deals by name, stage, value, owner, or any custom field.
 
 ### `search_contacts`
 
-Search contacts by name, email, company, or any field.
+Search contacts by name, email, company, or job title.
 
 <Expandable title="Parameters">
-  <ParamField body="query" type="string" required>
-    Search term to match against name, email, or company.
+  <ParamField body="query" type="string">
+    Search by contact name or email.
   </ParamField>
-  <ParamField body="company" type="string">
-    Filter by company name or domain.
+  <ParamField body="company_name" type="string">
+    Filter by company name.
   </ParamField>
-  <ParamField body="title" type="string">
-    Filter by job title (partial match).
+  <ParamField body="job_title" type="string">
+    Filter by job title.
   </ParamField>
-  <ParamField body="limit" type="number">
-    Maximum results to return. Defaults to 20, max 100.
+  <ParamField body="limit" type="integer">
+    Maximum results to return. Defaults to 10, max 25.
   </ParamField>
 </Expandable>
 
@@ -122,27 +105,8 @@ Search contacts by name, email, company, or any field.
 {
   "tool": "search_contacts",
   "arguments": {
-    "company": "Stripe"
+    "company_name": "Stripe"
   }
-}
-```
-
-**Response:**
-```json
-{
-  "contacts": [
-    {
-      "id": "contact_xyz789",
-      "name": "Sarah Chen",
-      "email": "sarah@stripe.com",
-      "title": "VP of Sales",
-      "company": "Stripe",
-      "phone": "+1 (415) 555-0142",
-      "linkedin": "https://linkedin.com/in/sarachen",
-      "last_contacted": "2026-03-06T14:30:00Z"
-    }
-  ],
-  "total": 1
 }
 ```
 
@@ -150,40 +114,35 @@ Search contacts by name, email, company, or any field.
 
 ---
 
-### `search_companies`
+### `search_accounts`
 
-Search companies by name, domain, industry, or size.
+Search accounts (companies) by name, domain, or industry.
 
 <Expandable title="Parameters">
-  <ParamField body="query" type="string" required>
-    Search term to match against company name or domain.
+  <ParamField body="query" type="string">
+    Search by company name or domain.
+  </ParamField>
+  <ParamField body="domain" type="string">
+    Filter by company domain.
   </ParamField>
   <ParamField body="industry" type="string">
     Filter by industry.
   </ParamField>
-  <ParamField body="min_size" type="number">
-    Minimum employee count.
-  </ParamField>
-  <ParamField body="max_size" type="number">
-    Maximum employee count.
-  </ParamField>
-  <ParamField body="limit" type="number">
-    Maximum results to return. Defaults to 20, max 100.
+  <ParamField body="limit" type="integer">
+    Maximum results to return. Defaults to 10, max 25.
   </ParamField>
 </Expandable>
 
 <Expandable title="Example">
 
-**Prompt:** "Find SaaS companies with 100-500 employees"
+**Prompt:** "Find SaaS companies in our CRM"
 
 **Tool call:**
 ```json
 {
-  "tool": "search_companies",
+  "tool": "search_accounts",
   "arguments": {
-    "industry": "SaaS",
-    "min_size": 100,
-    "max_size": 500
+    "industry": "SaaS"
   }
 }
 ```
@@ -192,19 +151,95 @@ Search companies by name, domain, industry, or size.
 
 ---
 
-### `get_deal`
+### `search_emails`
 
-Get full details of a specific deal including activity timeline, associated contacts, and agent actions.
+Search email conversations by contact, company domain, keyword, or direction.
 
 <Expandable title="Parameters">
-  <ParamField body="deal_id" type="string" required>
-    The deal ID.
+  <ParamField body="contact_email" type="string">
+    Search emails involving this email address.
   </ParamField>
-  <ParamField body="include_activity" type="boolean">
-    Include the full activity timeline. Defaults to true.
+  <ParamField body="account_domain" type="string">
+    Search emails involving this company domain.
   </ParamField>
-  <ParamField body="include_contacts" type="boolean">
-    Include associated contacts. Defaults to true.
+  <ParamField body="search_query" type="string">
+    Search by email subject or content.
+  </ParamField>
+  <ParamField body="label" type="string">
+    Filter by direction: `sent`, `inbox`, or `all`. Defaults to `all`.
+  </ParamField>
+  <ParamField body="limit" type="integer">
+    Maximum results to return. Defaults to 10, max 25.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "Show me all emails we've sent to Stripe"
+
+**Tool call:**
+```json
+{
+  "tool": "search_emails",
+  "arguments": {
+    "account_domain": "stripe.com",
+    "label": "sent"
+  }
+}
+```
+
+</Expandable>
+
+---
+
+### `search_meetings`
+
+Search past and upcoming meetings by keyword, attendee, or date range.
+
+<Expandable title="Parameters">
+  <ParamField body="query" type="string">
+    Search keywords for meeting title, summary, transcript, or attendee. Omit for purely temporal queries like "my next meeting".
+  </ParamField>
+  <ParamField body="start_date" type="string">
+    Start of date range (ISO 8601).
+  </ParamField>
+  <ParamField body="end_date" type="string">
+    End of date range (ISO 8601).
+  </ParamField>
+  <ParamField body="sort" type="string">
+    Sort order for start_time: `asc` for upcoming, `desc` for recent. Defaults to `desc`.
+  </ParamField>
+  <ParamField body="limit" type="integer">
+    Maximum results to return. Defaults to 10, max 25.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "What meetings do I have this week?"
+
+**Tool call:**
+```json
+{
+  "tool": "search_meetings",
+  "arguments": {
+    "start_date": "2026-04-14T00:00:00Z",
+    "sort": "asc"
+  }
+}
+```
+
+</Expandable>
+
+---
+
+### `get_deal_details`
+
+Get full details of a specific deal including associated contacts, account, notes, tasks, and next steps.
+
+<Expandable title="Parameters">
+  <ParamField body="opportunity_id" type="string" required>
+    The deal/opportunity ID. Use `search_deals` to find it.
   </ParamField>
 </Expandable>
 
@@ -212,94 +247,135 @@ Get full details of a specific deal including activity timeline, associated cont
 
 **Prompt:** "Pull up the Stripe deal"
 
-**Response includes:** deal details, current stage, value, close date, all associated contacts with roles, full activity timeline (emails, meetings, agent actions, notes), action items, and next steps.
+First call `search_deals` with `search_query: "Stripe"` to get the ID, then:
+
+```json
+{
+  "tool": "get_deal_details",
+  "arguments": {
+    "opportunity_id": "deal_abc123"
+  }
+}
+```
+
+Returns deal details, current stage, value, close date, all associated contacts, notes, tasks, and next steps.
 
 </Expandable>
 
 ---
 
-### `get_contact`
+### `get_pipeline_overview`
 
-Get full details of a contact including enrichment data, communication history, and associated deals.
-
-<Expandable title="Parameters">
-  <ParamField body="contact_id" type="string" required>
-    The contact ID.
-  </ParamField>
-  <ParamField body="include_deals" type="boolean">
-    Include associated deals. Defaults to true.
-  </ParamField>
-  <ParamField body="include_activity" type="boolean">
-    Include communication history. Defaults to true.
-  </ParamField>
-</Expandable>
-
----
-
-### `get_company`
-
-Get full details of a company including enrichment data, contacts, deals, and Signal visit history.
+Get a summary of your sales pipeline(s) showing deal counts, total values, and average deal size by stage.
 
 <Expandable title="Parameters">
-  <ParamField body="company_id" type="string" required>
-    The company ID.
-  </ParamField>
-  <ParamField body="include_contacts" type="boolean">
-    Include all contacts at this company. Defaults to true.
-  </ParamField>
-  <ParamField body="include_deals" type="boolean">
-    Include all deals with this company. Defaults to true.
-  </ParamField>
-  <ParamField body="include_signal" type="boolean">
-    Include Signal website visit data. Defaults to true.
-  </ParamField>
-</Expandable>
-
----
-
-### `get_pipeline`
-
-Get a pipeline overview with deal counts, values, and conversion rates per stage.
-
-<Expandable title="Parameters">
-  <ParamField body="pipeline_id" type="string">
-    Specific pipeline ID. Returns the default pipeline if omitted.
-  </ParamField>
-  <ParamField body="period" type="string">
-    Time period for metrics: `this_week`, `this_month`, `this_quarter`, `last_quarter`. Defaults to `this_month`.
+  <ParamField body="pipeline_name" type="string">
+    Filter by pipeline name. Omit to see all pipelines.
   </ParamField>
 </Expandable>
 
 <Expandable title="Example">
 
-**Prompt:** "What's our pipeline look like this quarter?"
+**Prompt:** "What's our pipeline look like?"
 
 **Tool call:**
 ```json
 {
-  "tool": "get_pipeline",
+  "tool": "get_pipeline_overview",
+  "arguments": {}
+}
+```
+
+Returns pipeline ID, name, and breakdown by stage with deal counts, total values, and average deal size.
+
+</Expandable>
+
+---
+
+### `get_signal_visitors`
+
+Retrieve website visitors identified by Octolane Signal with visit counts, intent scores, and activity dates.
+
+<Expandable title="Parameters">
+  <ParamField body="search_query" type="string">
+    Search by company name or domain.
+  </ParamField>
+  <ParamField body="page" type="integer">
+    Page number for pagination. Defaults to 1.
+  </ParamField>
+  <ParamField body="limit" type="integer">
+    Results per page. Defaults to 10, max 50.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "What companies have been visiting our site?"
+
+**Tool call:**
+```json
+{
+  "tool": "get_signal_visitors",
   "arguments": {
-    "period": "this_quarter"
+    "limit": 20
   }
 }
 ```
 
-**Response:**
+Returns companies with visit counts, intent scores, and activity dates.
+
+</Expandable>
+
+---
+
+### `get_email_thread`
+
+Get the full email thread conversation by thread ID.
+
+<Expandable title="Parameters">
+  <ParamField body="thread_id" type="string" required>
+    The email thread ID. Get this from `search_emails` results.
+  </ParamField>
+</Expandable>
+
+---
+
+### `get_notes`
+
+Search and retrieve notes linked to a deal, contact, or account. Supports lookup by name, email, or domain — no ID required.
+
+<Expandable title="Parameters">
+  <ParamField body="entity_id" type="string">
+    Direct entity UUID (deal, contact, or account).
+  </ParamField>
+  <ParamField body="account_name" type="string">
+    Find notes by company name.
+  </ParamField>
+  <ParamField body="account_domain" type="string">
+    Find notes by company domain.
+  </ParamField>
+  <ParamField body="contact_name" type="string">
+    Find notes by contact name.
+  </ParamField>
+  <ParamField body="contact_email" type="string">
+    Find notes by contact email.
+  </ParamField>
+  <ParamField body="limit" type="integer">
+    Maximum results. Defaults to 10, max 25.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "Show me all notes on the Stripe account"
+
+**Tool call:**
 ```json
 {
-  "pipeline": "Default Pipeline",
-  "period": "this_quarter",
-  "total_value": 847000,
-  "total_deals": 23,
-  "stages": [
-    { "name": "New Lead", "deals": 8, "value": 156000 },
-    { "name": "Meeting Scheduled", "deals": 5, "value": 210000 },
-    { "name": "Proposal", "deals": 4, "value": 185000 },
-    { "name": "Negotiation", "deals": 3, "value": 196000 },
-    { "name": "Closed-Won", "deals": 3, "value": 100000 }
-  ],
-  "at_risk": 4,
-  "stale": 6
+  "tool": "get_notes",
+  "arguments": {
+    "account_name": "Stripe"
+  }
 }
 ```
 
@@ -307,20 +383,47 @@ Get a pipeline overview with deal counts, values, and conversion rates per stage
 
 ---
 
-### `get_activity_feed`
+### `get_tasks`
 
-Get recent activity for a deal, contact, or company.
+Get tasks assigned to you or linked to a specific deal, contact, or account.
 
 <Expandable title="Parameters">
-  <ParamField body="record_id" type="string" required>
-    The ID of the deal, contact, or company.
+  <ParamField body="entity_id" type="string">
+    Get tasks linked to this entity UUID.
   </ParamField>
-  <ParamField body="record_type" type="string" required>
-    Type of record: `deal`, `contact`, `company`.
+  <ParamField body="entity_type" type="string">
+    Type of entity: `account`, `contact`, or `opportunity`. Required when `entity_id` is provided.
   </ParamField>
-  <ParamField body="limit" type="number">
-    Maximum activity entries to return. Defaults to 20.
+  <ParamField body="include_completed" type="boolean">
+    Include completed tasks. Defaults to false.
   </ParamField>
+  <ParamField body="limit" type="integer">
+    Maximum results. Defaults to 15, max 25.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "What are my open tasks?"
+
+**Tool call:**
+```json
+{
+  "tool": "get_tasks",
+  "arguments": {}
+}
+```
+
+</Expandable>
+
+---
+
+### `get_current_user`
+
+Get your identity, workspace role, and subscription details. Returns name, email, organization, role, and billing info.
+
+<Expandable title="Parameters">
+  No parameters required.
 </Expandable>
 
 ---
@@ -331,238 +434,166 @@ Tools for writing data to your CRM. Records created via MCP are immediately pick
 
 ### `create_deal`
 
-Create a new opportunity in your pipeline. The deal is automatically picked up by agents - contacts are enriched, the Follow-Up Agent starts monitoring, and activity tracking begins.
+Create a new deal in the CRM and assign it to a pipeline stage. The associated account and contacts must already exist — create them first if needed.
 
 <Expandable title="Parameters">
-  <ParamField body="name" type="string" required>
-    Deal name (e.g., "Stripe - Enterprise Plan").
+  <ParamField body="pipeline_id" type="string" required>
+    Pipeline UUID. Use `get_pipeline_overview` to find it.
   </ParamField>
-  <ParamField body="value" type="number">
-    Deal value in your workspace currency.
+  <ParamField body="name" type="string">
+    Deal name. Auto-generated from account/contact if omitted.
   </ParamField>
-  <ParamField body="stage" type="string">
-    Pipeline stage. Defaults to the first stage in your default pipeline.
+  <ParamField body="stage_id" type="string">
+    Stage UUID within the pipeline. Defaults to first stage. Use `list_pipeline_stages` to find it.
   </ParamField>
-  <ParamField body="company" type="string">
-    Company name or domain. Creates or links to existing company record.
-  </ParamField>
-  <ParamField body="contact_email" type="string">
-    Primary contact email. Creates or links to existing contact.
+  <ParamField body="deal_size" type="number">
+    Deal value in dollars.
   </ParamField>
   <ParamField body="close_date" type="string">
-    Expected close date in ISO 8601 format.
+    Expected close date (ISO 8601).
   </ParamField>
-  <ParamField body="notes" type="string">
-    Initial notes to attach to the deal.
+  <ParamField body="next_action_date" type="string">
+    Next follow-up date (ISO 8601).
+  </ParamField>
+  <ParamField body="next_steps" type="string">
+    Description of next steps for this deal.
+  </ParamField>
+  <ParamField body="account_domain" type="string">
+    Domain of the associated company (must already exist in CRM).
+  </ParamField>
+  <ParamField body="primary_contact_email" type="string">
+    Email of the primary contact (must already exist in CRM).
+  </ParamField>
+  <ParamField body="additional_contact_emails" type="array">
+    Emails of additional contacts (must already exist in CRM).
+  </ParamField>
+  <ParamField body="owner_email" type="string">
+    Email of the deal owner (org member). Defaults to current user.
   </ParamField>
 </Expandable>
 
 <Expandable title="Example">
 
-**Prompt:** "Create a deal for my meeting with Stripe tomorrow - $120K enterprise plan, negotiation stage"
+**Prompt:** "Create a deal for Stripe, $120K enterprise plan"
 
-**Tool call:**
+The AI assistant will chain tools: `get_pipeline_overview` → `create_account` (if needed) → `create_contact` (if needed) → `create_deal`:
+
 ```json
 {
   "tool": "create_deal",
   "arguments": {
+    "pipeline_id": "pipe_abc123",
     "name": "Stripe - Enterprise Plan",
-    "value": 120000,
-    "stage": "Negotiation",
-    "company": "stripe.com",
-    "contact_email": "sarah@stripe.com",
-    "close_date": "2026-04-15"
+    "deal_size": 120000,
+    "account_domain": "stripe.com",
+    "primary_contact_email": "sarah@stripe.com",
+    "close_date": "2026-04-30"
   }
 }
 ```
 
-**What happens next:** Octolane creates the deal, links or creates the company and contact records, enriches the contact with LinkedIn data and job title, enriches the company with size/funding/tech stack, and the Follow-Up Agent starts monitoring the email thread for stale conversations.
+**What happens next:** Octolane creates the deal, enriches linked contacts and accounts, and the Follow-Up Agent starts monitoring the conversation for stale threads.
 
-</Expandable>
-
----
-
-### `update_deal`
-
-Update any field on an existing deal.
-
-<Expandable title="Parameters">
-  <ParamField body="deal_id" type="string" required>
-    The deal ID.
-  </ParamField>
-  <ParamField body="stage" type="string">
-    New pipeline stage.
-  </ParamField>
-  <ParamField body="value" type="number">
-    Updated deal value.
-  </ParamField>
-  <ParamField body="close_date" type="string">
-    Updated close date.
-  </ParamField>
-  <ParamField body="owner" type="string">
-    New deal owner (email).
-  </ParamField>
-  <ParamField body="custom_fields" type="object">
-    Key-value pairs for custom field updates.
-  </ParamField>
 </Expandable>
 
 ---
 
 ### `create_contact`
 
-Create a new contact. Automatically enriched with job title, company, social profiles, and more.
+Create a new contact from an email address. The backend auto-creates the associated account from the email domain and enriches the contact.
 
 <Expandable title="Parameters">
   <ParamField body="email" type="string" required>
-    Contact email address.
+    Contact's email address.
   </ParamField>
-  <ParamField body="name" type="string">
-    Full name.
+  <ParamField body="first_name" type="string">
+    Contact's first name.
   </ParamField>
-  <ParamField body="phone" type="string">
-    Phone number.
+  <ParamField body="last_name" type="string">
+    Contact's last name.
   </ParamField>
-  <ParamField body="company" type="string">
-    Company name or domain.
-  </ParamField>
-  <ParamField body="title" type="string">
-    Job title.
-  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "Add Sarah Chen from Stripe to our CRM"
+
+**Tool call:**
+```json
+{
+  "tool": "create_contact",
+  "arguments": {
+    "email": "sarah@stripe.com",
+    "first_name": "Sarah",
+    "last_name": "Chen"
+  }
+}
+```
+
 </Expandable>
 
 ---
 
-### `update_contact`
+### `create_account`
 
-Update fields on an existing contact.
-
-<Expandable title="Parameters">
-  <ParamField body="contact_id" type="string" required>
-    The contact ID.
-  </ParamField>
-  <ParamField body="name" type="string">
-    Updated name.
-  </ParamField>
-  <ParamField body="title" type="string">
-    Updated job title.
-  </ParamField>
-  <ParamField body="phone" type="string">
-    Updated phone number.
-  </ParamField>
-  <ParamField body="custom_fields" type="object">
-    Key-value pairs for custom field updates.
-  </ParamField>
-</Expandable>
-
----
-
-### `create_company`
-
-Create a new company record. Automatically enriched with size, industry, funding, tech stack, and social profiles.
+Create a new account (company) from a domain. Automatically enriched with company info, size, industry, funding, and more.
 
 <Expandable title="Parameters">
   <ParamField body="domain" type="string" required>
-    Company domain (e.g., "stripe.com").
+    Company domain (e.g., "stripe.com", "linear.app").
   </ParamField>
-  <ParamField body="name" type="string">
-    Company name. Auto-detected from domain if omitted.
-  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Tool call:**
+```json
+{
+  "tool": "create_account",
+  "arguments": {
+    "domain": "linear.app"
+  }
+}
+```
+
 </Expandable>
 
 ---
 
 ### `create_note`
 
-Attach a note to a deal, contact, or company.
+Create a note and link it to a deal, contact, or account.
 
 <Expandable title="Parameters">
-  <ParamField body="record_id" type="string" required>
-    The ID of the deal, contact, or company.
+  <ParamField body="title" type="string" required>
+    Short title for the note.
   </ParamField>
-  <ParamField body="record_type" type="string" required>
-    Type of record: `deal`, `contact`, `company`.
+  <ParamField body="content" type="string">
+    Full note content (plain text).
   </ParamField>
-  <ParamField body="content" type="string" required>
-    Note content (plain text or markdown).
+  <ParamField body="entity_id" type="string" required>
+    UUID of the entity to link this note to. Use a search tool first to find the ID.
   </ParamField>
-</Expandable>
-
----
-
-## Agent Commands
-
-These tools are the differentiator. No other CRM MCP server gives you access to real-time website visitor intelligence or natural language pipeline queries.
-
-### `get_signal_visitors`
-
-Get companies currently visiting or who recently visited your website, with ICP scoring and page-level data from Signal.
-
-<Expandable title="Parameters">
-  <ParamField body="period" type="string">
-    Time period: `today`, `this_week`, `this_month`. Defaults to `this_week`.
-  </ParamField>
-  <ParamField body="min_icp_score" type="number">
-    Minimum ICP match score (0-100). Filter to high-quality visitors.
-  </ParamField>
-  <ParamField body="page_filter" type="string">
-    Filter by page URL path (e.g., "/pricing" to see visitors on your pricing page).
-  </ParamField>
-  <ParamField body="limit" type="number">
-    Maximum results. Defaults to 20, max 100.
+  <ParamField body="entity_type" type="string" required>
+    Type of the linked entity: `account`, `contact`, or `opportunity`.
   </ParamField>
 </Expandable>
 
 <Expandable title="Example">
 
-**Prompt:** "What companies visited our pricing page this week with an ICP score above 80?"
+**Prompt:** "Add a note to the Stripe deal: spoke with Sarah, they want SOC 2 before signing"
 
-**Tool call:**
+The AI assistant will call `search_deals` first to get the deal ID, then:
+
 ```json
 {
-  "tool": "get_signal_visitors",
+  "tool": "create_note",
   "arguments": {
-    "period": "this_week",
-    "min_icp_score": 80,
-    "page_filter": "/pricing"
+    "title": "Call with Sarah Chen",
+    "content": "Spoke with Sarah - they want SOC 2 report before procurement can sign off. Timeline is end of Q1.",
+    "entity_id": "deal_abc123",
+    "entity_type": "opportunity"
   }
-}
-```
-
-**Response:**
-```json
-{
-  "visitors": [
-    {
-      "company": "Linear",
-      "domain": "linear.app",
-      "icp_score": 94,
-      "employee_count": 120,
-      "industry": "Developer Tools",
-      "funding": "Series B - $52M",
-      "pages_viewed": ["/", "/pricing", "/features", "/pricing"],
-      "total_visits": 4,
-      "first_visit": "2026-03-03T10:22:00Z",
-      "last_visit": "2026-03-07T15:44:00Z",
-      "existing_deal": null,
-      "existing_contacts": []
-    },
-    {
-      "company": "Ramp",
-      "domain": "ramp.com",
-      "icp_score": 87,
-      "employee_count": 800,
-      "industry": "Fintech",
-      "funding": "Series D - $750M",
-      "pages_viewed": ["/pricing", "/vs-hubspot"],
-      "total_visits": 2,
-      "first_visit": "2026-03-05T11:15:00Z",
-      "last_visit": "2026-03-06T09:30:00Z",
-      "existing_deal": null,
-      "existing_contacts": []
-    }
-  ],
-  "total": 2
 }
 ```
 
@@ -570,65 +601,290 @@ Get companies currently visiting or who recently visited your website, with ICP 
 
 ---
 
-### `ask_pipeline`
+### `create_task`
 
-Ask a natural language question about your pipeline and get an instant answer. This tool uses the same AI engine as Octolane's in-app AI Chat.
+Create a task and optionally link it to a deal, contact, or account. Use for reminders, follow-ups, action items, or next steps.
 
 <Expandable title="Parameters">
-  <ParamField body="question" type="string" required>
-    Your question in plain English.
+  <ParamField body="title" type="string" required>
+    Short title for the task.
   </ParamField>
-</Expandable>
-
-<Expandable title="Example questions">
-
-- "Which deals are at risk of going stale?"
-- "What's our pipeline value this quarter vs last quarter?"
-- "How many deals did we close this month?"
-- "Which rep has the most deals in negotiation?"
-- "What's our average deal size by industry?"
-- "Show me deals closing this month that haven't had a meeting in 2 weeks"
-- "What's our win rate for deals over $50K?"
-
+  <ParamField body="content" type="string">
+    Detailed description of the task.
+  </ParamField>
+  <ParamField body="due_date" type="string">
+    Due date (ISO 8601).
+  </ParamField>
+  <ParamField body="priority" type="string">
+    Priority level: `Low`, `Medium`, `High`, or `Urgent`.
+  </ParamField>
+  <ParamField body="is_urgent" type="boolean">
+    Mark as urgent. Defaults to false.
+  </ParamField>
+  <ParamField body="entity_id" type="string">
+    UUID of the entity to link this task to.
+  </ParamField>
+  <ParamField body="entity_type" type="string">
+    Type of the linked entity: `account`, `contact`, or `opportunity`. Required when `entity_id` is provided.
+  </ParamField>
 </Expandable>
 
 <Expandable title="Example">
 
-**Prompt:** "Which deals are at risk?"
+**Prompt:** "Remind me to send SOC 2 report to Stripe by Friday"
 
-**Tool call:**
 ```json
 {
-  "tool": "ask_pipeline",
+  "tool": "create_task",
   "arguments": {
-    "question": "Which deals are at risk of going stale?"
+    "title": "Send SOC 2 report to Stripe",
+    "due_date": "2026-04-17",
+    "priority": "High",
+    "entity_id": "deal_abc123",
+    "entity_type": "opportunity"
   }
 }
 ```
 
-**Response:**
+</Expandable>
+
+---
+
+### `update_deal_stage`
+
+Move a deal to a specific stage by stage ID.
+
+<Expandable title="Parameters">
+  <ParamField body="opportunity_id" type="string" required>
+    The deal/opportunity ID. Use `search_deals` to find it.
+  </ParamField>
+  <ParamField body="stage_id" type="string" required>
+    Target stage ID. Use `list_pipeline_stages` to find available stages.
+  </ParamField>
+</Expandable>
+
+---
+
+### `move_deal_to_next_stage`
+
+Automatically advance a deal to the next stage in its pipeline based on stage order.
+
+<Expandable title="Parameters">
+  <ParamField body="opportunity_id" type="string" required>
+    The deal/opportunity ID. Use `search_deals` to find it.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "Move the Stripe deal to the next stage"
+
 ```json
 {
-  "answer": "You have 4 deals at risk of going stale:",
-  "deals": [
-    {
-      "name": "Notion - Annual Contract",
-      "value": 85000,
-      "stage": "Proposal",
-      "days_since_last_activity": 14,
-      "owner": "mike@yourcompany.com",
-      "risk_reason": "No email or meeting activity in 14 days. Last interaction was a proposal sent on Feb 22."
-    },
-    {
-      "name": "Figma - Team Plan",
-      "value": 42000,
-      "stage": "Meeting Scheduled",
-      "days_since_last_activity": 11,
-      "owner": "sarah@yourcompany.com",
-      "risk_reason": "Meeting was scheduled but cancelled. No follow-up sent."
-    }
-  ],
-  "suggestion": "The Follow-Up Agent has drafts ready for 2 of these deals. Check your approval queue."
+  "tool": "move_deal_to_next_stage",
+  "arguments": {
+    "opportunity_id": "deal_abc123"
+  }
+}
+```
+
+</Expandable>
+
+---
+
+### `update_note`
+
+Update an existing note's title or content.
+
+<Expandable title="Parameters">
+  <ParamField body="note_id" type="string" required>
+    UUID of the note to update.
+  </ParamField>
+  <ParamField body="title" type="string">
+    New title for the note.
+  </ParamField>
+  <ParamField body="content" type="string">
+    New content for the note.
+  </ParamField>
+</Expandable>
+
+---
+
+### `update_task`
+
+Update an existing task — change title, due date, priority, or mark as complete.
+
+<Expandable title="Parameters">
+  <ParamField body="task_id" type="string" required>
+    UUID of the task to update.
+  </ParamField>
+  <ParamField body="title" type="string">
+    New title.
+  </ParamField>
+  <ParamField body="content" type="string">
+    New description.
+  </ParamField>
+  <ParamField body="due_date" type="string">
+    New due date (ISO 8601). Set to null to remove.
+  </ParamField>
+  <ParamField body="priority" type="string">
+    New priority: `Low`, `Medium`, `High`, or `Urgent`.
+  </ParamField>
+  <ParamField body="is_urgent" type="boolean">
+    Set or unset urgent flag.
+  </ParamField>
+  <ParamField body="completed" type="boolean">
+    Set to true to mark as done, false to reopen.
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "Mark my SOC 2 task as done"
+
+```json
+{
+  "tool": "update_task",
+  "arguments": {
+    "task_id": "task_xyz789",
+    "completed": true
+  }
+}
+```
+
+</Expandable>
+
+---
+
+## Pipeline Management
+
+Tools for configuring and navigating your pipeline structure.
+
+### `list_pipeline_stages`
+
+List all stages for a pipeline, showing name, order, type (won/lost/default), and win probability.
+
+<Expandable title="Parameters">
+  <ParamField body="pipeline_name" type="string">
+    Name or partial name of the pipeline. Omit to list stages for all pipelines.
+  </ParamField>
+  <ParamField body="pipeline_id" type="string">
+    Pipeline ID, if already known.
+  </ParamField>
+</Expandable>
+
+---
+
+### `rename_pipeline`
+
+Rename a sales pipeline.
+
+<Expandable title="Parameters">
+  <ParamField body="pipeline_id" type="string" required>
+    UUID of the pipeline to rename. Use `get_pipeline_overview` to find it.
+  </ParamField>
+  <ParamField body="new_name" type="string" required>
+    The new name for the pipeline.
+  </ParamField>
+  <ParamField body="description" type="string">
+    New description for the pipeline.
+  </ParamField>
+</Expandable>
+
+---
+
+## Field Discovery
+
+Tools for discovering available fields and custom properties on your CRM records. Useful before creating or updating records to check what fields are available.
+
+### `get_account_fields`
+
+Discover available fields and custom properties for accounts (companies). Returns field names, types, and valid dropdown options.
+
+<Expandable title="Parameters">
+  No parameters required.
+</Expandable>
+
+---
+
+### `get_contact_fields`
+
+Discover available fields and custom properties for contacts. Returns field names, types, and valid dropdown options.
+
+<Expandable title="Parameters">
+  No parameters required.
+</Expandable>
+
+---
+
+### `get_deal_fields`
+
+Discover available fields and custom properties for deals in a specific pipeline. Each pipeline can have different custom fields.
+
+<Expandable title="Parameters">
+  <ParamField body="pipeline_name" type="string">
+    Name or partial name of the pipeline.
+  </ParamField>
+  <ParamField body="pipeline_id" type="string">
+    Pipeline ID, if already known.
+  </ParamField>
+</Expandable>
+
+---
+
+## Signal
+
+### `get_signal_script`
+
+Get the Octolane Signal tracking script tag for your website. Returns an HTML snippet with your organization's unique public key to install in your website's `<head>`.
+
+<Expandable title="Parameters">
+  No parameters required.
+</Expandable>
+
+---
+
+## Workspace
+
+Tools for managing your workspace and team.
+
+### `list_workspace_members`
+
+List all members in the workspace with their name, email, role, and avatar.
+
+<Expandable title="Parameters">
+  <ParamField body="search_name" type="string">
+    Filter by name to find a specific member.
+  </ParamField>
+</Expandable>
+
+---
+
+### `invite_team_member`
+
+Invite one or more people to your workspace by email. Requires admin or owner role.
+
+<Expandable title="Parameters">
+  <ParamField body="members" type="array" required>
+    List of people to invite (max 10). Each entry has:
+    - `email` (string, required) — email address of the person to invite
+    - `role` (string) — `member` (default), `admin`, or `owner`
+  </ParamField>
+</Expandable>
+
+<Expandable title="Example">
+
+**Prompt:** "Invite sarah@company.com as an admin"
+
+**Tool call:**
+```json
+{
+  "tool": "invite_team_member",
+  "arguments": {
+    "members": [
+      { "email": "sarah@company.com", "role": "admin" }
+    ]
+  }
 }
 ```
 

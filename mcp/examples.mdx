@@ -16,75 +16,71 @@ Start your day with a complete picture of your pipeline without opening the Octo
 
 **Prompt:**
 ```
-Show me deals closing this month. Which ones are at risk?
-What's gone stale? Give me the quick version.
+Show me our pipeline overview. Which deals are stale?
+What's gone quiet in the last 2 weeks?
 ```
 
 **What Octolane does behind the scenes:**
-1. Calls `get_pipeline` with `period: this_month` to get the pipeline overview
-2. Calls `search_deals` filtered by close date and stale status
-3. Cross-references deal activity to identify at-risk opportunities
+1. Calls `get_pipeline_overview` to get the pipeline summary with deal counts and values per stage
+2. Calls `search_deals` with `days_without_activity: 14` to find stale deals
+3. Presents both in a combined view
 
 **What you get back:**
 
-> **7 deals closing this month - $423K total value**
+> **Pipeline: Sales**
 >
-> **On track (4 deals - $285K):**
-> - Stripe Enterprise Plan - $120K - Negotiation - last activity yesterday
-> - Linear Team Plan - $65K - Proposal sent 3 days ago
-> - Ramp Annual Contract - $55K - Meeting scheduled for Thursday
-> - Webflow Pro - $45K - Contract sent, waiting on signature
+> | Stage | Deals | Total Value | Avg Size |
+> |-------|-------|-------------|----------|
+> | New Lead | 8 | $156K | $19.5K |
+> | Meeting Scheduled | 5 | $210K | $42K |
+> | Proposal | 4 | $185K | $46.3K |
+> | Negotiation | 3 | $196K | $65.3K |
+> | Closed-Won | 3 | $100K | $33.3K |
 >
-> **At risk (3 deals - $138K):**
-> - Notion Annual - $85K - No activity in 14 days, proposal stage
-> - Figma Team - $42K - Meeting was cancelled, no follow-up sent
-> - Vercel Startup Plan - $11K - Went quiet after demo, 18 days ago
->
-> The Follow-Up Agent has drafts ready for Notion and Vercel. Check your approval queue.
+> **Stale deals (no activity in 14+ days):**
+> - Notion Annual - $85K - Proposal - 14 days stale
+> - Figma Team - $42K - Meeting Scheduled - 11 days stale
+> - Vercel Startup Plan - $11K - New Lead - 18 days stale
 
 ---
 
-## 2. Website visitor response
+## 2. Website visitor intelligence
 
 See who's checking out your site and act on it immediately.
 
 **Prompt:**
 ```
-What companies visited our site today? Show me the ones that match
-our ICP. For the top 3, pull up their company details and tell me
-if we already have any contacts or deals with them.
+What companies visited our site recently? Show me the top ones
+with their details. Do we already have any contacts or deals
+with them?
 ```
 
 **What Octolane does behind the scenes:**
-1. Calls `get_signal_visitors` with `period: today` and sorts by ICP score
-2. For the top 3 matches, calls `search_companies` and `search_contacts` to check for existing records
-3. Compiles a combined view with company enrichment data
+1. Calls `get_signal_visitors` to get recent visitors with intent scores
+2. For the top matches, calls `search_accounts` and `search_contacts` to check for existing records
+3. Compiles a combined view with enrichment data
 
 **What you get back:**
 
-> **12 companies visited today. 5 match your ICP (score > 70).**
+> **Recent website visitors:**
 >
-> **Top 3:**
->
-> **1. Linear (94% ICP match)**
+> **1. Linear** (linear.app)
+> - Intent score: 94 | 4 visits this week
 > - 120 employees, Developer Tools, Series B ($52M raised)
-> - Viewed: /pricing (3x), /features, /vs-attio
 > - No existing contacts or deals
-> - *High intent - 3 pricing page views in one session*
+> - *High intent - multiple visits*
 >
-> **2. Ramp (87% ICP match)**
+> **2. Ramp** (ramp.com)
+> - Intent score: 87 | 2 visits
 > - 800 employees, Fintech, Series D ($750M raised)
-> - Viewed: /pricing, /vs-hubspot
 > - Existing contact: Jake Morrison (jake@ramp.com) - no active deal
-> - *Already in your CRM but no deal created yet*
 >
-> **3. Retool (82% ICP match)**
+> **3. Retool** (retool.com)
+> - Intent score: 82 | 3 visits
 > - 450 employees, Developer Tools, Series C ($45M raised)
-> - Viewed: /features, /integrations
 > - No existing contacts or deals
-> - *Browsing product features, early research stage*
 >
-> Want me to create deals for any of these?
+> Want me to create accounts and deals for any of these?
 
 ---
 
@@ -95,211 +91,162 @@ Pull up everything you need before a call without clicking through 5 different C
 **Prompt:**
 ```
 I have a call with Stripe tomorrow. Pull up everything we know about
-them - the deal status, all contacts we've talked to, recent email
-activity, and any action items from past meetings.
+them - the deal status, all contacts, recent emails, and any notes
+or tasks.
 ```
 
 **What Octolane does behind the scenes:**
-1. Calls `search_companies` to find Stripe
-2. Calls `get_company` with all includes (contacts, deals, signal data)
-3. Calls `get_deal` for the active deal with full activity timeline
-4. Filters the activity feed for recent emails and meeting notes
+1. Calls `search_accounts` with `query: "Stripe"` to find the account
+2. Calls `search_deals` with `account_name: "Stripe"` to get active deals
+3. Calls `get_deal_details` on the active deal for full context
+4. Calls `search_emails` with `account_domain: "stripe.com"` for recent correspondence
+5. Calls `get_notes` with `account_name: "Stripe"` for logged notes
+6. Calls `get_tasks` for open tasks linked to the deal
 
 **What you get back:**
 
 > **Stripe - Enterprise Plan**
 > - **Stage:** Negotiation | **Value:** $120K | **Close date:** April 15
-> - **Owner:** Sarah (you) | **Days in stage:** 5
+> - **Owner:** Sarah (you) | **Next steps:** Send SOC 2 report
 >
 > **Contacts:**
-> - Sarah Chen, VP of Sales (sarah@stripe.com) - primary contact, 14 emails exchanged
-> - David Park, Head of RevOps (david@stripe.com) - joined last 2 meetings
-> - Lisa Wu, Procurement (lisa@stripe.com) - CC'd on contract discussion
+> - Sarah Chen, VP of Sales (sarah@stripe.com) - primary contact
+> - David Park, Head of RevOps (david@stripe.com) - technical evaluator
+> - Lisa Wu, Procurement (lisa@stripe.com) - CC'd on contract thread
 >
-> **Recent activity:**
-> - Mar 6: Email from Sarah Chen - "Need SOC 2 report before procurement can sign off"
-> - Mar 4: 45-min meeting - discussed pricing tiers, they want custom enterprise pricing
-> - Mar 1: Proposal sent ($120K/yr for 50 seats)
-> - Feb 27: Demo call - David Park attended, asked about API access
+> **Recent emails:**
+> - Mar 6: From Sarah Chen - "Need SOC 2 report before procurement can sign off"
+> - Mar 4: To Sarah Chen - Pricing follow-up after meeting
+> - Mar 1: To Sarah Chen - Proposal sent ($120K/yr for 50 seats)
 >
-> **Open action items:**
-> - Send SOC 2 report to Lisa Wu (from Mar 6 email)
-> - Follow up on custom pricing structure (from Mar 4 meeting)
-> - Share API documentation with David Park (from Feb 27 demo)
+> **Notes:**
+> - Mar 4: "Meeting notes - discussed custom pricing, David wants SSO included"
+> - Feb 27: "Demo call - David asked about API access and webhooks"
 >
-> **Signal:** Stripe visited your docs 3 times this week (API reference, security page)
+> **Open tasks:**
+> - Send SOC 2 report to Lisa Wu (High priority, due Apr 10)
+> - Share API docs with David Park (Medium priority)
 
 ---
 
-## 4. Pipeline reporting
+## 4. Deal creation flow
 
-Get the numbers your VP of Sales asks for in 10 seconds instead of building a report.
+Create a deal with all the linked records in one conversation.
 
 **Prompt:**
 ```
-What's our pipeline value this quarter compared to last quarter?
-Break it down by stage. Which rep has the most deals and which
-rep has the most stale deals?
+Just had a great call with the CTO of Linear. Create a deal -
+$65K annual contract, meeting scheduled stage. Main contact is
+karri@linear.app. Add a note with the call summary.
 ```
 
 **What Octolane does behind the scenes:**
-1. Calls `get_pipeline` for `this_quarter` and `last_quarter`
-2. Calls `ask_pipeline` for rep-level performance data
-3. Compares the two periods and calculates deltas
+1. Calls `create_account` with `domain: "linear.app"` (auto-enriched)
+2. Calls `create_contact` with `email: "karri@linear.app"` (auto-enriched)
+3. Calls `get_pipeline_overview` to get the pipeline ID
+4. Calls `list_pipeline_stages` to find the "Meeting Scheduled" stage ID
+5. Calls `create_deal` with all the details
+6. Calls `create_note` linked to the new deal
 
 **What you get back:**
 
-> **Q1 2026 vs Q4 2025:**
+> **Created:**
+> - Account: Linear (linear.app) - auto-enriched with company data
+> - Contact: karri@linear.app - auto-enriched with job title and profile
+> - Deal: "Linear - Annual Contract" - $65K - Meeting Scheduled
+> - Note: Call summary logged on the deal
 >
-> | Stage | Q1 2026 | Q4 2025 | Change |
-> |-------|---------|---------|--------|
-> | New Lead | $156K (8 deals) | $120K (6 deals) | +30% |
-> | Meeting Scheduled | $210K (5 deals) | $180K (4 deals) | +17% |
-> | Proposal | $185K (4 deals) | $195K (5 deals) | -5% |
-> | Negotiation | $196K (3 deals) | $145K (3 deals) | +35% |
-> | Closed-Won | $100K (3 deals) | $340K (8 deals) | -71% |
->
-> **Total pipeline:** $847K (Q1) vs $980K (Q4) - down 14%, but it's early in the quarter.
->
-> **Rep breakdown:**
-> - **Sarah:** 9 deals, $380K total - 0 stale
-> - **Mike:** 8 deals, $290K total - 3 stale (oldest: 18 days)
-> - **Alex:** 6 deals, $177K total - 1 stale
->
-> Mike has 3 stale deals. The Follow-Up Agent has 2 drafts ready for his queue.
+> The Follow-Up Agent is now monitoring this deal for stale conversations.
 
 ---
 
-## 5. Lead qualification
+## 5. Email and meeting history
 
-A new lead comes in and you want to know everything about them before responding.
+Look up your communication history with any contact or company.
 
 **Prompt:**
 ```
-A new lead just came in from our website form - john@linearapp.com.
-What do we know about their company? Score them against our ICP.
-Do we have any existing contacts or deals with them?
+Show me all emails and meetings with Notion in the last month.
+What was the last thing we discussed?
 ```
 
 **What Octolane does behind the scenes:**
-1. Calls `search_contacts` to check if john@linearapp.com exists
-2. Calls `search_companies` for linear.app to check for existing records
-3. Calls `get_signal_visitors` to check if Linear has been visiting the site
-4. Cross-references against ICP criteria
+1. Calls `search_emails` with `account_domain: "notion.so"` to find email threads
+2. Calls `search_meetings` with `query: "Notion"` to find meeting records
+3. Combines and sorts by date
 
 **What you get back:**
 
-> **Linear (linear.app) - 94% ICP match**
+> **Emails with Notion (last 30 days):**
+> - Mar 6: To sarah@notion.so - Proposal follow-up (no reply)
+> - Feb 22: From sarah@notion.so - "Looks good, let me loop in procurement"
+> - Feb 20: To sarah@notion.so - Proposal sent ($85K annual)
 >
-> **Company:**
-> - 120 employees | Developer Tools | San Francisco
-> - Series B - $52M raised (Sequoia, Accel)
-> - Tech stack: React, TypeScript, PostgreSQL, Vercel
+> **Meetings:**
+> - Feb 18: Discovery call with Sarah - 30 min
+>   Summary: Discussed pain points with current CRM, interested in AI features
 >
-> **ICP scoring:**
-> - Company size: 120 employees (target: 50-500) ✓
-> - Industry: Developer Tools ✓
-> - Funding: Series B ✓
-> - Location: US ✓
-> - Score: **94/100**
->
-> **Existing records:** None - new prospect
->
-> **Signal activity:** Linear visited your site 4 times this week
-> - Pages viewed: /, /pricing (3x), /features, /vs-hubspot
-> - High-intent signal: repeated pricing page views
->
-> **Contact (from form):**
-> - John Martinez, john@linearapp.com
-> - Title not yet enriched (enrichment pending)
->
-> This is a strong lead. They match your ICP, they've been researching pricing, and they submitted a form. Want me to create a deal?
+> **Last interaction:** Proposal follow-up email on Mar 6 - no reply in 8 days. This deal may need attention.
 
 ---
 
-## 6. Deal deep-dive
+## 6. Task management
 
-Get the full story on a deal without clicking through 10 screens.
+Manage your follow-ups and action items from your AI assistant.
 
 **Prompt:**
 ```
-Give me the complete picture on the Stripe deal. Full timeline,
-everyone involved, all emails and meetings, and what needs to
-happen next.
+What tasks do I have open? Show me what's overdue and what's
+coming up this week. Mark the Stripe SOC 2 task as done.
 ```
 
 **What Octolane does behind the scenes:**
-1. Calls `search_deals` to find the Stripe deal
-2. Calls `get_deal` with full activity timeline and contacts
-3. Calls `get_activity_feed` for the complete history
+1. Calls `get_tasks` to get all open tasks
+2. Filters by due date for overdue and this-week buckets
+3. Calls `update_task` with `completed: true` on the SOC 2 task
 
 **What you get back:**
 
-> **Stripe - Enterprise Plan**
-> - Created: Feb 15 | Stage: Negotiation | Value: $120K | Close: Apr 15
+> **Overdue (2):**
+> - Share API docs with David Park (Stripe) - due Apr 8 - Medium
+> - Follow up with Notion on proposal - due Apr 10 - High
 >
-> **People involved:**
-> - Sarah Chen (VP Sales) - your main champion, replies within hours
-> - David Park (Head of RevOps) - technical evaluator, joined last 2 meetings
-> - Lisa Wu (Procurement) - gate-keeper, needs SOC 2 before signing
+> **This week (3):**
+> - Schedule demo with Linear - due Apr 16 - Medium
+> - Send case study to Ramp - due Apr 17 - Low
+> - Review Retool pricing proposal - due Apr 18 - High
 >
-> **Full timeline:**
-> - Feb 15: Deal created by Deal Finder Agent from email thread
-> - Feb 18: First meeting - discovery call, 30 min. Sarah described pain points with HubSpot
-> - Feb 22: Email thread - pricing discussion, asked about enterprise tier
-> - Feb 27: Demo - David Park attended, asked about API and webhooks
-> - Mar 1: Proposal sent - $120K/yr for 50 seats, enterprise features
-> - Mar 4: Meeting - discussed custom pricing, David wants SSO included
-> - Mar 6: Email from Sarah - "Lisa needs SOC 2 report before procurement"
-> - Mar 7: Lisa CC'd on thread - asked about data residency
->
-> **What needs to happen:**
-> 1. Send SOC 2 report to Lisa Wu (blocker)
-> 2. Respond to data residency question (Lisa, Mar 7)
-> 3. Finalize custom pricing with SSO included (David, from Mar 4 meeting)
-> 4. Schedule follow-up call to address procurement questions
->
-> **Risk:** The deal is in good shape but procurement is a gate. Get the SOC 2 report to Lisa ASAP.
+> **Done:** Marked "Send SOC 2 report to Stripe" as complete.
 
 ---
 
-## 7. Signal intelligence sweep
+## 7. Stale deal sweep
 
-Find high-intent visitors who haven't been contacted yet.
+Find deals that need attention and take action.
 
 **Prompt:**
 ```
-Which companies visited our pricing page 3+ times this week and
-haven't been contacted yet? Show me the ones that match our ICP
-with full company details.
+Show me all deals that haven't had any activity in 2 weeks.
+For each one, show the last email and create a follow-up task.
 ```
 
 **What Octolane does behind the scenes:**
-1. Calls `get_signal_visitors` with `page_filter: "/pricing"` and `period: "this_week"`
-2. Filters for 3+ visits
-3. Calls `search_contacts` and `search_deals` to check for existing relationships
-4. Returns only companies with no prior contact
+1. Calls `search_deals` with `days_without_activity: 14`
+2. For each stale deal, calls `search_emails` with the account domain to find the last email
+3. Calls `create_task` for each stale deal with a follow-up reminder
 
 **What you get back:**
 
-> **3 companies visited /pricing 3+ times this week with no prior contact:**
+> **3 stale deals (no activity in 14+ days):**
 >
-> **1. Linear (94% ICP match)**
-> - 120 employees | Developer Tools | Series B
-> - 4 pricing page views between Mon and Fri
-> - Also viewed: /features, /vs-hubspot, /integrations
-> - No contacts in CRM, no existing deals
+> **1. Notion Annual - $85K - Proposal**
+> - Last email: Mar 6 - Proposal follow-up (no reply, 38 days ago)
+> - Task created: "Follow up with Notion on proposal" - due tomorrow - High
 >
-> **2. Loom (79% ICP match)**
-> - 200 employees | Video/Productivity | Series C
-> - 3 pricing page views, all on Wednesday
-> - Also viewed: /pricing, /security
-> - No contacts in CRM, no existing deals
+> **2. Figma Team - $42K - Meeting Scheduled**
+> - Last email: Mar 2 - Meeting confirmation (cancelled, never rescheduled)
+> - Task created: "Reschedule meeting with Figma" - due tomorrow - High
 >
-> **3. Descript (75% ICP match)**
-> - 150 employees | Media/AI | Series C
-> - 3 pricing page views spread across the week
-> - Also viewed: /features, /for-sales-teams
-> - No contacts in CRM, no existing deals
->
-> All three are strong ICP matches actively researching pricing. Want me to create prospect records and have the Outreach Agent draft messages for them?
+> **3. Vercel Startup - $11K - New Lead**
+> - Last email: Feb 25 - Intro email (no reply, 47 days ago)
+> - Task created: "Re-engage Vercel or close as lost" - due tomorrow - Medium
