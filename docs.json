@@ -153,22 +153,6 @@
         ]
       },
       {
-        "tab": "API Reference",
-        "icon": "square-terminal",
-        "groups": [
-          {
-            "group": "API Reference",
-            "pages": [
-              "api-reference/introduction",
-              "api-reference/create-opportunity",
-              "api-reference/create-account",
-              "api-reference/create-contact",
-              "api-reference/create-note"
-            ]
-          }
-        ]
-      },
-      {
         "tab": "MCP",
         "icon": "code",
         "groups": [
@@ -183,6 +167,22 @@
               "mcp/use-with-cursor",
               "mcp/authentication",
               "mcp/examples"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "icon": "square-terminal",
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/create-opportunity",
+              "api-reference/create-account",
+              "api-reference/create-contact",
+              "api-reference/create-note"
             ]
           }
         ]

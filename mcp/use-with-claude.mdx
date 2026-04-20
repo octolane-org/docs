@@ -1,126 +1,79 @@
 ---
 title: "Use Octolane with Claude"
 sidebarTitle: "Use with Claude"
-description: "Connect Octolane to Claude Desktop or Claude.ai so you can manage your CRM, query your pipeline, and command your AI sales agents directly from Claude."
+description: "Connect Octolane to Claude.ai as a custom connector so you can manage your CRM, query your pipeline, and command your AI sales agents directly from Claude."
 ---
 
 # Use Octolane with Claude
 
 Claude is the best AI assistant for working with Octolane. It handles multi-step CRM queries naturally, asks clarifying questions when needed, and presents data in clean, readable formats.
 
-## Claude Desktop setup
+<Note>
+Claude.ai custom connectors currently only work in the **web version** ([claude.ai](https://claude.ai)) — not Claude Desktop. Make sure you're set up on the web before you start.
+</Note>
+
+## Setup
 
 <Steps>
 
-<Step title="Open your config file">
+<Step title="Open Claude in your browser">
 
-Find your Claude Desktop configuration file:
-
-| OS | Path |
-|-----|------|
-| Mac | `~/Library/Application Support/Claude/claude_desktop_config.json` |
-| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
-| Linux | `~/.config/Claude/claude_desktop_config.json` |
-
-Create the file if it doesn't exist.
+Go to [claude.ai](https://claude.ai) and sign in. Custom connectors are only available in the web app today, so this step won't work from Claude Desktop.
 
 </Step>
 
-<Step title="Add the Octolane MCP server">
+<Step title="Open Settings → Connectors">
 
-Paste this configuration (replace `your-api-key` with your actual key from **Settings > Integrations > API**):
+Click your profile icon in the bottom-left corner, open **Settings**, and switch to the **Connectors** tab. Scroll to the bottom of the connector list and click **Add custom connector**.
 
-```json
-{
-  "mcpServers": {
-    "octolane": {
-      "url": "https://mcp.octolane.com/mcp",
-      "headers": {
-        "X-API-Key": "your-api-key"
-      }
-    }
-  }
-}
+</Step>
+
+<Step title="Paste your Octolane MCP server URL">
+
+Name the connector **Octolane** (or anything you like). Paste this link into the URL field:
+
+```
+https://mcp.octolane.com/mcp
 ```
 
-If you already have other MCP servers configured, add the `"octolane"` entry inside the existing `"mcpServers"` object.
+Then click **Connect**.
 
 </Step>
 
-<Step title="Restart Claude Desktop">
+<Step title="Add your Octolane MCP API key">
 
-Quit Claude Desktop completely and reopen it. You should see the Octolane tools available in the tools panel.
+You'll need a free Octolane account. Grab your MCP API key from [octolane.com/settings/mcp](https://www.octolane.com/settings/mcp) and paste it into the connector when prompted.
+
+</Step>
+
+<Step title="Enable the connector in a conversation">
+
+Connectors are enabled per-conversation. In the chat input, click the **+** button (bottom-left), open **Connectors**, and toggle **Octolane** on. You're good to go — try asking a question from the examples below.
 
 </Step>
 
 </Steps>
 
-## Claude.ai setup
-
-In Claude.ai, go to **Settings > MCP Servers > Add Server** and enter:
-
-- **Name:** Octolane
-- **URL:** `https://mcp.octolane.com/mcp`
-- **Headers:** `X-API-Key: your-api-key`
-
-The Octolane tools are available immediately in your next conversation.
-
 ## Example prompts
 
 Here are prompts that work well with Claude + Octolane. Copy and paste any of these to get started.
 
-### Pipeline review
+### Pipeline summary
 
 ```
-Show me all open deals. For each one, tell me the stage, value, owner,
-and how many days since the last activity. Flag any that look stale.
+What's my pipeline summary on Octolane?
 ```
 
-### Website visitor intelligence
+### Deal deep-dive
 
 ```
-What companies visited our pricing page this week? Show me the ones
-that match our ICP, sorted by match score. Include company size and
-industry for each.
+Can you tell me about the Acme deal?
 ```
 
-### Meeting prep
+### Draft a follow-up
 
 ```
-I have a call with Stripe tomorrow. Pull up everything we know about
-them - the deal status, all contacts we've talked to, recent email
-activity, and any action items from past meetings.
-```
-
-### Deal creation
-
-```
-Create a deal for my meeting with Notion next Tuesday. It's a $85K
-annual contract, they're at the proposal stage. Main contact is
-sarah@notion.so.
-```
-
-### Pipeline analytics
-
-```
-What's our pipeline value this quarter compared to last quarter?
-Break it down by stage. Which deals are most likely to close this month?
-```
-
-### Lead qualification
-
-```
-A new lead just came in - john@linearapp.com. What do we know about
-their company? How do they score against our ICP? Do we have any
-existing contacts or deals with them?
-```
-
-### Stale deal sweep
-
-```
-Show me all deals that haven't had any activity in the last 2 weeks.
-For each one, tell me who owns it, what stage it's in, and when the
-last email or meeting was.
+Write me a follow-up email for the Acme deal for our next meeting.
 ```
 
 ## Tips for best results
