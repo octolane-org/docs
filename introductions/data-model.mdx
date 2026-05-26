@@ -1,0 +1,50 @@
+---
+title: "The Octolane data model"
+description: "How Accounts, Contacts, Opportunities, Tasks, Meetings, and Activities relate."
+---
+
+Octolane is built around a small set of core objects. Everything you do. Every email, meeting, AI field, custom field. Extends them.
+
+## Core objects
+
+| Object | What it is | How it's created |
+|---|---|---|
+| **Account** | A company | Auto-created from every external email and meeting |
+| **Contact** | A person, linked to one or more accounts | Auto-created from email participants and meeting attendees |
+| **Opportunity** | A deal: account + value + stage + close date | Auto-detected from email patterns, or created manually |
+| **Task** | A first-class to-do with owner, due date, completion | Manual, AI-generated from meetings, or via API |
+
+## Activities
+
+Activities are the events that happen on a record's timeline. They attach to Accounts, Contacts, Opportunities, and Tasks.
+
+| Activity | What it is |
+|---|---|
+| **Email** | Inbound and outbound messages, auto-threaded to the right record |
+| **Meeting** | Calendar events, with optional recording, transcript, and recap |
+| **Note** | Free-form text written by you or your team |
+| **AI action** | Field updates, draft sends, stage changes. Every AI move logged with citation |
+
+Every record has a unified timeline showing every activity in order.
+
+## Custom fields
+
+Add any field to any standard object: text, number, date, select, multi-select, URL, currency, formula, lookup. See [Custom fields](/introductions/custom-fields).
+
+## AI fields
+
+Fields that fill themselves in by reading conversations. Describe what to track in plain English. Octolane keeps the value current. See [AI fields](/introductions/ai-fields).
+
+## Custom objects
+
+<Note>Available on the **Team** plan.</Note>
+
+Model anything beyond Accounts, Contacts, and Opportunities. Partners, Investors, Projects, Properties, Loans, Locations. Custom objects get the same treatment as standard ones: AI fields, views, automation, API access. See [Custom objects](/introductions/custom-objects).
+
+## How everything connects
+
+- A **Contact** belongs to one or more **Accounts**.
+- An **Opportunity** belongs to one **Account** and has one or more **Contacts**.
+- A **Task** can attach to an Account, Contact, or Opportunity.
+- Every **Email**, **Meeting**, **Note**, and **AI action** attaches to the relevant Account, Contact, and Opportunity automatically.
+- **Custom objects** can relate to standard objects through lookup fields.

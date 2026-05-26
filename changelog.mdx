@@ -1,16 +1,366 @@
 ---
 title: "Changelog"
 sidebarTitle: "Changelog"
-description: "What's new in Octolane — product updates, new features, improvements, and bug fixes. We ship daily."
+description: "What's new in Octolane. Product updates, new features, improvements, and bug fixes. We ship daily."
 rss: true
 ---
+
+<Update label="May 25, 2026" description="AI Memory" tags={["New Features"]}>
+  ### AI Memory: teach Octolane about your business once
+
+  Personalize every AI draft, field update, and report with workspace-wide memory.
+
+  - New Settings , AI Memory page. Add facts about your ICP, tone, abbreviations, and product names
+  - Memory blocks are referenced in every AI Chat answer and approval draft
+  - Per-user memory layered on top of workspace memory
+</Update>
+
+<Update label="May 22, 2026" description="Signal" tags={["Improvements"]}>
+  ### Signal: ICP fit scoring v2
+
+  Reworked the buying-intent score to weight in account-level firmographics and historical win rates.
+
+  - Score now factors in industry, headcount, and funding stage against your closed-won pattern
+  - "Why this score" breakdown shows the exact signals that contributed
+</Update>
+
+<Update label="May 21, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed duplicate contact creation when an email had both `to` and `cc` overlap
+  - Fixed Calendar invites with no title showing as "Untitled" on the timeline
+  - Fixed AI Chat losing context when switching between two records mid-conversation
+</Update>
+
+<Update label="May 20, 2026" description="Meeting Recorder" tags={["New Features"]}>
+  ### Meeting recorder: speaker analytics
+
+  Every recap now includes per-speaker talk time, with a visual timeline of who spoke when.
+
+  - Click any segment on the timeline to jump to that moment
+  - Talk-time ratio surfaced on the deal record as an AI field
+</Update>
+
+<Update label="May 19, 2026" description="Performance" tags={["Performance"]}>
+  - 40% faster initial sync for new workspaces (median time-to-first-deal: 4.2 min , 2.5 min)
+  - Pipeline view load time down from 1.8s to 0.6s on workspaces with 5,000+ opportunities
+</Update>
+
+<Update label="May 18, 2026" description="Pipelines" tags={["Improvements"]}>
+  - Drag and drop reordering of pipeline stages
+  - Per-stage default probability that AI Chat uses for forecasts
+  - Bulk move deals between stages from any view
+</Update>
+
+<Update label="May 15, 2026" description="MCP" tags={["New Features"]}>
+  ### MCP: new tools for custom objects
+
+  Custom objects are now fully exposed over MCP. Claude and Cursor can read, create, and update any custom object in your workspace.
+
+  - `list_custom_objects`, `get_custom_object`, `create_custom_object_record`, `update_custom_object_record`
+  - Automatic schema introspection so the AI knows your fields without you describing them
+</Update>
+
+<Update label="May 14, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed Stripe integration occasionally double-counting MRR for annual subscriptions
+  - Fixed AI field re-runs not honoring the manual-lock flag
+  - Fixed Slack notifications going to wrong channel after workspace rename
+</Update>
+
+<Update label="May 13, 2026" description="AI Chat" tags={["Improvements"]}>
+  - AI Chat now streams partial answers for long queries instead of waiting for completion
+  - Added `/forecast` slash command shortcut
+  - Inline citations now show on hover instead of click
+</Update>
+
+<Update label="May 12, 2026" description="Approvals" tags={["Improvements"]}>
+  - Auto-approve thresholds are now per-action-type (field updates, drafts, stage changes, enrichment)
+  - Bulk approve and bulk reject from any filter
+  - Keyboard shortcuts `A` (approve next) and `R` (reject next) in the queue
+</Update>
+
+<Update label="May 11, 2026" description="Email" tags={["New Features"]}>
+  ### Email templates and snippets
+
+  Save and reuse email blocks across your team. Insert with `/` in the composer.
+
+  - Variables auto-fill from the linked record: `{{contact.first_name}}`, `{{account.name}}`
+  - Workspace-wide or personal templates
+</Update>
+
+<Update label="May 8, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed Meeting Recorder occasionally joining cancelled meetings
+  - Fixed enrichment timing out on companies with very long historical funding rounds
+  - Fixed CSV import preview not respecting custom field order
+</Update>
+
+<Update label="May 7, 2026" description="Tasks" tags={["Improvements"]}>
+  - Recurring tasks (daily, weekly, custom cadence)
+  - Snooze a task to a specific time of day, not just date
+  - Tasks now surface in AI Chat: "What tasks do I have due today?"
+</Update>
+
+<Update label="May 6, 2026" description="Signal" tags={["Improvements"]}>
+  - First-party domain support: track traffic across multiple owned domains under one workspace
+  - Better resolution for visitors behind corporate VPNs
+  - New "returning visitors" filter
+</Update>
+
+<Update label="May 5, 2026" description="Migration" tags={["New Features"]}>
+  ### Migration tools: HubSpot one-click import
+
+  Connect HubSpot, pick what to bring, click go. We map Companies, Contacts, Deals, and Engagements into Accounts, Contacts, Opportunities, and Activities.
+
+  - Pipeline stages map automatically
+  - Custom properties become custom fields
+  - Re-run anytime to pull deltas
+</Update>
+
+<Update label="May 4, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed time zone display in meeting recaps for Europe/London users
+  - Fixed Zapier triggers firing twice for stage changes via API
+  - Fixed search not matching across custom field values
+</Update>
+
+<Update label="May 1, 2026" description="Reports" tags={["Improvements"]}>
+  - "Pin to dashboard" for any AI Chat-generated report
+  - Scheduled email delivery for any saved report
+  - Slack delivery for any saved report
+</Update>
+
+<Update label="April 30, 2026" description="Polish" tags={["Polish"]}>
+  - Refreshed empty states across the app with clearer next-step CTAs
+  - Improved color contrast on stage badges for accessibility
+  - New keyboard shortcut hint overlay (`?` to open)
+</Update>
+
+<Update label="April 29, 2026" description="API" tags={["Improvements"]}>
+  - Added `/v1/opportunities/search` with full filter language support
+  - Bumped default rate limits 5x for paying workspaces
+  - New webhook event: `opportunity.stage_changed`
+</Update>
+
+<Update label="April 28, 2026" description="AI Fields" tags={["Improvements"]}>
+  - AI fields now show inline source citations on hover (which email / meeting / note)
+  - One-click revert with "this was wrong" feedback. Octolane learns from corrections
+  - Re-run all AI fields on a record from the right rail
+</Update>
+
+<Update label="April 27, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed Calendar bot joining personal calendar events when only work account was connected
+  - Fixed @mentions sometimes not notifying the tagged teammate
+  - Fixed export CSV missing the last row on large datasets
+</Update>
+
+<Update label="April 24, 2026" description="Slack" tags={["New Features"]}>
+  ### Slack app (beta) for Business plan
+
+  Bring Octolane into Slack.
+
+  - Ask AI Chat any question, get the answer in-thread
+  - Create opportunities, tasks, and notes from Slack
+  - Approve queued actions from the channel
+  - `@octolane` mentions in any channel
+</Update>
+
+<Update label="April 23, 2026" description="Performance" tags={["Performance"]}>
+  - Reduced AI Chat first-token latency from 1.4s to 0.7s
+  - Cut webhook delivery time p95 from 2.1s to 0.4s
+</Update>
+
+<Update label="April 22, 2026" description="Pipelines" tags={["New Features"]}>
+  ### Multiple pipelines
+
+  Run sales, expansion, partnerships, and customer success in separate pipelines.
+
+  - Each opportunity lives in exactly one pipeline at a time
+  - Clone deals across pipelines (e.g. New Business , Expansion on renewal)
+  - Per-pipeline forecast in AI Chat
+</Update>
+
+<Update label="April 21, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed Gmail signature occasionally getting parsed as the email body
+  - Fixed Signal script not initializing inside iframes
+  - Fixed "no activity" filter excluding deals with only AI-generated activity
+</Update>
+
+<Update label="April 20, 2026" description="MCP" tags={["Improvements"]}>
+  - One-click install link for Claude Desktop
+  - New `search_meetings` and `get_meeting_transcript` tools
+  - Connection status indicator in workspace settings
+</Update>
+
+<Update label="April 17, 2026" description="Activity feed" tags={["Improvements"]}>
+  - Filter activity feed by type (email, meeting, note, AI action, stage change)
+  - Pin any activity to keep it at the top
+  - Date range filter on every timeline
+</Update>
+
+<Update label="April 16, 2026" description="Imports" tags={["Improvements"]}>
+  - CSV import now auto-detects 80% of column mappings, up from 60%
+  - Preview now shows duplicate detection results before commit
+  - Undo any import within 24 hours
+</Update>
+
+<Update label="April 15, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed `/forecast` returning stale data after stage changes within the same session
+  - Fixed contact dedupe merging across different domains in rare cases
+  - Fixed CSV exports failing when a cell contained a literal `null` string
+</Update>
+
+<Update label="April 14, 2026" description="Meeting Recorder" tags={["Improvements"]}>
+  - Three new auto-record modes: All meetings, External only, Manually invite
+  - Bot can be renamed per workspace
+  - Meeting recap now includes a "next steps" section pushed into Tasks
+</Update>
+
+<Update label="April 13, 2026" description="Signal" tags={["Improvements"]}>
+  - New Leads view replaces the old Signal dashboard
+  - Bulk add to outreach drafts from the Leads view
+  - Visitor enrichment now includes browser, device, country, and tech stack
+</Update>
+
+<Update label="April 10, 2026" description="Polish" tags={["Polish"]}>
+  - Sidebar groups now remember their collapsed state across sessions
+  - Faster page transitions across the app
+  - New onboarding tour for first-time workspaces
+</Update>
+
+<Update label="April 9, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed AI Chat occasionally hallucinating opportunity amounts that didn't exist
+  - Fixed Calendar permissions prompt looping after granting
+  - Fixed Spanish, French, and German diacritics breaking search
+</Update>
+
+<Update label="April 8, 2026" description="API" tags={["New Features"]}>
+  ### Webhooks v2
+
+  - 12 new event types covering every object lifecycle
+  - HMAC-signed payloads
+  - Replay any failed delivery from the dashboard
+</Update>
+
+<Update label="April 7, 2026" description="Custom Objects" tags={["New Features"]}>
+  ### Custom objects (Team plan)
+
+  Model anything beyond Accounts, Contacts, and Opportunities. Partners, Investors, Projects, Properties, Loans.
+
+  - Full AI field support
+  - Lookup relationships to standard or other custom objects
+  - Full API and MCP access
+</Update>
+
+<Update label="April 3, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed mobile sidebar getting stuck open after navigation
+  - Fixed AI enrichment occasionally writing LinkedIn URL into the wrong field
+  - Fixed search highlighting carrying over to the wrong record after switching
+</Update>
+
+<Update label="April 2, 2026" description="Forecasting" tags={["New Features"]}>
+  ### Forecasting in AI Chat
+
+  Ask AI Chat for a forecast and it weighs every deal using real conversation signals, not just stage averages.
+
+  - Commit / best case / pipeline coverage
+  - Per-rep, per-pipeline, per-segment slicing
+  - "Why is this deal in commit?" explanation per row
+</Update>
+
+<Update label="April 1, 2026" description="AI Chat" tags={["Improvements"]}>
+  - AI Chat can now write to multiple records in one command ("update all deals in negotiation to add a follow-up task for Friday")
+  - Undo any AI Chat action with `Cmd+Z`
+  - History view to replay past AI Chat sessions
+</Update>
+
+<Update label="March 31, 2026" description="Performance" tags={["Performance"]}>
+  - 60% reduction in memory usage for the meeting recorder bot
+  - Faster enrichment fan-out (5x more concurrent enrichment jobs)
+</Update>
+
+<Update label="March 30, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed AI Chat truncating long answers in the inline preview
+  - Fixed mention notifications repeating after the same person is mentioned twice in a thread
+  - Fixed time-on-page metric in Signal counting tab-out time
+</Update>
+
+<Update label="March 27, 2026" description="Views" tags={["Improvements"]}>
+  - Group by any field, including AI fields
+  - Save views with a custom icon and color
+  - Share view across the workspace with one click
+</Update>
+
+<Update label="March 26, 2026" description="Settings" tags={["Improvements"]}>
+  - Reorganized Settings into Profile, Workspace, Members, Integrations, Billing, AI
+  - SAML SSO setup wizard (Business plan)
+  - Audit log for workspace owner actions
+</Update>
+
+<Update label="March 25, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed Gmail sync occasionally missing the latest message in a long thread
+  - Fixed PostHog integration mapping events to wrong account when same person at two companies
+  - Fixed account merge keeping the older logo instead of the better one
+</Update>
+
+<Update label="March 24, 2026" description="Email" tags={["Improvements"]}>
+  - Composer now drafts follow-ups with full conversation context, not just the last message
+  - Send-later from the composer
+  - Email open and reply tracking surfaced on the timeline
+</Update>
+
+<Update label="March 23, 2026" description="Notes" tags={["Improvements"]}>
+  - Notes now support full Markdown, including code blocks and tables
+  - @mention any record (not just teammates) to link records inline
+  - Edit history visible on hover
+</Update>
+
+<Update label="March 20, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed onboarding flow occasionally hanging at the "enrichment" step
+  - Fixed AI fields showing stale values after manual edit
+  - Fixed Slack OAuth redirect failing for workspaces with custom subdomains
+</Update>
+
+<Update label="March 19, 2026" description="Polish" tags={["Polish"]}>
+  - New empty states with example data
+  - Streamlined onboarding from 12 steps to 6
+  - Better error messages across the app
+</Update>
+
+<Update label="March 18, 2026" description="Imports" tags={["New Features"]}>
+  ### Salesforce and Pipedrive importers
+
+  - Step-by-step migration wizard for both
+  - Automatic field mapping with manual override
+  - Idempotent re-runs to pull deltas during a side-by-side period
+</Update>
+
+<Update label="March 17, 2026" description="Approvals" tags={["Improvements"]}>
+  - "Reject with reason" so Octolane learns from corrections
+  - Filter approval queue by action type and confidence
+  - Daily digest email of queue size and oldest items
+</Update>
+
+<Update label="March 16, 2026" description="MCP" tags={["Improvements"]}>
+  - Per-tool permission scopes (read-only, read-write, full)
+  - Connection tested every 60s with auto-reconnect
+  - New `list_views` and `run_view` tools
+</Update>
+
+<Update label="March 13, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed Calendar sync occasionally missing recurring meetings
+  - Fixed AI Chat citing emails that had been deleted
+  - Fixed search not indexing notes added in the last 60s
+</Update>
+
+<Update label="March 12, 2026" description="AI Chat" tags={["Improvements"]}>
+  - Faster response times for short queries (median 800ms , 400ms)
+  - Added contextual examples when AI Chat opens on an empty input
+  - Better handling of ambiguous account references ("Acme" when there are two)
+</Update>
 
 <Update label="March 11, 2026" description="MCP Server" tags={["New Features"]}>
   ### MCP Server: Use Octolane from Cursor, Claude & ChatGPT
 
-  Launched Octolane MCP server — interact with your CRM from any AI tool that supports MCP.
+  Launched Octolane MCP server. Interact with your CRM from any AI tool that supports MCP.
 
-  - Supported tools: search deals, create contacts, update pipeline stages, add notes — all via natural language
+  - Supported tools: search deals, create contacts, update pipeline stages, add notes. All via natural language
   - Works with Cursor, Claude Desktop, and ChatGPT out of the box
   - Published quickstart guides for each platform
 </Update>
@@ -48,25 +398,25 @@ rss: true
 
   - You can now set per-pipeline timing rules for when the Follow-Up Agent drafts follow-ups (e.g., 3 days for hot deals, 2 weeks for enterprise)
   - Added "urgency" indicator to the approval queue so you can prioritize what to review first
-  - Follow-Up Agent now respects timezone preferences — drafts are timed to land during the recipient's working hours
+  - Follow-Up Agent now respects timezone preferences. Drafts are timed to land during the recipient's working hours
 </Update>
 
 <Update label="March 6, 2026" description="AI Chat" tags={["Improvements"]}>
   ### AI Chat improvements
 
   - AI Chat now understands multi-step instructions: "Find all stale deals over $10K and draft follow-ups for each one"
-  - Faster response times for pipeline queries — 2x speed improvement on large datasets
-  - Added contextual suggestions — AI Chat now proactively suggests follow-up questions based on your query
+  - Faster response times for pipeline queries. 2x speed improvement on large datasets
+  - Added contextual suggestions. AI Chat now proactively suggests follow-up questions based on your query
 </Update>
 
 <Update label="March 5, 2026" description="Signal" tags={["New Features"]}>
   ### Signal: Page-level tracking
 
-  Signal now shows exactly which pages a visiting company viewed — not just that they visited your site.
+  Signal now shows exactly which pages a visiting company viewed. Not just that they visited your site.
 
   - New "Pages Viewed" column in the Signal dashboard with time-on-page data
   - Session replay links for high-value visitors (requires web analytics integration)
-  - Page-level data feeds into ICP scoring — pricing page visits boost the score
+  - Page-level data feeds into ICP scoring. Pricing page visits boost the score
 </Update>
 
 <Update label="March 4, 2026" description="WhatsApp" tags={["New Features"]}>
@@ -75,7 +425,7 @@ rss: true
   - Sync WhatsApp conversations into your CRM automatically
   - Deal Finder Agent now detects deals from WhatsApp threads
   - WhatsApp messages appear in the Activity Feed on contact and deal records
-  - Two-way sync — reply to WhatsApp messages directly from the deal record
+  - Two-way sync. Reply to WhatsApp messages directly from the deal record
 </Update>
 
 <Update label="March 3, 2026" description="Approval Queue" tags={["Improvements"]}>
@@ -90,7 +440,7 @@ rss: true
 <Update label="March 2, 2026" description="Outreach Agent" tags={["New Features"]}>
   ### Outreach Agent: A/B testing
 
-  - Outreach Agent now supports A/B message variants — define two approaches and let the agent alternate
+  - Outreach Agent now supports A/B message variants. Define two approaches and let the agent alternate
   - Performance tracking per variant: open rates, reply rates, meeting booked rates
   - Winning variant auto-selected after statistical significance reached (configurable sample size)
 </Update>
@@ -110,7 +460,7 @@ rss: true
   New REST API for pushing data into Octolane from any source.
 
   - Four endpoints: Create Opportunity, Create Account, Create Contact, Create Note
-  - Automatic deduplication — safe to call multiple times without creating duplicates
+  - Automatic deduplication. Safe to call multiple times without creating duplicates
   - Published full API reference documentation with interactive playground
   - Rate limits: 1,000 requests/minute on Pro, 10,000 on Enterprise
 </Update>
@@ -130,14 +480,14 @@ rss: true
 
   - Connect LinkedIn to enrich contacts with profile data, job titles, and company info
   - LinkedIn data now feeds into the Outreach Agent for more personalized messages
-  - Mutual connections surfaced on contact records — useful for warm intros
+  - Mutual connections surfaced on contact records. Useful for warm intros
   - LinkedIn activity (posts, comments) tracked for key contacts
 </Update>
 
 <Update label="February 25, 2026" description="AI Fields" tags={["New Features"]}>
   ### Custom AI Fields
 
-  Create fields that fill themselves in — describe what you want to track in plain English and Octolane extracts it from your conversations.
+  Create fields that fill themselves in. Describe what you want to track in plain English and Octolane extracts it from your conversations.
 
   - Supports deal, contact, and company objects
   - Examples: budget range, buying timeline, competitor mentions, decision maker
@@ -147,7 +497,7 @@ rss: true
 <Update label="February 24, 2026" description="Follow-Up Agent" tags={["Improvements"]}>
   ### Follow-Up Agent: Tone matching improvements
 
-  - Improved voice matching — the Follow-Up Agent now better captures your email style, including greeting patterns, sign-offs, and sentence length
+  - Improved voice matching. The Follow-Up Agent now better captures your email style, including greeting patterns, sign-offs, and sentence length
   - Added "Preview as sent" view in the approval queue
   - Side-by-side comparison: your original emails vs. agent-drafted follow-ups for calibration
 </Update>
@@ -182,7 +532,7 @@ rss: true
   ### Onboarding: Guided setup wizard
 
   - New step-by-step setup wizard for first-time users
-  - Connect Gmail → Import contacts → Configure pipeline → Install Signal → Enable agents — all in under 10 minutes
+  - Connect Gmail → Import contacts → Configure pipeline → Install Signal → Enable agents. All in under 10 minutes
   - Progress tracker in the sidebar until setup is complete
   - Contextual tips and sample data to help users understand each feature
 </Update>
@@ -198,10 +548,10 @@ rss: true
 <Update label="February 18, 2026" description="Pipeline" tags={["New Features"]}>
   ### Pipeline: Auto-stage advancement
 
-  - Deals can now automatically advance stages based on real signals — meeting booked, proposal sent, contract discussed
+  - Deals can now automatically advance stages based on real signals. Meeting booked, proposal sent, contract discussed
   - Configurable per pipeline in Settings → Pipeline → Automation Rules
   - Audit log shows exactly which signal triggered each stage change
-  - Manual override always available — automation never blocks human judgment
+  - Manual override always available. Automation never blocks human judgment
 </Update>
 
 <Update label="February 17, 2026" description="Deal Finder" tags={["Improvements"]}>
@@ -238,14 +588,14 @@ rss: true
   - AI Notes can now summarize entire email threads into a concise deal update
   - One-click "Summarize thread" button on any email conversation
   - Summaries are saved as notes on the deal record
-  - Supports threads with 50+ messages — compresses to key decisions and next steps
+  - Supports threads with 50+ messages. Compresses to key decisions and next steps
 </Update>
 
 <Update label="February 13, 2026" description="AI Enrichment" tags={["Improvements"]}>
   ### AI Enrichment: Funding data
 
   - Contact and company enrichment now includes funding history, investors, and total raised
-  - Data sourced from the live web — not a static database
+  - Data sourced from the live web. Not a static database
   - Funding stage classification: Pre-seed, Seed, Series A–E, Public
   - Revenue estimates for private companies based on employee count and funding
 </Update>
@@ -272,7 +622,7 @@ rss: true
 <Update label="February 10, 2026" description="Search" tags={["Improvements"]}>
   ### Search: Global search overhaul
 
-  - Completely rebuilt global search — now searches across deals, contacts, companies, notes, emails, and meetings simultaneously
+  - Completely rebuilt global search. Now searches across deals, contacts, companies, notes, emails, and meetings simultaneously
   - Fuzzy matching handles typos and partial names
   - Search results ranked by relevance with context snippets
   - Keyboard shortcut: `Cmd+K` to open search from anywhere
@@ -307,9 +657,9 @@ rss: true
 <Update label="February 6, 2026" description="Custom Data Model" tags={["Improvements"]}>
   ### Custom Data Model: Relationships
 
-  - Define custom relationships between any objects — deals to deals, contacts to companies, custom objects to anything
+  - Define custom relationships between any objects. Deals to deals, contacts to companies, custom objects to anything
   - Relationship types: parent-child, related, influenced-by
-  - Relationship data feeds into AI context — agents understand your full deal graph
+  - Relationship data feeds into AI context. Agents understand your full deal graph
 </Update>
 
 <Update label="February 5, 2026" description="Custom Data Model" tags={["New Features"]}>
@@ -326,7 +676,7 @@ rss: true
 
   - Complete frontend rewrite for pipeline and list views
   - Pipeline board loads in under 500ms for workspaces with 10K+ deals
-  - Infinite scroll replaces pagination — smoother browsing experience
+  - Infinite scroll replaces pagination. Smoother browsing experience
   - Reduced memory usage by 40% on large datasets
 </Update>
 
@@ -352,7 +702,7 @@ rss: true
   ### Signal: Google Tag Manager support
 
   - Install Signal via Google Tag Manager with one-click setup
-  - No code changes needed — just paste the tag ID
+  - No code changes needed. Just paste the tag ID
   - GTM template published in the GTM Community Gallery
   - Verified data parity with direct script installation
 </Update>
@@ -379,7 +729,7 @@ rss: true
   ### Signal: Industry detection
 
   - Signal now detects the industry of visiting companies automatically
-  - Industry data feeds into ICP scoring — boost scores for your target verticals
+  - Industry data feeds into ICP scoring. Boost scores for your target verticals
   - Filter Signal dashboard by industry to focus on relevant visitors
   - 95% accuracy across 150+ industry categories
 </Update>
@@ -387,7 +737,7 @@ rss: true
 <Update label="January 28, 2026" description="Deal Finder" tags={["Improvements"]}>
   ### Deal Finder: Multi-source detection
 
-  - Deal Finder now scans connected web analytics, marketing tools, and support platforms — not just email and calendar
+  - Deal Finder now scans connected web analytics, marketing tools, and support platforms. Not just email and calendar
   - Deals detected from support-to-sales handoffs and marketing engagement signals
   - Source attribution on every deal: which channel or interaction triggered detection
   - Consolidated deal view when multiple signals point to the same opportunity
@@ -415,14 +765,14 @@ rss: true
   ### AI Meeting Notes: Summary improvements
 
   - Meeting summaries now include key decisions, open questions, and sentiment indicators
-  - Summaries are shorter and more actionable — average 60% reduction in length with no loss of detail
+  - Summaries are shorter and more actionable. Average 60% reduction in length with no loss of detail
   - New "Key Moments" feature highlights the most important parts of the call with timestamps
 </Update>
 
 <Update label="January 24, 2026" description="Outreach Agent" tags={["New Features"]}>
   ### Outreach Agent: Sequence support
 
-  - Outreach Agent now supports multi-step sequences — not just single messages
+  - Outreach Agent now supports multi-step sequences. Not just single messages
   - Define a sequence: Day 1 intro → Day 3 follow-up → Day 7 value-add → Day 14 break-up
   - Each step is personalized independently based on whether the prospect engaged with previous steps
   - Sequence performance dashboard with step-by-step conversion metrics
@@ -467,7 +817,7 @@ rss: true
   ### AI Enrichment: Tech stack detection
 
   - Company enrichment now includes detected technology stack
-  - See which tools your prospects use — CRM, marketing, analytics, etc.
+  - See which tools your prospects use. CRM, marketing, analytics, etc.
   - Tech stack data feeds into ICP scoring and outreach personalization
   - 200+ technologies detected including competitors
 </Update>
@@ -496,7 +846,7 @@ rss: true
   - Detect and merge duplicate contacts with one click
   - Smart matching based on email, name similarity, and company association
   - Merge preview shows which fields will be kept from each record
-  - Activity history is combined — no data loss during merge
+  - Activity history is combined. No data loss during merge
 </Update>
 
 <Update label="January 15, 2026" description="Views" tags={["New Features"]}>
@@ -513,15 +863,15 @@ rss: true
 
   - Follow-Up Agent now drafts follow-ups in the same language as the original conversation
   - Supports 12 languages: English, Spanish, French, German, Portuguese, Italian, Dutch, Swedish, Danish, Norwegian, Japanese, Korean
-  - Language detection is automatic — no configuration needed
+  - Language detection is automatic. No configuration needed
 </Update>
 
 <Update label="January 13, 2026" description="Follow-Up Agent" tags={["Improvements"]}>
   ### Follow-Up Agent: Subject line preservation
 
   - Follow-Up Agent now preserves the original email subject line when drafting follow-ups
-  - Thread continuity maintained — replies appear in the same conversation
-  - Smart "Re:" prefix handling — no duplicate "Re: Re: Re:" chains
+  - Thread continuity maintained. Replies appear in the same conversation
+  - Smart "Re:" prefix handling. No duplicate "Re: Re: Re:" chains
 </Update>
 
 <Update label="January 12, 2026" description="Pipeline" tags={["Improvements"]}>
@@ -564,7 +914,7 @@ rss: true
 <Update label="January 8, 2026" description="Pipeline" tags={["Improvements"]}>
   ### Pipeline: Quick-edit from board view
 
-  - Edit deal name, value, close date, and owner directly from the pipeline board — no need to open the deal page
+  - Edit deal name, value, close date, and owner directly from the pipeline board. No need to open the deal page
   - Inline editing with auto-save
   - Bulk update deal owner for multiple deals at once
 </Update>
@@ -634,8 +984,8 @@ rss: true
 <Update label="December 31, 2025" description="AI Enrichment" tags={["Improvements"]}>
   ### AI Enrichment: Refresh scheduling
 
-  - Schedule automatic enrichment refreshes — daily, weekly, or monthly
-  - Only changed data triggers updates — no unnecessary API calls
+  - Schedule automatic enrichment refreshes. Daily, weekly, or monthly
+  - Only changed data triggers updates. No unnecessary API calls
   - Enrichment changelog shows what changed and when
   - Manual refresh available for any record with one click
 </Update>
@@ -652,7 +1002,7 @@ rss: true
 <Update label="December 29, 2025" description="Pipeline" tags={["Improvements"]}>
   ### Pipeline: Close date tracking
 
-  - Close date field now tracks history — see how many times a deal's close date was pushed
+  - Close date field now tracks history. See how many times a deal's close date was pushed
   - "Slippage" indicator shows deals that have been pushed 3+ times
   - Close date change triggers are available as automation inputs
 </Update>
@@ -661,7 +1011,7 @@ rss: true
   ### AI Chat: Context-aware responses
 
   - AI Chat now considers the page you're on when answering questions
-  - Ask "How is this deal going?" from a deal page — no need to specify which deal
+  - Ask "How is this deal going?" from a deal page. No need to specify which deal
   - Responses include links to related records for easy navigation
 </Update>
 
@@ -698,7 +1048,7 @@ rss: true
   - Follow-Up Agent now learns your writing style from your sent emails
   - Matches your tone, greeting patterns, and sign-off style
   - Better voice matching with every email you send
-  - Voice profile is private to each user — not shared across the workspace
+  - Voice profile is private to each user. Not shared across the workspace
 </Update>
 
 <Update label="December 23, 2025" description="Workspace" tags={["New Features"]}>
@@ -733,7 +1083,7 @@ rss: true
 
   - Emails are now grouped into threads on deal and contact records
   - Thread view shows the full conversation with newest messages on top
-  - Collapsed view for long threads — expand individual messages as needed
+  - Collapsed view for long threads. Expand individual messages as needed
   - Thread-level actions: summarize, create note, flag for follow-up
 </Update>
 
@@ -749,7 +1099,7 @@ rss: true
   ### AI Enrichment launched
 
   - Automatic enrichment for every contact and company
-  - Data sourced from the live web — job titles, company size, social profiles, location
+  - Data sourced from the live web. Job titles, company size, social profiles, location
   - Refreshes periodically to keep records current
   - 92% fill rate for job title, 88% for company size, 85% for location
 </Update>
@@ -758,7 +1108,7 @@ rss: true
   ### Gmail sync: Two-way sync
 
   - Emails sent from Octolane now appear in your Gmail sent folder
-  - Full two-way sync — no parallel universe of emails
+  - Full two-way sync. No parallel universe of emails
   - BCC and CC recipients captured on synced emails
   - Attachment previews visible on deal records
 </Update>
@@ -769,7 +1119,7 @@ rss: true
   - Filter deals, contacts, and companies without leaving the list view
   - Quick filter chips: stage, owner, value range, created date, last activity
   - Combine multiple filters with AND/OR logic
-  - Filter state is saved in the URL — shareable with teammates
+  - Filter state is saved in the URL. Shareable with teammates
 </Update>
 
 <Update label="December 15, 2025" description="Deal Finder" tags={["New Features"]}>
@@ -777,7 +1127,7 @@ rss: true
 
   - Scans your email and calendar to detect deals automatically
   - Creates opportunities in your pipeline with associated contacts and context
-  - Deduplication built in — same deal from multiple signals won't create duplicates
+  - Deduplication built in. Same deal from multiple signals won't create duplicates
   - Detection accuracy: 94% precision on real user data during beta
 </Update>
 
@@ -786,7 +1136,7 @@ rss: true
 
   - Activity Feed shows all emails and meetings in chronological order
   - Filter by: emails only, meetings only, agent actions, notes
-  - Expandable email previews — read the full email without leaving the deal page
+  - Expandable email previews. Read the full email without leaving the deal page
   - Quick reply button to respond to emails directly from the Activity Feed
 </Update>
 
@@ -812,7 +1162,7 @@ rss: true
 <Update label="December 11, 2025" description="Deals" tags={["Improvements"]}>
   ### Deal page: Activity timeline
 
-  - Complete timeline of all deal activity — emails, meetings, notes, stage changes, agent actions
+  - Complete timeline of all deal activity. Emails, meetings, notes, stage changes, agent actions
   - Pinnable events for important milestones
   - Timeline is the default view when opening a deal
 </Update>
@@ -830,7 +1180,7 @@ rss: true
   ### Gmail sync launched
 
   - Connect your Gmail account with one click via OAuth
-  - Emails are synced in real-time — new messages appear within seconds
+  - Emails are synced in real-time. New messages appear within seconds
   - Historical sync: imports the last 90 days of email on first connect
   - Privacy-first: only emails with external participants are synced (internal emails are ignored)
 </Update>

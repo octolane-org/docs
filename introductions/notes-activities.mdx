@@ -1,0 +1,73 @@
+---
+title: "Notes and activities"
+description: "Every email, meeting, note, and AI action on a single timeline."
+---
+
+Every record in Octolane has a unified timeline. Open any Account, Contact, or Opportunity and you see everything that has ever happened on it, in order. Automatically.
+
+## What's on the timeline
+
+| Type | Source | Notes |
+|---|---|---|
+| **Email** | Gmail (inbound + outbound) | Auto-threaded to the right record |
+| **Meeting** | Google Calendar | With optional recording, transcript, and recap |
+| **Meeting recap** | Octolane notetaker | TL;DR, decisions, action items, AI field updates |
+| **Note** | You or your team | Free-form text, Markdown supported |
+| **Comment** | You or your team | Threaded discussion on the record |
+| **AI action** | Octolane | Field updates, draft sends, stage changes, enrichment. Every move logged with citation |
+| **Task** | Manual, API, or AI-generated | Shows when created, assigned, and completed |
+| **Stage change** | Manual or auto-advanced | Shows old stage, new stage, and trigger |
+| **Field update** | Any source | Old value → new value with timestamp and author |
+
+## Filtering and searching
+
+- **Filter by type**. Show only emails, only meetings, only AI actions, etc.
+- **Filter by person**. Show only what one teammate (or one external contact) did.
+- **Date range**. Last 7 days, last 30 days, custom.
+- **Search**. Full-text search across every email body, meeting transcript, and note.
+
+## Notes
+
+Drop notes on any record. Notes support:
+
+- **Markdown**. Headings, lists, code blocks, links
+- **@mentions**. Notify a teammate or link to another record
+- **Pinning**. Keep important context at the top of the timeline
+- **Editing and version history**. Every edit logged
+
+## @mentions
+
+Type `@` anywhere in a note or comment to:
+
+- **Tag a teammate**. They get notified in-app, by email, and optionally in Slack
+- **Link a record**. `@Acme` inserts a clickable link to that Account, Contact, or Opportunity
+
+## Comments
+
+Comments live on a separate thread from notes. Use them for back-and-forth discussion you don't want polluting the activity timeline:
+
+- Threaded replies
+- Resolve when done
+- Notification routing to the assigned owner
+
+## AI actions on the timeline
+
+Every consequential AI action is logged with:
+
+- **What changed**. Field name, old value, new value
+- **Why it changed**. The source (specific email, meeting moment, or web enrichment hit)
+- **Confidence**. Octolane's confidence in the update
+- **Who approved it**. You, a teammate, or auto-approve threshold
+
+Click any AI action to see the citation. If it's wrong, revert in one click. Octolane learns from the correction.
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Notes and mentions" icon="at" href="/productivity/notes-mentions">
+    Day-to-day note-taking and @mentioning.
+  </Card>
+  <Card title="Comments" icon="message" href="/productivity/comments">
+    Discuss a deal inside the record.
+  </Card>
+</CardGroup>

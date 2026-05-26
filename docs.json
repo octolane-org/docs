@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Octolane",
-  "description": "Self-driving CRM that updates itself from Gmail and Calendar",
+  "description": "Everything you need to set up, use, and build with Octolane.",
   "favicon": "/favicon.svg",
   "appearance": {
     "default": "light",
@@ -27,12 +27,12 @@
   "navbar": {
     "links": [
       {
-        "label": "Dashboard",
-        "href": "https://octolane.com/dashboard"
+        "label": "Contact sales",
+        "href": "mailto:sales@octolane.com"
       },
       {
-        "label": "Support",
-        "href": "https://docs.octolane.com/support"
+        "label": "Dashboard",
+        "href": "https://octolane.com/dashboard"
       }
     ]
   },
@@ -42,112 +42,149 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Get started",
             "icon": "rocket",
             "pages": [
               "get-started/welcome",
-              "get-started/what-is-octolane",
-              "get-started/getting-started",
-              "get-started/how-octolane-works",
-              "get-started/import-migration"
+              "get-started/quickstart",
+              "get-started/common-questions",
+              "get-started/glossary",
+              "get-started/whats-new"
             ]
           },
           {
-            "group": "AI Agents",
-            "icon": "robot",
+            "group": "Introductions",
+            "icon": "book-open",
             "pages": [
-              "agents/overview",
-              {
-                "group": "Your Agents",
-                "expanded": false,
-                "pages": [
-                  "agents/signal-agent",
-                  "agents/deal-finder",
-                  "agents/form-submission",
-                  "agents/follow-up",
-                  "agents/outreach",
-                  "agents/meeting-recorder"
-                ]
-              },
-              "agents/ai-chat",
-              "agents/approving-actions"
+              "introductions/data-model",
+              "introductions/accounts",
+              "introductions/contacts",
+              "introductions/opportunities",
+              "introductions/tasks",
+              "introductions/notes-activities",
+              "introductions/pipelines-stages",
+              "introductions/custom-fields",
+              "introductions/ai-fields",
+              "introductions/views-filters",
+              "introductions/email-calendar-sync",
+              "introductions/meeting-recorder",
+              "introductions/signal",
+              "introductions/ai-chat",
+              "introductions/custom-objects"
             ]
           },
           {
-            "group": "Signal",
-            "icon": "radar",
+            "group": "Managing your data",
+            "icon": "database",
             "pages": [
-              "signal/what-is-signal",
-              "signal/installing-signal",
-              "signal/identifying-qualifying-visitors",
-              "signal/visitor-to-deal"
+              "managing-data/importing",
+              "managing-data/migrate-hubspot",
+              "managing-data/migrate-salesforce",
+              "managing-data/migrate-pipedrive",
+              "managing-data/migrate-attio",
+              "managing-data/migrate-spreadsheet",
+              "managing-data/bulk-edits",
+              "managing-data/merging-duplicates",
+              "managing-data/exports",
+              "managing-data/deleting-archiving"
             ]
           },
           {
-            "group": "Using Your CRM",
-            "icon": "table-columns",
+            "group": "Email and calendar",
+            "icon": "envelope",
             "pages": [
-              "your-crm/pipeline-management",
-              "your-crm/opportunities",
-              "your-crm/accounts-contacts",
-              "your-crm/custom-data-model",
-              "your-crm/custom-ai-fields",
-              "your-crm/ai-enrichment",
-              "your-crm/activity-feed",
-              "your-crm/ai-notes",
-              "your-crm/ai-meeting-notes",
-              "your-crm/views-filters-search",
-              "your-crm/ai-reporting"
+              "email-calendar/gmail-setup",
+              "email-calendar/google-calendar-setup",
+              "email-calendar/deal-auto-detection",
+              "email-calendar/threading",
+              "email-calendar/templates"
             ]
           },
           {
-            "group": "Integrations",
+            "group": "Pipelines and deals",
+            "icon": "chart-line",
+            "pages": [
+              "pipelines/building",
+              "pipelines/multiple",
+              "pipelines/stage-automation",
+              "pipelines/working-with-opportunities"
+            ]
+          },
+          {
+            "group": "Reports and forecasts",
+            "icon": "chart-pie",
+            "pages": [
+              "reports/overview",
+              "reports/recipes",
+              "reports/forecasting"
+            ]
+          },
+          {
+            "group": "AI in Octolane",
+            "icon": "sparkles",
+            "pages": [
+              "ai/how-it-works",
+              "ai/auto-filling-fields",
+              "ai/auto-detecting-deals",
+              "ai/auto-follow-ups",
+              "ai/enrichment",
+              "ai/drafted-outreach",
+              "ai/meeting-recorder",
+              "ai/chat-slash-commands",
+              "ai/approvals"
+            ]
+          },
+          {
+            "group": "Productivity and collaborating",
+            "icon": "users",
+            "pages": [
+              "productivity/tasks",
+              "productivity/notes-mentions",
+              "productivity/comments",
+              "productivity/email-composer",
+              "productivity/keyboard-shortcuts"
+            ]
+          },
+          {
+            "group": "Tools and extensions",
             "icon": "plug",
             "pages": [
-              "integrations/overview",
-              "integrations/gmail-google-calendar",
-              "integrations/linkedin",
-              "integrations/whatsapp",
-              "integrations/web-analytics",
-              "integrations/zapier"
+              "tools/slack",
+              "tools/zapier"
             ]
           },
           {
-            "group": "Use Cases",
-            "icon": "lightbulb",
-            "pages": [
-              "use-cases/for-founders",
-              "use-cases/for-sales-teams",
-              "use-cases/for-agencies"
-            ]
-          },
-          {
-            "group": "Comparisons",
-            "icon": "scale-balanced",
-            "pages": [
-              "comparisons/octolane-vs-hubspot",
-              "comparisons/octolane-vs-salesforce",
-              "comparisons/octolane-vs-attio",
-              "comparisons/octolane-vs-pipedrive",
-              "comparisons/octolane-vs-lightfield"
-            ]
-          },
-          {
-            "group": "Account & Settings",
+            "group": "Account and workspace",
             "icon": "gear",
             "pages": [
+              "account/account-settings",
               "account/workspace-settings",
               "account/team-permissions",
               "account/plans-pricing",
-              "account/security-privacy"
+              "account/billing"
+            ]
+          },
+          {
+            "group": "Playbooks",
+            "icon": "book",
+            "pages": [
+              "playbooks/overview",
+              "playbooks/yc-founders",
+              "playbooks/founder-led-sales",
+              "playbooks/never-miss-followup",
+              "playbooks/run-50-demos",
+              "playbooks/first-7-days",
+              "playbooks/inbound-website",
+              "playbooks/approval-queue"
             ]
           },
           {
             "group": "Support",
             "icon": "life-ring",
             "pages": [
-              "support/faq",
-              "support/contact"
+              "support/contact",
+              "support/status",
+              "support/trust"
             ]
           }
         ]
@@ -172,7 +209,7 @@
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "API",
         "icon": "square-terminal",
         "groups": [
           {
@@ -188,6 +225,18 @@
         ]
       },
       {
+        "tab": "Security",
+        "icon": "shield-check",
+        "groups": [
+          {
+            "group": "Security",
+            "pages": [
+              "security"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Changelog",
         "icon": "clock-rotate-left",
         "pages": [
@@ -197,6 +246,17 @@
     ]
   },
   "footer": {
+    "links": [
+      {
+        "header": "Help",
+        "items": [
+          { "label": "Support", "href": "/support/contact" },
+          { "label": "Status", "href": "/support/status" },
+          { "label": "Trust", "href": "/security" },
+          { "label": "Contact sales", "href": "mailto:sales@octolane.com" }
+        ]
+      }
+    ],
     "socials": {
       "x": "https://twitter.com/octolane_ai",
       "website": "https://www.octolane.com"
