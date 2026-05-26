@@ -1,0 +1,118 @@
+---
+title: "Meeting recorder"
+description: "Auto-joins your Zoom, Meet, and Teams calls. Records, transcribes, summarizes, and updates the linked opportunity."
+---
+
+The Octolane notetaker joins your calls automatically, records them, generates a structured recap, and pushes everything. Transcript, action items, AI field updates. Onto the linked account, contact, and opportunity.
+
+## How it works
+
+1. The bot accepts every calendar invite that matches your auto-record rules.
+2. It joins the call at start time and records the full session.
+3. After the call, you get a transcript, a recap (TL;DR, key discussion points, decisions, action items), and speaker analytics. Usually within a few minutes.
+4. Action items become tasks. AI fields on the opportunity update from what was said. Everything attaches to the timeline.
+
+## Auto-record rules
+
+Pick one mode in [Settings → Meeting Intelligence](https://www.octolane.com/settings/meeting-intelligence):
+
+- **All meetings**. Record every meeting with a conference link.
+- **External meetings**. Record only meetings with at least one outside attendee. (Most common for founder-led sales.)
+- **Meetings I manually invite**. The bot only joins when you explicitly add the notetaker to the invite.
+
+You can override per-meeting at any time.
+
+## The meetings view
+
+Every recorded call shows up in the Meetings view with:
+
+- Meeting title and duration
+- Linked accounts
+- Participants (color-coded badges)
+- Date
+
+Filter, search, and sort like any other Octolane view. Open any meeting to see the full recap.
+
+## What you get for every call
+
+<AccordionGroup>
+  <Accordion title="Video playback with speaker timeline">
+    Full recording with a visual speaker timeline. See who talked when, and what percentage of the call each person held. Click any segment to jump to that moment.
+  </Accordion>
+
+  <Accordion title="Recap">
+    A structured summary, regenerated on demand:
+
+    - **TL;DR**. The call in 3–4 sentences
+    - **Key discussion points**. Bulleted, organized by topic
+    - **Decisions made**. Concrete outcomes
+    - **Action items**. Pushed into Tasks, assigned to the right people
+    - **Next steps**. What happens between now and the next touchpoint
+
+    Hit **Generate** to re-run with updated context. Hit **Copy** to paste the recap anywhere.
+  </Accordion>
+
+  <Accordion title="Full transcript">
+    Speaker-labeled, timestamped, searchable. Click any line to jump the video to that moment.
+  </Accordion>
+
+  <Accordion title="Contacts and Accounts tabs">
+    Every participant and company on the call, auto-linked. New people from the call become Contacts; new companies become Accounts.
+  </Accordion>
+
+  <Accordion title="AI field updates on the opportunity">
+    Any AI field on the linked opportunity refreshes from what was said. Decision maker, budget, timeline, blockers, next step. Updates show up in the [approval queue](/ai/approvals) (or apply automatically if auto-approve is on).
+  </Accordion>
+
+  <Accordion title="Ask anything about the call">
+    Hit **Ask** to query the transcript in plain English: *"What objection did they raise about pricing?"* or *"What did Tiffany commit to send by Friday?"*
+  </Accordion>
+
+  <Accordion title="Share">
+    Share recap or full recording with teammates, or generate a public link for an external prospect.
+  </Accordion>
+</AccordionGroup>
+
+## Prompts to try with Ask
+
+Click any meeting, hit **Ask**, and try these. Copy and paste:
+
+```text Pull objections
+What objections did they raise, and how did we respond?
+```
+
+```text Surface commitments
+List everything I committed to send or do, with deadlines.
+```
+
+```text Surface their commitments
+List everything they committed to, and by when.
+```
+
+```text Draft the follow-up
+Draft a follow-up email summarizing this call and the next steps.
+```
+
+```text Score the call
+On a scale of 1–10, how likely is this deal to close? Cite specific moments from the call.
+```
+
+```text Compare to last call
+Compare this call to the previous one with the same account. What's changed?
+```
+
+```text Extract decision criteria
+What criteria did they say will drive their decision?
+```
+
+```text Find competitors mentioned
+Did they mention any competitors? What did they say about each?
+```
+
+## Supported platforms
+
+Google Meet, Zoom, and Microsoft Teams.
+
+## Setup
+
+See [Setting up Google Calendar](/email-calendar/google-calendar-setup) for the calendar permissions the bot needs. Configure recording rules in [Settings → Meeting Intelligence](https://www.octolane.com/settings/meeting-intelligence).

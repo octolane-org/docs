@@ -1,0 +1,80 @@
+---
+title: "Custom objects"
+description: "Model anything beyond Accounts, Contacts, and Opportunities."
+---
+
+<Note>Custom objects are available on the **Team** plan. [Contact sales](mailto:sales@octolane.com).</Note>
+
+Custom objects let you model anything that doesn't fit into the standard Account / Contact / Opportunity / Task shape. They get the full Octolane treatment. AI fields, views, automation, API, and human-in-the-loop approval.
+
+## What you can model
+
+Custom objects are useful when your business has first-class entities that aren't deals.
+
+| Object | Common use |
+|---|---|
+| **Partners** | Resellers, integrators, referral sources you track outside of customers |
+| **Investors** | Funds and angels you're raising from, with stage and check size |
+| **Projects** | Implementation projects, with milestones and timelines |
+| **Properties** | Real estate or physical assets, with location and status |
+| **Loans** | Lending deals with principal, term, and payment schedule |
+| **Locations** | Physical sites for retail, healthcare, or logistics |
+| **Inventory** | SKUs or units tied to opportunities |
+| **Vendors** | Suppliers and contractors |
+
+## How custom objects work
+
+Every custom object gets:
+
+- **Standard fields**. Name, owner, created/updated, tags
+- **Custom fields**. Text, number, date, select, multi-select, URL, currency, formula, lookup
+- **AI fields**. Define in plain English, Octolane fills them in from related conversations
+- **Relationships**. Lookup fields to Accounts, Contacts, Opportunities, or other custom objects
+- **Views**. Filter, sort, group, save, share
+- **Activity timeline**. Emails, meetings, notes, and AI actions linked through related Accounts and Contacts
+- **API access**. Full REST API and MCP tool support
+- **Approval queue**. Every AI action on a custom object routes through approvals like standard objects
+
+## Creating a custom object
+
+1. Open **Settings → Data Model → Custom Objects**.
+2. Name the object (singular and plural).
+3. Pick an icon and color.
+4. Add custom fields and AI fields.
+5. Define relationships to standard or other custom objects.
+6. Save. The object appears in your sidebar.
+
+## Relationships
+
+Custom objects connect to the rest of your data through **lookup fields**.
+
+- A **Partner** has a lookup to an Account (the partner's company).
+- A **Project** has a lookup to an Opportunity (the deal it implements) and an Account.
+- An **Investor** has a lookup to multiple Contacts (people at the fund).
+
+Relationships are bidirectional. Open an Account to see all Projects, Partners, or Loans linked to it.
+
+## AI fields on custom objects
+
+AI fields work the same as on standard objects. For a **Project** custom object, you might define:
+
+- *"Current milestone the team is working on"*
+- *"Blocker mentioned in the last status update"*
+- *"Expected go-live date based on recent emails"*
+
+Octolane reads every email, meeting, and note related to the Project and keeps the values current.
+
+## API and MCP
+
+Custom objects are fully accessible via REST API and the MCP server. See [API Reference](/api-reference/introduction) and [MCP overview](/mcp/overview).
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Custom fields" icon="square-pen" href="/introductions/custom-fields">
+    Add fields to any standard object.
+  </Card>
+  <Card title="AI fields" icon="sparkles" href="/introductions/ai-fields">
+    Fields that fill themselves in from conversations.
+  </Card>
+</CardGroup>

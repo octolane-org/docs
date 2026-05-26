@@ -1,0 +1,78 @@
+---
+title: "Signal"
+description: "Identify which companies visit your website, what they read, and how to reach out. In real time."
+---
+
+Drop one script tag on your website. Octolane identifies the companies visiting, scores their buying intent, and enriches every visit with the data you need to act.
+
+No personally identifiable information. No cookies. No consent banner required for what we capture.
+
+## How it works
+
+1. Install the Signal script on your marketing site (one `<script>` tag).
+2. Octolane resolves visitor IP traffic to real companies.
+3. Every identified company shows up in Signal with the pages they read, how long they stayed, and return-visit history.
+4. Advanced enrichment runs on each visitor company in the background.
+5. Matches against your pipeline. When a champion at an open opportunity lands on pricing, you see it in the same view as your deals.
+
+## What you see for every visit
+
+- **Company**. Name, domain, logo
+- **LinkedIn**. Company page URL
+- **Tech stack**. What they run (analytics, CRM, frameworks, hosting)
+- **Country and city**. Derived from IP
+- **Browser and device**. Chrome, Safari, mobile vs desktop
+- **Pages visited**. Full path, order, time on each page
+- **Return visits**. First seen, last seen, total sessions
+- **Industry, headcount, funding**. From the enrichment layer
+
+## Buying intent scoring
+
+Every company is scored on intent based on:
+
+- Pages visited (pricing, demo, docs > blog, careers)
+- Depth. Number of pages in the session
+- Recency and frequency of return visits
+- Fit against your ICP definition
+- Match against open opportunities and past customers
+
+High-intent companies bubble to the top of your Signal feed automatically.
+
+## Where to see your Signal data
+
+All identified visitors and their activity live in the [Leads view](https://www.octolane.com/leads). That's also where you grab your install snippet. Or just ask AI Chat: *"Give me my Signal install script."*
+
+## Install
+
+One snippet, served from our CDN. Add it to the `<head>` of your site or via your tag manager.
+
+```html
+<script crossOrigin="anonymous" src="https://cdn.octolane.com/tag.js?pk=YOUR_WORKSPACE_KEY"></script>
+```
+
+Grab your workspace-specific key from the [Leads view](https://www.octolane.com/leads). Live in 5 minutes. First identifications appear within an hour.
+
+## What it does for your CRM
+
+- **Auto-creates accounts** for high-intent visitors that match your ICP
+- **Updates existing accounts** with web activity on their timeline
+- **Drafts outreach**. AI-drafted personalized openers referencing the pages they read (queued in your [approval queue](/ai/approvals))
+- **Pipeline alerts**. Get notified when someone from an open opportunity returns to pricing or product pages
+
+## What it doesn't capture
+
+- No personal identification (we identify companies, not individuals)
+- No traffic from residential or mobile IPs (only office and business networks resolve)
+- No cookies set on the visitor's browser
+- No GDPR/CCPA consent banner required for what we capture
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Inbound from website playbook" icon="globe" href="/playbooks/inbound-website">
+    Signal → AI scoring → outreach → deal.
+  </Card>
+  <Card title="Open Leads" icon="users" href="https://www.octolane.com/leads">
+    See identified visitors and grab your install snippet.
+  </Card>
+</CardGroup>

@@ -4,8 +4,6 @@ sidebarTitle: "Tools Reference"
 description: "Complete reference for all 29 Octolane MCP tools - search, create, update records, manage pipeline, access Signal data, and more."
 ---
 
-# MCP Tools Reference
-
 Every tool available on the Octolane MCP server, organized by category. Each tool includes its parameters, types, and example usage.
 
 <Note>
@@ -342,7 +340,7 @@ Get the full email thread conversation by thread ID.
 
 ### `get_notes`
 
-Search and retrieve notes linked to a deal, contact, or account. Supports lookup by name, email, or domain — no ID required.
+Search and retrieve notes linked to a deal, contact, or account. Supports lookup by name, email, or domain. No ID required.
 
 <Expandable title="Parameters">
   <ParamField body="entity_id" type="string">
@@ -434,7 +432,7 @@ Tools for writing data to your CRM. Records created via MCP are immediately pick
 
 ### `create_deal`
 
-Create a new deal in the CRM and assign it to a pipeline stage. The associated account and contacts must already exist — create them first if needed.
+Create a new deal in the CRM and assign it to a pipeline stage. The associated account and contacts must already exist. Create them first if needed.
 
 <Expandable title="Parameters">
   <ParamField body="pipeline_id" type="string" required>
@@ -712,7 +710,7 @@ Update an existing note's title or content.
 
 ### `update_task`
 
-Update an existing task — change title, due date, priority, or mark as complete.
+Update an existing task. Change title, due date, priority, or mark as complete.
 
 <Expandable title="Parameters">
   <ParamField body="task_id" type="string" required>
@@ -867,8 +865,8 @@ Invite one or more people to your workspace by email. Requires admin or owner ro
 <Expandable title="Parameters">
   <ParamField body="members" type="array" required>
     List of people to invite (max 10). Each entry has:
-    - `email` (string, required) — email address of the person to invite
-    - `role` (string) — `member` (default), `admin`, or `owner`
+    - `email` (string, required). Email address of the person to invite
+    - `role` (string). `member` (default), `admin`, or `owner`
   </ParamField>
 </Expandable>
 
