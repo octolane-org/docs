@@ -1,0 +1,84 @@
+---
+title: "Search opportunities"
+sidebarTitle: "Search opportunities"
+description: "Advanced opportunity search with filters, sorting, pagination, and field selection."
+api: "POST https://enrich.octolane.com/v2/inbound/opportunities/search"
+---
+
+Advanced search endpoint for Opportunities. Supports filters on system and custom fields, sorting, cursor pagination, and field selection.
+
+<Note>`pipeline_id` is **mandatory**.</Note>
+
+## Request
+
+<ParamField header="X-API-Key" type="string" required>
+  Your Octolane API key.
+</ParamField>
+
+<ParamField header="Content-Type" type="string" required>
+  Must be `application/json`.
+</ParamField>
+
+### Body parameters
+
+<ParamField body="pipeline_id" type="string" required>
+  Pipeline UUID.
+</ParamField>
+
+<ParamField body="stage_id" type="string">
+  Filter opportunities by stage.
+</ParamField>
+
+<ParamField body="query" type="string">
+  Basic text search. Alias: `q`.
+</ParamField>
+
+<ParamField body="filters" type="array">
+  Array of filter objects. See [Filters](/api-reference/v2/filters).
+</ParamField>
+
+<ParamField body="sort" type="string | object | array">
+  Sort configuration. Default: `updated_at desc`.
+</ParamField>
+
+<ParamField body="cursor" type="string">
+  Opaque cursor from a previous response.
+</ParamField>
+
+<ParamField body="limit" type="number" default="100">
+  Page size. Max `500`.
+</ParamField>
+
+<ParamField body="fields" type="string[]">
+  Fields to return.
+</ParamField>
+
+## Example request
+
+```bash
+curl -X POST "https://enrich.octolane.com/v2/inbound/opportunities/search" \
+  -H "X-API-Key: your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "pipeline_id": "pipeline_uuid",
+    "stage_id": "stage_uuid",
+    "limit": 10,
+    "filters": [
+      { "field": "amount", "operator": "gte", "value": 50000 },
+      { "field": "deal_source", "operator": "eq", "value": "partner" }
+    ],
+    "sort": { "field": "updated_at", "direction": "desc" },
+    "fields": [
+      "id", "name", "stage_id", "stage_name", "amount",
+      "account_id", "contact_id", "custom_fields"
+    ]
+  }'
+```
+
+## Supported sort fields
+
+`updated_at`, `created_at`, `name`, `amount`, `probability`, `close_date`, `next_action_date`, `stage_id`, `owner_id`, `id`
+
+## Response
+
+Identical shape to [`GET /opportunities`](/api-reference/v2/list-opportunities#example-response).

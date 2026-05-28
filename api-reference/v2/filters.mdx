@@ -1,0 +1,106 @@
+---
+title: "Filters"
+sidebarTitle: "Filters"
+description: "Operator reference and aliases for search endpoints."
+---
+
+Filters are supported on every `POST .../search` endpoint:
+
+- [`POST /accounts/search`](/api-reference/v2/search-accounts)
+- [`POST /contacts/search`](/api-reference/v2/search-contacts)
+- [`POST /opportunities/search`](/api-reference/v2/search-opportunities)
+
+## Filter shape
+
+Each filter is an object with `field`, `operator`, and `value`.
+
+```json
+{
+  "filters": [
+    { "field": "customer_tier", "operator": "eq", "value": "enterprise" },
+    { "field": "amount", "operator": "gte", "value": 50000 }
+  ]
+}
+```
+
+Multiple filters in the array combine with **AND**.
+
+## Supported operators
+
+| Operator | Use |
+|---|---|
+| `eq` | Equal |
+| `neq` | Not equal |
+| `contains` | String contains substring |
+| `not_contains` | String does not contain substring |
+| `starts_with` | String starts with |
+| `ends_with` | String ends with |
+| `in` | Value is in array |
+| `not_in` | Value is not in array |
+| `gt` | Greater than |
+| `gte` | Greater than or equal |
+| `lt` | Less than |
+| `lte` | Less than or equal |
+| `between` | Between two values (inclusive). Pass `value` as `[min, max]` |
+| `empty` | Field has no value |
+| `not_empty` | Field has any value |
+| `contains_all` | Array field contains all of the given values |
+| `contains_none` | Array field contains none of the given values |
+
+## Operator aliases
+
+These read more naturally and resolve to the same operator under the hood.
+
+| Alias | Resolves to |
+|---|---|
+| `is` | `eq` |
+| `is_not` | `neq` |
+| `contain` | `contains` |
+| `not_contain` | `not_contains` |
+| `is_any_of` | `in` |
+| `greater_than` | `gt` |
+| `less_than` | `lt` |
+| `before` | `lt` |
+| `after` | `gt` |
+| `include_all` | `contains_all` |
+| `exclude_all` | `contains_none` |
+
+## Custom field filters
+
+Custom fields are filtered by their slug (the same key returned in `custom_fields`).
+
+```json
+{
+  "filters": [
+    { "field": "customer_tier", "operator": "eq", "value": "enterprise" }
+  ]
+}
+```
+
+Look up slugs in the `custom_field_definitions` block of any response.
+
+## Examples
+
+### Range filter
+
+```json
+{ "field": "amount", "operator": "between", "value": [10000, 50000] }
+```
+
+### Array membership
+
+```json
+{ "field": "industry", "operator": "in", "value": ["Software", "Fintech"] }
+```
+
+### Date after
+
+```json
+{ "field": "close_date", "operator": "after", "value": "2026-06-01" }
+```
+
+### Empty check
+
+```json
+{ "field": "next_action_date", "operator": "empty" }
+```

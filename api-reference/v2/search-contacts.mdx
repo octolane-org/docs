@@ -1,0 +1,70 @@
+---
+title: "Search contacts"
+sidebarTitle: "Search contacts"
+description: "Advanced contact search with filters, sorting, pagination, and field selection."
+api: "POST https://enrich.octolane.com/v2/inbound/contacts/search"
+---
+
+Advanced search endpoint for Contacts. Supports filters on system and custom fields, sorting, cursor pagination, and field selection.
+
+## Request
+
+<ParamField header="X-API-Key" type="string" required>
+  Your Octolane API key.
+</ParamField>
+
+<ParamField header="Content-Type" type="string" required>
+  Must be `application/json`.
+</ParamField>
+
+### Body parameters
+
+<ParamField body="query" type="string">
+  Basic text search across name and email. Alias: `q`.
+</ParamField>
+
+<ParamField body="filters" type="array">
+  Array of filter objects. See [Filters](/api-reference/v2/filters).
+</ParamField>
+
+<ParamField body="sort" type="string | object | array">
+  Sort configuration. Default: `updated_at desc`.
+</ParamField>
+
+<ParamField body="cursor" type="string">
+  Opaque cursor from a previous response.
+</ParamField>
+
+<ParamField body="limit" type="number" default="100">
+  Page size. Max `500`.
+</ParamField>
+
+<ParamField body="fields" type="string[]">
+  Fields to return.
+</ParamField>
+
+## Example request
+
+```bash
+curl -X POST "https://enrich.octolane.com/v2/inbound/contacts/search" \
+  -H "X-API-Key: your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "limit": 10,
+    "q": "john",
+    "filters": [
+      { "field": "email", "operator": "contains", "value": "@example.com" },
+      { "field": "customer_tier", "operator": "eq", "value": "enterprise" }
+    ],
+    "sort": { "field": "updated_at", "direction": "desc" },
+    "fields": ["id", "name", "email", "job_title", "custom_fields"]
+  }'
+```
+
+## Supported sort fields
+
+`updated_at`, `created_at`, `name`, `first_name`, `last_name`, `email`, `account_id`, `id`
+
+## Response
+
+Identical shape to [`GET /contacts`](/api-reference/v2/list-contacts#example-response).
