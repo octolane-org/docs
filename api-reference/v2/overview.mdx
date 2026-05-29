@@ -1,0 +1,81 @@
+---
+title: "Read & search"
+sidebarTitle: "Overview"
+description: "Read APIs for Accounts, Contacts, and Opportunities with filters, sorting, field selection, and cursor pagination."
+---
+
+Read access to your Octolane CRM. Each object (Accounts, Contacts, Opportunities) has two endpoints:
+
+- A **simple list endpoint** (`GET`) with basic text search and cursor pagination.
+- A **search endpoint** (`POST`) with full filtering, sorting, field selection, and cursor pagination.
+
+## Base URL
+
+```
+https://enrich.octolane.com/v2/inbound
+```
+
+## Authentication
+
+Every request must include the API key in the `X-API-Key` header.
+
+```
+X-API-Key: your-api-key
+```
+
+Find your API key in **Settings , Integrations , API**.
+
+## Endpoints
+
+| Object | List | Search |
+|---|---|---|
+| Accounts | [`GET /accounts`](/api-reference/v2/list-accounts) | [`POST /accounts/search`](/api-reference/v2/search-accounts) |
+| Contacts | [`GET /contacts`](/api-reference/v2/list-contacts) | [`POST /contacts/search`](/api-reference/v2/search-contacts) |
+| Opportunities | [`GET /opportunities`](/api-reference/v2/list-opportunities) | [`POST /opportunities/search`](/api-reference/v2/search-opportunities) |
+
+## Shared concepts
+
+<CardGroup cols={2}>
+  <Card title="Filters" icon="filter" href="/api-reference/v2/filters">
+    Operator reference and aliases used in every `POST .../search` endpoint.
+  </Card>
+  <Card title="Cursor pagination" icon="arrow-right" href="/api-reference/v2/pagination">
+    How to paginate `GET` and `POST` endpoints safely.
+  </Card>
+</CardGroup>
+
+## Field selection
+
+Every list and search endpoint accepts a `fields` parameter to return only the fields you need. Pass a comma-separated string (for `GET`) or a JSON array (for `POST`).
+
+```
+GET  /accounts?fields=id,name,domain,custom_fields
+POST /accounts/search   { "fields": ["id", "name", "domain", "custom_fields"] }
+```
+
+## Custom fields
+
+Every response includes a `custom_fields` object on each record and a top-level `custom_field_definitions` object describing those fields.
+
+```json
+{
+  "custom_fields": {
+    "customer_tier": "enterprise",
+    "renewal_date": "2026-06-01T00:00:00.000Z"
+  },
+  "custom_field_definitions": {
+    "customer_tier": {
+      "current_name": "Customer Tier",
+      "property_name": "select_530",
+      "attribute_type": "select",
+      "metadata": { "select_options": [] }
+    }
+  }
+}
+```
+
+The keys in `custom_field_definitions` match the keys in `custom_fields`, so clients can resolve slug/value mappings dynamically.
+
+## Need help?
+
+Email [one@octolane.com](mailto:one@octolane.com). We ship custom endpoints when teams need something specific.

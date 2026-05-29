@@ -213,13 +213,32 @@
         "icon": "square-terminal",
         "groups": [
           {
-            "group": "API Reference",
+            "group": "Getting started",
             "pages": [
-              "api-reference/introduction",
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Create",
+            "pages": [
               "api-reference/create-opportunity",
               "api-reference/create-account",
               "api-reference/create-contact",
               "api-reference/create-note"
+            ]
+          },
+          {
+            "group": "Read & search",
+            "pages": [
+              "api-reference/v2/overview",
+              "api-reference/v2/list-accounts",
+              "api-reference/v2/search-accounts",
+              "api-reference/v2/list-contacts",
+              "api-reference/v2/search-contacts",
+              "api-reference/v2/list-opportunities",
+              "api-reference/v2/search-opportunities",
+              "api-reference/v2/filters",
+              "api-reference/v2/pagination"
             ]
           }
         ]

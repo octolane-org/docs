@@ -1,0 +1,100 @@
+---
+title: "List opportunities"
+sidebarTitle: "List opportunities"
+description: "Simple opportunity list scoped to a pipeline, with cursor pagination and basic text search."
+api: "GET https://enrich.octolane.com/v2/inbound/opportunities"
+---
+
+Simple list endpoint for Opportunities.
+
+<Note>`pipeline_id` is **mandatory**. Filters and sorting are not supported. Use [`POST /opportunities/search`](/api-reference/v2/search-opportunities) when you need them.</Note>
+
+## Request
+
+<ParamField header="X-API-Key" type="string" required>
+  Your Octolane API key.
+</ParamField>
+
+### Query parameters
+
+<ParamField query="pipeline_id" type="string" required>
+  Pipeline UUID.
+</ParamField>
+
+<ParamField query="stage_id" type="string">
+  Filter opportunities by stage.
+</ParamField>
+
+<ParamField query="q" type="string">
+  Basic text search across opportunity name, next steps, account, and contact email.
+</ParamField>
+
+<ParamField query="cursor" type="string">
+  Opaque cursor from a previous response.
+</ParamField>
+
+<ParamField query="limit" type="number" default="100">
+  Page size. Max `500`.
+</ParamField>
+
+<ParamField query="fields" type="string">
+  Comma-separated fields or JSON-encoded string array.
+</ParamField>
+
+## Example request
+
+```bash
+curl "https://enrich.octolane.com/v2/inbound/opportunities?pipeline_id=pipeline_uuid&stage_id=stage_uuid&limit=10&q=renewal" \
+  -H "X-API-Key: your-api-key"
+```
+
+## Example response
+
+```json 200
+{
+  "success": true,
+  "data": {
+    "opportunities": [
+      {
+        "id": "opportunity_uuid",
+        "name": "Enterprise Renewal",
+        "pipeline_id": "pipeline_uuid",
+        "stage_id": "stage_uuid",
+        "stage_name": "Qualification",
+        "amount": 50000,
+        "probability": 40,
+        "close_date": "2026-06-30T00:00:00.000Z",
+        "next_action_date": null,
+        "next_steps": "Follow up with buyer",
+        "owner_id": "user_uuid",
+        "account_id": "account_uuid",
+        "account_name": "Example Inc",
+        "account_domain": "example.com",
+        "contact_id": "contact_uuid",
+        "contact_first_name": "John",
+        "contact_last_name": "Smith",
+        "contact_email": "john@example.com",
+        "additional_contacts": [],
+        "created_at": "2026-05-25T09:30:03.285099Z",
+        "updated_at": "2026-05-25T09:30:03.285099Z",
+        "custom_fields": {
+          "deal_source": "partner"
+        }
+      }
+    ],
+    "custom_field_definitions": {
+      "deal_source": {
+        "current_name": "Deal Source",
+        "property_name": "select_456",
+        "attribute_type": "select",
+        "metadata": { "select_options": [] }
+      }
+    },
+    "has_more": true,
+    "next_cursor": "opaque_cursor",
+    "limit": 10
+  },
+  "message": "Opportunities fetched successfully",
+  "statusCode": 200
+}
+```

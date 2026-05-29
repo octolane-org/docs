@@ -1,0 +1,68 @@
+---
+title: "Cursor pagination"
+sidebarTitle: "Cursor pagination"
+description: "How to paginate list and search endpoints."
+---
+
+Every list and search response includes:
+
+```json
+{
+  "has_more": true,
+  "next_cursor": "opaque_cursor_token",
+  "limit": 10
+}
+```
+
+Continue paginating until:
+
+```json
+{ "has_more": false, "next_cursor": null }
+```
+
+## GET endpoints
+
+Pass `cursor` as a query parameter.
+
+### First request
+
+```bash
+curl "https://enrich.octolane.com/v2/inbound/accounts?limit=10" \
+  -H "X-API-Key: your-api-key"
+```
+
+### Next request
+
+```bash
+curl "https://enrich.octolane.com/v2/inbound/accounts?limit=10&cursor=<next_cursor>" \
+  -H "X-API-Key: your-api-key"
+```
+
+## POST search endpoints
+
+Pass `cursor` in the request body. Keep `filters`, `sort`, `limit`, and (for opportunities) `pipeline_id`/`stage_id` identical between pages.
+
+### First request
+
+```json
+{
+  "pipeline_id": "pipeline_uuid",
+  "limit": 10,
+  "sort": { "field": "updated_at", "direction": "desc" }
+}
+```
+
+### Next request
+
+```json
+{
+  "pipeline_id": "pipeline_uuid",
+  "limit": 10,
+  "sort": { "field": "updated_at", "direction": "desc" },
+  "cursor": "next_cursor_from_previous_response"
+}
+```
+
+<Warning>
+  Cursors are valid only when paired with the **same query**: `query`, `filters`, `sort`, `limit`, and (for opportunities) `pipeline_id` / `stage_id`. Changing any of these invalidates the cursor.
+</Warning>
