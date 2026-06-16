@@ -1,0 +1,4202 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Octolane Public API",
+    "version": "1.0.0",
+    "description": "OpenAPI specification for Octolane public APIs. These endpoints let external systems read CRM data and create or update accounts, contacts, opportunities, notes, and activities through the public API gateway.",
+    "contact": {
+      "name": "Octolane",
+      "url": "https://octolane.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.octolane.com",
+      "description": "Public API gateway"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "CRM",
+      "description": "Public endpoints for creating, bulk creating, listing, searching, and updating CRM data."
+    }
+  ],
+  "paths": {
+    "/v1/accounts": {
+      "get": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "listAccountsV1",
+        "summary": "List accounts",
+        "description": "Returns accounts using cursor pagination with optional search and field projection. Custom attribute names and value types are returned in `data.custom_field_definitions`; keys in that map match keys under each account's `custom_fields` object.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Free-text search query.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Opaque pagination cursor returned by a previous page.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of records.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "Optional fields to include. Accepts a comma-separated string or repeated array values.",
+            "schema": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accounts were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/AccountsListData"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "createAccountV1",
+        "summary": "Create account",
+        "description": "Creates an account from a domain, or returns the existing account when the domain is already present. Additional account fields are persisted as system or custom attributes when supported.",
+        "requestBody": {
+          "required": true,
+          "description": "Account payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account was created or resolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Account was created or resolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/accounts/bulk": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkCreateAccountsV1",
+        "summary": "Bulk create accounts",
+        "description": "Creates or resolves up to 100 account records in one request.",
+        "requestBody": {
+          "required": true,
+          "description": "Array of account payloads. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountBulkInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accounts were created or resolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Accounts were created or resolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/accounts/search": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "searchAccountsV1Compatibility",
+        "summary": "Search accounts",
+        "description": "Search accounts with structured filters, sort, cursor pagination, and field projection. Custom attribute names and value types are returned in `data.custom_field_definitions`; keys in that map match keys under each account's `custom_fields` object.",
+        "requestBody": {
+          "required": true,
+          "description": "Search body with optional text query, structured filters, sort, cursor pagination, and field projection.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accounts were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/AccountsListData"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/contacts": {
+      "get": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "listContactsV1",
+        "summary": "List contacts",
+        "description": "Returns contacts using cursor pagination with optional search and field projection. Custom attribute names and value types are returned in `data.custom_field_definitions`; keys in that map match keys under each contact's `custom_fields` object.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Free-text search query.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Opaque pagination cursor returned by a previous page.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of records.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "Optional fields to include. Accepts a comma-separated string or repeated array values.",
+            "schema": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contacts were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/ContactsListData"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "createContactV1",
+        "summary": "Create contact",
+        "description": "Creates a contact from an email address, or returns the existing contact when the email is already present. Optional profile fields are persisted as attributes when supported.",
+        "requestBody": {
+          "required": true,
+          "description": "Contact payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact was created or resolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Contact was created or resolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/contacts/bulk": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkCreateContactsV1",
+        "summary": "Bulk create contacts",
+        "description": "Creates or resolves up to 100 contact records in one request.",
+        "requestBody": {
+          "required": true,
+          "description": "Array of contact payloads. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactBulkInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contacts were created or resolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Contacts were created or resolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/contacts/search": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "searchContactsV1Compatibility",
+        "summary": "Search contacts",
+        "description": "Search contacts with structured filters, sort, cursor pagination, and field projection. Custom attribute names and value types are returned in `data.custom_field_definitions`; keys in that map match keys under each contact's `custom_fields` object.",
+        "requestBody": {
+          "required": true,
+          "description": "Search body with optional text query, structured filters, sort, cursor pagination, and field projection.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contacts were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/ContactsListData"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/opportunities": {
+      "get": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "listOpportunitiesV1",
+        "summary": "List opportunities",
+        "description": "Returns opportunities in a required pipeline using cursor pagination with optional stage, search, and field projection. Custom attribute names and value types are returned in `data.custom_field_definitions`; keys in that map match keys under each opportunity's `custom_fields` object.",
+        "parameters": [
+          {
+            "name": "pipeline_id",
+            "in": "query",
+            "required": true,
+            "description": "Pipeline ID. Required for opportunity reads.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stage_id",
+            "in": "query",
+            "required": false,
+            "description": "Optional stage ID.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Free-text search query.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "description": "Opaque pagination cursor returned by a previous page.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of records.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "Optional fields to include. Accepts a comma-separated string or repeated array values.",
+            "schema": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Opportunities were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/OpportunitiesListData"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "createOpportunityV1",
+        "summary": "Create opportunity",
+        "description": "Creates an opportunity in a pipeline and resolves related account, primary contact, additional contacts, owner, and stage from the supplied identifiers.",
+        "requestBody": {
+          "required": true,
+          "description": "Opportunity payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpportunityInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Opportunity was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Opportunity was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/opportunities/search": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "searchOpportunitiesV1Compatibility",
+        "summary": "Search opportunities",
+        "description": "Search opportunities in a required pipeline with optional stage, structured filters, sort, cursor pagination, and field projection. Custom attribute names and value types are returned in `data.custom_field_definitions`; keys in that map match keys under each opportunity's `custom_fields` object.",
+        "requestBody": {
+          "required": true,
+          "description": "Opportunity search body. `pipeline_id` is required.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpportunitySearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Opportunities were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/OpportunitiesListData"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/opportunities/bulk": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkCreateOpportunitiesV1",
+        "summary": "Bulk create opportunities",
+        "description": "Creates up to 100 opportunities using the standard opportunity payload shape.",
+        "requestBody": {
+          "required": true,
+          "description": "Array of opportunity payloads. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpportunityBulkInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Opportunities were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Opportunities were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/opportunities/fast-bulk": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "fastBulkCreateOpportunitiesV1",
+        "summary": "Fast bulk create opportunities",
+        "description": "Creates up to 100 opportunities with nested account and contact payloads. This optimized endpoint batch-resolves accounts, contacts, owners, and stages before inserting opportunities.",
+        "requestBody": {
+          "required": true,
+          "description": "Array of fast bulk opportunity payloads. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FastBulkOpportunityBulkInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Opportunities were created or skipped as duplicates.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Opportunities were created or skipped as duplicates.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/activities/bulk": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkCreateActivitiesV1",
+        "summary": "Bulk create activities",
+        "description": "Creates up to 100 timeline activities such as email, meeting, call, link click, or other interaction records.",
+        "requestBody": {
+          "required": true,
+          "description": "Array of activity payloads. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivityBulkInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Activities were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Activities were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/notes": {
+      "get": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "listNotesV1",
+        "summary": "List notes",
+        "description": "Returns notes for the authenticated organization.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Free-text search query.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Page size.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notes were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "createNoteV1",
+        "summary": "Create note",
+        "description": "Creates a note and optionally maps it to accounts by domain and contacts by email.",
+        "requestBody": {
+          "required": true,
+          "description": "Note payload.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Note was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Note was created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/notes/bulk": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkCreateNotesV1",
+        "summary": "Bulk create notes",
+        "description": "Creates up to 100 notes and maps them to account/contact references.",
+        "requestBody": {
+          "required": true,
+          "description": "Array of note payloads. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteBulkInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Notes were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Notes were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipelines": {
+      "get": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "listPipelinesV1",
+        "summary": "List pipelines",
+        "description": "Returns opportunity pipelines and their stages for the authenticated organization.",
+        "responses": {
+          "200": {
+            "description": "Pipelines were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/accounts/fields": {
+      "get": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "listAccountFieldsV1",
+        "summary": "List account fields",
+        "description": "Returns account field definitions, including system fields and custom fields. Use `property_name` as the stable key for custom field values.",
+        "responses": {
+          "200": {
+            "description": "Account fields were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/FieldsListData"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/accounts/fields/bulk": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkCreateAccountFieldsV1",
+        "summary": "Bulk create account fields",
+        "description": "Creates account custom field definitions in bulk.",
+        "requestBody": {
+          "required": true,
+          "description": "Array of field definitions to create. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FieldBulkCreateInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account fields were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Account fields were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/accounts/fields/bulk/update": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkUpdateAccountFieldsV1",
+        "summary": "Bulk update account fields",
+        "description": "Updates account field definitions in bulk. Identify each field by `id` or `property_name`. `property_name` is a stable identifier and cannot be renamed; if you include it with `id`, it must match the stored field `property_name` exactly.",
+        "requestBody": {
+          "required": true,
+          "description": "Array of field definition patches. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FieldBulkUpdateInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account fields were updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/contacts/fields": {
+      "get": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "listContactFieldsV1",
+        "summary": "List contact fields",
+        "description": "Returns contact field definitions, including system fields and custom fields. Use `property_name` as the stable key for custom field values.",
+        "responses": {
+          "200": {
+            "description": "Contact fields were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/FieldsListData"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/contacts/fields/bulk": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkCreateContactFieldsV1",
+        "summary": "Bulk create contact fields",
+        "description": "Creates contact custom field definitions in bulk.",
+        "requestBody": {
+          "required": true,
+          "description": "Array of field definitions to create. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FieldBulkCreateInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact fields were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Contact fields were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/contacts/fields/bulk/update": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkUpdateContactFieldsV1",
+        "summary": "Bulk update contact fields",
+        "description": "Updates contact field definitions in bulk. Identify each field by `id` or `property_name`. `property_name` is a stable identifier and cannot be renamed; if you include it with `id`, it must match the stored field `property_name` exactly.",
+        "requestBody": {
+          "required": true,
+          "description": "Array of field definition patches. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FieldBulkUpdateInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact fields were updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipelines/{pipeline_id}/fields": {
+      "get": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "listPipelineFieldsV1",
+        "summary": "List pipeline fields",
+        "description": "Returns opportunity field definitions for a pipeline, including system fields and custom fields.",
+        "parameters": [
+          {
+            "name": "pipeline_id",
+            "in": "path",
+            "required": true,
+            "description": "Pipeline ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pipeline fields were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/FieldsListData"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipelines/{pipeline_id}/fields/bulk": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkCreatePipelineFieldsV1",
+        "summary": "Bulk create pipeline fields",
+        "description": "Creates opportunity custom field definitions for a pipeline in bulk.",
+        "parameters": [
+          {
+            "name": "pipeline_id",
+            "in": "path",
+            "required": true,
+            "description": "Pipeline ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Array of field definitions to create. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FieldBulkCreateInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pipeline fields were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Pipeline fields were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipelines/{pipeline_id}/fields/bulk/update": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkUpdatePipelineFieldsV1",
+        "summary": "Bulk update pipeline fields",
+        "description": "Updates opportunity field definitions for a pipeline in bulk. Identify each field by `id`/`attribute_id` or `property_name`. Opportunity fields are pipeline-scoped, so use this pipeline endpoint. `property_name` is a stable identifier and cannot be renamed; if you include it with `id`/`attribute_id`, it must match the stored field `property_name` exactly.",
+        "parameters": [
+          {
+            "name": "pipeline_id",
+            "in": "path",
+            "required": true,
+            "description": "Pipeline ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Array of field definition patches. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FieldBulkUpdateInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pipeline fields were updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipelines/{pipeline_id}/stages": {
+      "get": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "listPipelineStagesV1",
+        "summary": "List pipeline stages",
+        "description": "Returns active stages for a pipeline ordered by `stage_order`.",
+        "parameters": [
+          {
+            "name": "pipeline_id",
+            "in": "path",
+            "required": true,
+            "description": "Pipeline ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pipeline stages were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/StagesListData"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipelines/{pipeline_id}/stages/bulk": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkCreatePipelineStagesV1",
+        "summary": "Bulk create pipeline stages",
+        "description": "Creates stages for a pipeline in bulk.",
+        "parameters": [
+          {
+            "name": "pipeline_id",
+            "in": "path",
+            "required": true,
+            "description": "Pipeline ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Array of pipeline stages to create. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StageBulkCreateInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pipeline stages were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Pipeline stages were created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipelines/{pipeline_id}/stages/bulk/update": {
+      "post": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkUpdatePipelineStagesV1",
+        "summary": "Bulk update pipeline stages",
+        "description": "Updates stages for a pipeline in bulk.",
+        "parameters": [
+          {
+            "name": "pipeline_id",
+            "in": "path",
+            "required": true,
+            "description": "Pipeline ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Array of pipeline stage patches. Maximum 100 items.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StageBulkUpdateInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pipeline stages were updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pipelines/{pipeline_id}/stages/{stage_id}": {
+      "delete": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "deletePipelineStageV1",
+        "summary": "Delete pipeline stage",
+        "description": "Soft deletes a stage in a pipeline. If deals are in that stage, they are reassigned to `destination_stage_id` when supplied, otherwise to the best remaining stage in the pipeline.",
+        "parameters": [
+          {
+            "name": "pipeline_id",
+            "in": "path",
+            "required": true,
+            "description": "Pipeline ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "stage_id",
+            "in": "path",
+            "required": true,
+            "description": "Stage ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "destination_stage_id",
+            "in": "query",
+            "required": false,
+            "description": "Optional stage ID to receive deals from the deleted stage.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pipeline stage was deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/{object_type}/bulk": {
+      "patch": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "bulkUpdateObjectsV1",
+        "summary": "Bulk update records",
+        "description": "Updates up to 50 existing objects. The request body is keyed by object UUID, and each value is a patch object of field names to updated values. For opportunity relationship fields, `opportunity_account`, `opportunity_contact`, and `opportunity_other_stakeholders` use replace semantics: supplying the field clears the existing mapping of that type, then writes the supplied UUID or UUID list. Use `null` to clear `opportunity_account` or `opportunity_contact`; use `null` or `[]` to clear `opportunity_other_stakeholders`.",
+        "parameters": [
+          {
+            "name": "object_type",
+            "in": "path",
+            "required": true,
+            "description": "Object collection to update.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "accounts",
+                "contacts",
+                "opportunities"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Object keyed by target object UUID. Maximum 50 keys.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkUpdateInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Objects were updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key",
+        "description": "Public API key for the Octolane organization."
+      }
+    },
+    "schemas": {
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "description": "Endpoint-specific response payload."
+          }
+        },
+        "additionalProperties": true
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "message": {
+            "type": "string",
+            "example": "Validation failed"
+          },
+          "statusCode": {
+            "type": "integer",
+            "example": 400
+          }
+        },
+        "additionalProperties": true
+      },
+      "AttributeType": {
+        "type": "string",
+        "enum": [
+          "string",
+          "number",
+          "checkbox",
+          "date",
+          "date_range",
+          "rating",
+          "timestamp",
+          "select",
+          "multi_select",
+          "currency",
+          "percentage",
+          "location",
+          "time",
+          "datetime",
+          "email",
+          "phone",
+          "website",
+          "url",
+          "radio",
+          "team_members"
+        ]
+      },
+      "FieldDefinition": {
+        "type": "object",
+        "description": "Field or attribute definition. Account/contact fields use `id`; pipeline fields use `attribute_id`. Use `property_name` as the stable API key.",
+        "required": [
+          "property_name",
+          "current_name",
+          "attribute_type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "attribute_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "property_name": {
+            "type": "string",
+            "example": "customer_tier_123"
+          },
+          "current_name": {
+            "type": "string",
+            "example": "Customer Tier"
+          },
+          "original_name": {
+            "type": "string",
+            "example": "Customer Tier"
+          },
+          "attribute_type": {
+            "$ref": "#/components/schemas/AttributeType"
+          },
+          "entity_type": {
+            "type": "string",
+            "enum": [
+              "company",
+              "people",
+              "opportunity"
+            ]
+          },
+          "pipeline_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "is_editable": {
+            "type": "boolean"
+          },
+          "is_hidden": {
+            "type": "boolean"
+          },
+          "is_system": {
+            "type": "boolean"
+          },
+          "attribute_order": {
+            "type": "integer"
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": true
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true
+      },
+      "FieldsListData": {
+        "type": "object",
+        "required": [
+          "fields"
+        ],
+        "properties": {
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FieldDefinition"
+            }
+          }
+        }
+      },
+      "FieldCreateInput": {
+        "type": "object",
+        "required": [
+          "name",
+          "attribute_type"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Customer Tier"
+          },
+          "property_name": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "Optional stable field key. If omitted, Octolane generates a unique property name.",
+            "example": "customer_tier"
+          },
+          "attribute_type": {
+            "$ref": "#/components/schemas/AttributeType"
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": true
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional field metadata. For select fields, include `select_options` with label/value/color/order entries."
+          },
+          "order": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "is_hidden": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FieldBulkCreateInput": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "$ref": "#/components/schemas/FieldCreateInput"
+        }
+      },
+      "FieldUpdateInput": {
+        "type": "object",
+        "description": "Field patch. Identify account/contact fields with `id` or `property_name`; identify pipeline fields with `attribute_id`/`id` or `property_name`. `property_name` is immutable: use the same value returned by the field list/create APIs. When sent together with `id` or `attribute_id`, it must match the stored field `property_name`.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "attribute_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Alias for `id` when updating pipeline fields."
+          },
+          "property_name": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "Stable field identifier. This value cannot be changed by update APIs. If supplied with `id` or `attribute_id`, it must match the stored field `property_name` exactly."
+          },
+          "name": {
+            "type": "string",
+            "description": "New display name."
+          },
+          "current_name": {
+            "type": "string",
+            "description": "New display name."
+          },
+          "attribute_type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AttributeType"
+              }
+            ],
+            "description": "Can be changed only for custom fields, not system fields."
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": true
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "order": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "is_hidden": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FieldBulkUpdateInput": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "$ref": "#/components/schemas/FieldUpdateInput"
+        }
+      },
+      "StageDefinition": {
+        "type": "object",
+        "required": [
+          "stage_id",
+          "pipeline_id",
+          "label",
+          "stage_order"
+        ],
+        "properties": {
+          "stage_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pipeline_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "label": {
+            "type": "string",
+            "example": "Qualified"
+          },
+          "color": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": "#3B82F6"
+          },
+          "is_active": {
+            "type": "boolean"
+          },
+          "is_default": {
+            "type": "boolean"
+          },
+          "probability": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "stage_order": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "stage_type": {
+            "type": "string",
+            "enum": [
+              "default",
+              "positive",
+              "negative"
+            ]
+          }
+        },
+        "additionalProperties": true
+      },
+      "StagesListData": {
+        "type": "object",
+        "required": [
+          "stages"
+        ],
+        "properties": {
+          "stages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StageDefinition"
+            }
+          }
+        }
+      },
+      "StageCreateInput": {
+        "type": "object",
+        "required": [
+          "label"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "color": {
+            "type": "string",
+            "maxLength": 32
+          },
+          "stage_order": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "is_default": {
+            "type": "boolean"
+          },
+          "probability": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 100
+          },
+          "stage_type": {
+            "type": "string",
+            "enum": [
+              "default",
+              "positive",
+              "negative"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "StageBulkCreateInput": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "$ref": "#/components/schemas/StageCreateInput"
+        }
+      },
+      "StageUpdateInput": {
+        "type": "object",
+        "required": [
+          "stage_id"
+        ],
+        "properties": {
+          "stage_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "color": {
+            "type": "string",
+            "maxLength": 32
+          },
+          "stage_order": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "is_default": {
+            "type": "boolean"
+          },
+          "probability": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 100
+          },
+          "stage_type": {
+            "type": "string",
+            "enum": [
+              "default",
+              "positive",
+              "negative"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "StageBulkUpdateInput": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "$ref": "#/components/schemas/StageUpdateInput"
+        }
+      },
+      "RecordCustomFields": {
+        "type": "object",
+        "description": "Custom field values keyed by custom field slug. Use the sibling `custom_field_definitions` map in the same response to get each custom field's display name (`current_name`), stable property name (`property_name`), and value type (`attribute_type`).",
+        "additionalProperties": true
+      },
+      "CustomFieldDefinition": {
+        "type": "object",
+        "description": "Definition for one custom field returned under a record's `custom_fields` object.",
+        "required": [
+          "current_name",
+          "property_name",
+          "attribute_type"
+        ],
+        "properties": {
+          "current_name": {
+            "type": "string",
+            "description": "Display name configured for the custom field.",
+            "example": "Last action date"
+          },
+          "property_name": {
+            "type": "string",
+            "description": "Stable internal property name for the custom field. This can be used in field selection, filtering, and update payloads where custom properties are accepted.",
+            "example": "custom__last_action_date"
+          },
+          "attribute_type": {
+            "type": "string",
+            "description": "Value type for this custom field. Use this to format request values and interpret `custom_fields` values.",
+            "enum": [
+              "string",
+              "number",
+              "checkbox",
+              "date",
+              "date_range",
+              "rating",
+              "timestamp",
+              "select",
+              "multi_select",
+              "currency",
+              "percentage",
+              "location",
+              "time",
+              "datetime",
+              "email",
+              "phone",
+              "website",
+              "url",
+              "radio",
+              "team_members"
+            ],
+            "example": "date"
+          },
+          "metadata": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": true
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional field metadata such as select options. Shape depends on `attribute_type`."
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomFieldDefinitions": {
+        "type": "object",
+        "description": "Map of custom field slug to definition. This is returned by `/v1/accounts`, `/v1/accounts/search`, `/v1/contacts`, `/v1/contacts/search`, `/v1/opportunities`, and `/v1/opportunities/search`. The map key matches the key used under each record's `custom_fields` object. If the request uses `fields`, only selected custom fields are included; otherwise all visible custom fields for the object are included. For opportunities, definitions are scoped to the requested `pipeline_id`.",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/CustomFieldDefinition"
+        },
+        "example": {
+          "last_action_date": {
+            "current_name": "Last Action Date",
+            "property_name": "custom__last_action_date",
+            "attribute_type": "date",
+            "metadata": null
+          },
+          "kola": {
+            "current_name": "Kola",
+            "property_name": "custom__kola",
+            "attribute_type": "multi_select",
+            "metadata": {
+              "options": [
+                {
+                  "label": "E",
+                  "value": "e-532837",
+                  "color": "indigo"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "CursorPageFields": {
+        "type": "object",
+        "properties": {
+          "custom_field_definitions": {
+            "$ref": "#/components/schemas/CustomFieldDefinitions"
+          },
+          "has_more": {
+            "type": "boolean",
+            "description": "Whether another page is available."
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Cursor to pass on the next request when `has_more` is true."
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Effective page size used for this response."
+          }
+        }
+      },
+      "AccountRecord": {
+        "type": "object",
+        "description": "Account record. Additional selected system fields may be present.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "domain": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "custom_fields": {
+            "$ref": "#/components/schemas/RecordCustomFields"
+          }
+        },
+        "additionalProperties": true
+      },
+      "ContactRecord": {
+        "type": "object",
+        "description": "Contact record. Additional selected system fields may be present.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "first_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "last_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "email": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "email"
+          },
+          "custom_fields": {
+            "$ref": "#/components/schemas/RecordCustomFields"
+          }
+        },
+        "additionalProperties": true
+      },
+      "AdditionalOpportunityContact": {
+        "type": "object",
+        "properties": {
+          "contact_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "contact_first_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "contact_last_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "contact_email": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "email"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OpportunityRecord": {
+        "type": "object",
+        "description": "Opportunity record. Additional selected system fields may be present.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "pipeline_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "stage_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "stage_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "account_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "contact_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "additional_contacts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalOpportunityContact"
+            }
+          },
+          "custom_fields": {
+            "$ref": "#/components/schemas/RecordCustomFields"
+          }
+        },
+        "additionalProperties": true
+      },
+      "AccountsListData": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CursorPageFields"
+          },
+          {
+            "type": "object",
+            "required": [
+              "accounts",
+              "custom_field_definitions",
+              "has_more",
+              "next_cursor",
+              "limit"
+            ],
+            "properties": {
+              "accounts": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AccountRecord"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ContactsListData": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CursorPageFields"
+          },
+          {
+            "type": "object",
+            "required": [
+              "contacts",
+              "custom_field_definitions",
+              "has_more",
+              "next_cursor",
+              "limit"
+            ],
+            "properties": {
+              "contacts": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ContactRecord"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "OpportunitiesListData": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CursorPageFields"
+          },
+          {
+            "type": "object",
+            "required": [
+              "opportunities",
+              "custom_field_definitions",
+              "has_more",
+              "next_cursor",
+              "limit"
+            ],
+            "properties": {
+              "opportunities": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OpportunityRecord"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "AccountInput": {
+        "type": "object",
+        "required": [
+          "domain"
+        ],
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Company domain.",
+            "example": "acme.com"
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": "Acme"
+          },
+          "industry": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "logo": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "linkedin": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "twitter": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "twitter_followers": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "primary_location": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "founded": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 1000,
+            "maximum": 9999
+          },
+          "estimated_revenue": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "total_fund_raised": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "employee_range": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "tags": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "first_email_interaction": {
+            "$ref": "#/components/schemas/PayloadTimestamp"
+          },
+          "last_email_interaction": {
+            "$ref": "#/components/schemas/PayloadTimestamp"
+          },
+          "first_meeting_interaction": {
+            "$ref": "#/components/schemas/PayloadTimestamp"
+          },
+          "last_meeting_interaction": {
+            "$ref": "#/components/schemas/PayloadTimestamp"
+          },
+          "last_interaction": {
+            "$ref": "#/components/schemas/PayloadTimestamp"
+          },
+          "next_meeting": {
+            "$ref": "#/components/schemas/PayloadTimestamp"
+          }
+        },
+        "additionalProperties": true
+      },
+      "AccountBulkInput": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "$ref": "#/components/schemas/AccountInput"
+        }
+      },
+      "ContactInput": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "jane@acme.com"
+          },
+          "first_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "last_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "full_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "job_title": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phone": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "seniority": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "linkedin": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "twitter": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "twitter_followers": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "current_company": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "other_emails": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "avatar_url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "email_verified": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "first_email_interaction": {
+            "$ref": "#/components/schemas/PayloadTimestamp"
+          },
+          "last_email_interaction": {
+            "$ref": "#/components/schemas/PayloadTimestamp"
+          },
+          "first_meeting_interaction": {
+            "$ref": "#/components/schemas/PayloadTimestamp"
+          },
+          "last_meeting_interaction": {
+            "$ref": "#/components/schemas/PayloadTimestamp"
+          },
+          "last_interaction": {
+            "$ref": "#/components/schemas/PayloadTimestamp"
+          },
+          "next_meeting": {
+            "$ref": "#/components/schemas/PayloadTimestamp"
+          }
+        },
+        "additionalProperties": true
+      },
+      "ContactBulkInput": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "$ref": "#/components/schemas/ContactInput"
+        }
+      },
+      "OpportunityInput": {
+        "type": "object",
+        "required": [
+          "pipeline_id",
+          "opportunity",
+          "related_objects"
+        ],
+        "properties": {
+          "pipeline_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Target pipeline ID.",
+            "example": "018f13b3-8239-7ef8-a8f1-93ad10b76110"
+          },
+          "opportunity": {
+            "$ref": "#/components/schemas/OpportunityFields"
+          },
+          "related_objects": {
+            "$ref": "#/components/schemas/OpportunityRelatedObjects"
+          }
+        },
+        "additionalProperties": true
+      },
+      "OpportunityFields": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Opportunity name. Derived if omitted."
+          },
+          "stage_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "stage_name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Stage label fallback."
+          },
+          "deal_size": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "close_date": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Unix timestamp in seconds."
+          },
+          "next_action_date": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Unix timestamp in seconds."
+          },
+          "next_steps": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "custom_attributes": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "null"
+              ]
+            }
+          }
+        },
+        "additionalProperties": true
+      },
+      "OpportunityRelatedObjects": {
+        "type": "object",
+        "properties": {
+          "account_domain": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": "acme.com"
+          },
+          "primary_contact_email": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "email"
+          },
+          "additional_contact_emails": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string",
+              "format": "email"
+            }
+          },
+          "owner_email": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "email"
+          },
+          "owner_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OpportunityBulkInput": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "$ref": "#/components/schemas/OpportunityInput"
+        }
+      },
+      "FastBulkOpportunityInput": {
+        "type": "object",
+        "required": [
+          "opportunity",
+          "related_objects"
+        ],
+        "properties": {
+          "pipeline_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "pipeline_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "opportunity": {
+            "$ref": "#/components/schemas/OpportunityFields"
+          },
+          "related_objects": {
+            "type": "object",
+            "required": [],
+            "properties": {
+              "account": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/AccountInput"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "primary_contact": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ContactInput"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "additional_contacts": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "$ref": "#/components/schemas/ContactInput"
+                }
+              },
+              "owner_email": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "email"
+              },
+              "owner_id": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "uuid"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": true
+      },
+      "FastBulkOpportunityBulkInput": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "$ref": "#/components/schemas/FastBulkOpportunityInput"
+        }
+      },
+      "ActivityInput": {
+        "type": "object",
+        "required": [
+          "activity_type",
+          "title"
+        ],
+        "properties": {
+          "activity_type": {
+            "type": "string",
+            "enum": [
+              "EMAIL",
+              "MEETING",
+              "EMAIL_OPEN",
+              "LINK_CLICK",
+              "CALL",
+              "COMMENT",
+              "IN_PERSON_MEETING",
+              "LINKEDIN_CONNECTION",
+              "LINKEDIN_MESSAGE",
+              "X_ACTIVITY",
+              "TEXT_MESSAGE",
+              "WHATSAPP_MESSAGE",
+              "CONTACT_ADDED",
+              "OTHER"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "participants": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "email"
+            },
+            "default": []
+          },
+          "domains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "metadata": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": true
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": true
+      },
+      "ActivityBulkInput": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "$ref": "#/components/schemas/ActivityInput"
+        }
+      },
+      "NoteInput": {
+        "type": "object",
+        "required": [
+          "note"
+        ],
+        "properties": {
+          "note": {
+            "type": "object",
+            "required": [
+              "title"
+            ],
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "content": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "account_domains": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "contact_emails": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string",
+              "format": "email"
+            }
+          }
+        },
+        "additionalProperties": true
+      },
+      "NoteBulkInput": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "$ref": "#/components/schemas/NoteInput"
+        }
+      },
+      "BulkUpdateInput": {
+        "type": "object",
+        "description": "Bulk update payload keyed by object UUID. For opportunities, relationship updates are expressed with system field names: `opportunity_account` for the associated account UUID, `opportunity_contact` for the primary contact UUID, and `opportunity_other_stakeholders` for the complete replacement list of additional contact UUIDs. These relationship fields replace the existing mapping for that field instead of appending.",
+        "minProperties": 1,
+        "maxProperties": 50,
+        "propertyNames": {
+          "format": "uuid"
+        },
+        "additionalProperties": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Patch object. For opportunity relationship fields, pass UUID strings for `opportunity_account` and `opportunity_contact`, and an array of contact UUID strings for `opportunity_other_stakeholders`.",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "examples": [
+          {
+            "018f13b3-8239-7ef8-a8f1-93ad10b76110": {
+              "name": "Acme Enterprise"
+            }
+          },
+          {
+            "018f13b3-8239-7ef8-a8f1-93ad10b76111": {
+              "opportunity_account": "018f13b3-8239-7ef8-a8f1-93ad10b76120",
+              "opportunity_contact": "018f13b3-8239-7ef8-a8f1-93ad10b76121",
+              "opportunity_other_stakeholders": [
+                "018f13b3-8239-7ef8-a8f1-93ad10b76122",
+                "018f13b3-8239-7ef8-a8f1-93ad10b76123"
+              ]
+            }
+          }
+        ]
+      },
+      "SearchFilter": {
+        "type": "object",
+        "required": [
+          "field"
+        ],
+        "properties": {
+          "field": {
+            "type": "string",
+            "description": "Public field name, system field alias, or custom field slug."
+          },
+          "operator": {
+            "type": "string",
+            "default": "eq",
+            "enum": [
+              "eq",
+              "neq",
+              "contains",
+              "not_contains",
+              "starts_with",
+              "ends_with",
+              "in",
+              "not_in",
+              "gt",
+              "gte",
+              "lt",
+              "lte",
+              "between",
+              "empty",
+              "not_empty",
+              "contains_all",
+              "contains_none"
+            ],
+            "description": "Filter operator. For multi-value operators such as `in`, `not_in`, `between`, `contains_all`, and `contains_none`, pass an array in `value`."
+          },
+          "value": {
+            "description": "Filter value. For date/time fields such as `created_at`, `updated_at`, `close_date`, and custom date/timestamp fields, pass an ISO 8601 date or date-time string such as `2024-06-11T01:40:00Z`; Unix timestamps such as `1718070000` are not accepted in search filters. Use an array here for multi-value operators; omit for `empty` and `not_empty`.",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "example": {
+          "field": "created_at",
+          "operator": "gt",
+          "value": "2024-06-11T01:40:00Z"
+        },
+        "additionalProperties": false
+      },
+      "SearchSort": {
+        "type": "object",
+        "required": [
+          "field"
+        ],
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "default": "desc"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchRequest": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "q": {
+            "type": "string"
+          },
+          "filters": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "$ref": "#/components/schemas/SearchFilter"
+            }
+          },
+          "sort": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^[^:]+(?::(asc|desc))?$",
+                "description": "Compact sort expression. Use `field`, `field:asc`, or `field:desc`."
+              },
+              {
+                "$ref": "#/components/schemas/SearchSort"
+              },
+              {
+                "type": "array",
+                "maxItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/SearchSort"
+                }
+              }
+            ]
+          },
+          "cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "fields": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "OpportunitySearchRequest": {
+        "type": "object",
+        "required": [
+          "pipeline_id"
+        ],
+        "properties": {
+          "pipeline_id": {
+            "type": "string"
+          },
+          "stage_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "query": {
+            "type": "string"
+          },
+          "q": {
+            "type": "string"
+          },
+          "filters": {
+            "type": "array",
+            "maxItems": 50,
+            "items": {
+              "$ref": "#/components/schemas/SearchFilter"
+            }
+          },
+          "sort": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^[^:]+(?::(asc|desc))?$",
+                "description": "Compact sort expression. Use `field`, `field:asc`, or `field:desc`."
+              },
+              {
+                "$ref": "#/components/schemas/SearchSort"
+              },
+              {
+                "type": "array",
+                "maxItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/SearchSort"
+                }
+              }
+            ]
+          },
+          "cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "fields": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "PayloadTimestamp": {
+        "oneOf": [
+          {
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "type": "number",
+            "description": "Unix seconds or milliseconds."
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  }
+}

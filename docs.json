@@ -17,12 +17,7 @@
     "href": "https://octolane.com"
   },
   "styling": {
-    "codeblocks": {
-      "theme": {
-        "light": "github-light",
-        "dark": "github-light"
-      }
-    }
+    "codeblocks": "system"
   },
   "navbar": {
     "links": [
@@ -211,34 +206,77 @@
       {
         "tab": "API",
         "icon": "square-terminal",
+        "openapi": "/api-reference/openapi.json",
         "groups": [
           {
             "group": "Getting started",
             "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Create",
-            "pages": [
-              "api-reference/create-opportunity",
-              "api-reference/create-account",
-              "api-reference/create-contact",
-              "api-reference/create-note"
-            ]
-          },
-          {
-            "group": "Read & search",
-            "pages": [
+              "api-reference/introduction",
               "api-reference/v2/overview",
-              "api-reference/v2/list-accounts",
-              "api-reference/v2/search-accounts",
-              "api-reference/v2/list-contacts",
-              "api-reference/v2/search-contacts",
-              "api-reference/v2/list-opportunities",
-              "api-reference/v2/search-opportunities",
               "api-reference/v2/filters",
               "api-reference/v2/pagination"
+            ]
+          },
+          {
+            "group": "Accounts",
+            "pages": [
+              "api-reference/endpoints/crm/cursor-list-accounts",
+              "api-reference/endpoints/crm/create-or-resolve-an-account",
+              "api-reference/endpoints/crm/bulk-create-or-resolve-accounts",
+              "api-reference/endpoints/crm/search-accounts",
+              "api-reference/endpoints/crm/list-account-fields",
+              "api-reference/endpoints/crm/bulk-create-account-fields",
+              "api-reference/endpoints/crm/bulk-update-account-fields"
+            ]
+          },
+          {
+            "group": "Contacts",
+            "pages": [
+              "api-reference/endpoints/crm/cursor-list-contacts",
+              "api-reference/endpoints/crm/create-or-resolve-a-contact",
+              "api-reference/endpoints/crm/bulk-create-or-resolve-contacts",
+              "api-reference/endpoints/crm/search-contacts",
+              "api-reference/endpoints/crm/list-contact-fields",
+              "api-reference/endpoints/crm/bulk-create-contact-fields",
+              "api-reference/endpoints/crm/bulk-update-contact-fields"
+            ]
+          },
+          {
+            "group": "Opportunities",
+            "pages": [
+              "api-reference/endpoints/crm/cursor-list-opportunities",
+              "api-reference/endpoints/crm/create-an-opportunity",
+              "api-reference/endpoints/crm/search-opportunities",
+              "api-reference/endpoints/crm/bulk-create-opportunities",
+              "api-reference/endpoints/crm/fast-bulk-create-opportunities"
+            ]
+          },
+          {
+            "group": "Notes & activities",
+            "pages": [
+              "api-reference/endpoints/crm/list-notes",
+              "api-reference/endpoints/crm/create-a-note",
+              "api-reference/endpoints/crm/bulk-create-notes",
+              "api-reference/endpoints/crm/bulk-create-activities"
+            ]
+          },
+          {
+            "group": "Pipelines",
+            "pages": [
+              "api-reference/endpoints/crm/list-pipelines",
+              "api-reference/endpoints/crm/list-pipeline-fields",
+              "api-reference/endpoints/crm/bulk-create-pipeline-fields",
+              "api-reference/endpoints/crm/bulk-update-pipeline-fields",
+              "api-reference/endpoints/crm/list-pipeline-stages",
+              "api-reference/endpoints/crm/bulk-create-pipeline-stages",
+              "api-reference/endpoints/crm/bulk-update-pipeline-stages",
+              "api-reference/endpoints/crm/soft-delete-a-pipeline-stage"
+            ]
+          },
+          {
+            "group": "Bulk update",
+            "pages": [
+              "api-reference/endpoints/crm/bulk-update-accounts-contacts-or-opportunities"
             ]
           }
         ]
@@ -269,9 +307,9 @@
       {
         "header": "Help",
         "items": [
-          { "label": "Support", "href": "/support/contact" },
-          { "label": "Status", "href": "/support/status" },
-          { "label": "Trust", "href": "/security" },
+          { "label": "Support", "href": "https://docs.octolane.com/support/contact" },
+          { "label": "Status", "href": "https://docs.octolane.com/support/status" },
+          { "label": "Trust", "href": "https://docs.octolane.com/security" },
           { "label": "Contact sales", "href": "mailto:sales@octolane.com" }
         ]
       }
