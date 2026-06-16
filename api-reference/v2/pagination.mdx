@@ -27,15 +27,15 @@ Pass `cursor` as a query parameter.
 ### First request
 
 ```bash
-curl "https://enrich.octolane.com/v2/inbound/accounts?limit=10" \
-  -H "X-API-Key: your-api-key"
+curl "https://api.octolane.com/v1/accounts?limit=10" \
+  -H "x-api-key: your-api-key"
 ```
 
 ### Next request
 
 ```bash
-curl "https://enrich.octolane.com/v2/inbound/accounts?limit=10&cursor=<next_cursor>" \
-  -H "X-API-Key: your-api-key"
+curl "https://api.octolane.com/v1/accounts?limit=10&cursor=<next_cursor>" \
+  -H "x-api-key: your-api-key"
 ```
 
 ## POST search endpoints

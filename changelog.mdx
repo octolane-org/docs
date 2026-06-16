@@ -5,6 +5,150 @@ description: "What's new in Octolane. Product updates, new features, improvement
 rss: true
 ---
 
+<Update label="June 15, 2026" description="AI Chat" tags={["Improvements"]}>
+  ### AI Chat: pinned conversations
+
+  Keep your most important threads one click away.
+
+  - Pin any AI Chat thread to the top of the history panel
+  - Resume a pinned conversation with full context restored
+  - Share a pinned thread with a teammate via link
+</Update>
+
+<Update label="June 14, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed Signal occasionally double-counting sessions from the same visitor within a minute
+  - Fixed AI field re-runs queuing twice when triggered from a bulk edit
+  - Fixed the "last activity" column showing the wrong time for UTC+13 workspaces
+</Update>
+
+<Update label="June 13, 2026" description="Performance" tags={["Performance"]}>
+  - Cut median search latency from 220ms to 90ms on workspaces with 50K+ records
+  - Reduced MCP server cold-start time by 35%
+</Update>
+
+<Update label="June 12, 2026" description="Pipelines" tags={["Improvements"]}>
+  ### Pipeline: weighted forecast snapshots
+
+  - Daily automatic snapshot of weighted pipeline value for trend charts
+  - Compare any two snapshots side by side
+  - Export snapshot history to CSV
+</Update>
+
+<Update label="June 11, 2026" description="Email" tags={["New Features"]}>
+  ### Send-later scheduling
+
+  Write now, send at the perfect moment.
+
+  - Schedule any email to send at a specific date and time
+  - Per-recipient timezone awareness so sends land during working hours
+  - Scheduled sends are visible and editable from the composer
+</Update>
+
+<Update label="June 10, 2026" description="MCP" tags={["Improvements"]}>
+  - New `bulk_update_records` tool exposed over MCP
+  - Tool calls now stream partial results for long-running queries
+  - Clearer error messages when a tool is called with a missing required field
+</Update>
+
+<Update label="June 9, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed CSV export dropping custom field columns added within the last hour
+  - Fixed AI Chat losing the active pipeline filter after a page refresh
+  - Fixed Slack notifications missing the deal amount for multi-currency workspaces
+</Update>
+
+<Update label="June 8, 2026" description="Polish" tags={["Polish"]}>
+  - Refreshed the approval queue with a denser, faster-loading layout
+  - New keyboard shortcut `G` then `A` to jump straight to Approvals
+  - Subtle loading skeletons replace spinners across list views
+</Update>
+
+<Update label="June 7, 2026" description="Signal" tags={["Improvements"]}>
+  - Signal now resolves company identity for an additional 12% of anonymous traffic
+  - Added "first seen" and "last seen" timestamps to every identified company
+  - New filter: companies that viewed pricing in the last 7 days
+</Update>
+
+<Update label="June 6, 2026" description="Reports" tags={["New Features"]}>
+  ### Scheduled report digests
+
+  - Bundle multiple saved reports into a single scheduled email
+  - Choose a daily, weekly, or monthly cadence per digest
+  - Slack delivery option for any digest
+</Update>
+
+<Update label="June 5, 2026" description="Meeting Recorder" tags={["Improvements"]}>
+  - Recaps now open with a one-line "deal impact" summary
+  - Correct a speaker label once and it applies retroactively across the transcript
+  - Faster recap generation. Median time from call end to recap down to 90s
+</Update>
+
+<Update label="June 4, 2026" description="API" tags={["New Features"]}>
+  ### Bulk update endpoint
+
+  - New `PATCH /v1/{object_type}/bulk` to update accounts, contacts, or opportunities in one call
+  - Up to 1,000 records per request
+  - Partial-success reporting. Each record returns its own status
+</Update>
+
+<Update label="June 3, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed enrichment occasionally overwriting manually edited company names
+  - Fixed pipeline board scroll position jumping after an inline edit
+  - Fixed `/forecast` excluding deals with a close date set to today
+</Update>
+
+<Update label="June 2, 2026" description="AI Fields" tags={["Improvements"]}>
+  - AI fields can now reference other AI fields in their prompt
+  - Added a confidence badge so you can see how sure Octolane is about each value
+  - Bulk re-run AI fields across any filtered view
+</Update>
+
+<Update label="June 1, 2026" description="Tasks" tags={["New Features"]}>
+  ### Task dependencies
+
+  - Mark a task as blocked by another. The blocked task stays hidden until its dependency is done
+  - Dependency chains are visualized on the deal record
+  - AI Chat understands dependencies: "What's blocking the Acme renewal?"
+</Update>
+
+<Update label="May 31, 2026" description="Performance" tags={["Performance"]}>
+  - 50% faster initial load for the Reports tab
+  - Reduced webhook delivery p99 from 1.2s to 0.5s
+</Update>
+
+<Update label="May 30, 2026" description="Polish" tags={["Polish"]}>
+  - New empty-state illustrations for Signal, Tasks, and Reports
+  - Improved contrast on AI-generated field highlights in dark mode
+  - Consistent date formatting across every view
+</Update>
+
+<Update label="May 29, 2026" description="Approvals" tags={["Improvements"]}>
+  - Group approval queue items by agent or by record
+  - "Approve and next" now preloads the following item for instant review
+  - Added a daily summary of everything auto-approved overnight
+</Update>
+
+<Update label="May 28, 2026" description="Integrations" tags={["New Features"]}>
+  ### HubSpot two-way sync (beta)
+
+  Keep Octolane and HubSpot in lockstep, not just a one-time import.
+
+  - Continuous sync with field-level mapping and conflict-resolution rules
+  - Sync status dashboard with per-object counts
+  - Pause or resync any object at any time
+</Update>
+
+<Update label="May 27, 2026" description="Bug fixes" tags={["Bug Fixes"]}>
+  - Fixed Meeting Recorder bot occasionally staying in a call after it ended
+  - Fixed contact merge not combining LinkedIn URLs
+  - Fixed search highlighting persisting after the query was cleared
+</Update>
+
+<Update label="May 26, 2026" description="Mobile" tags={["Improvements"]}>
+  - Pipeline board is now fully usable on mobile with horizontal swipe between stages
+  - Approve or reject queued actions from the mobile app
+  - Offline mode caches your most recent views for read access
+</Update>
+
 <Update label="May 25, 2026" description="AI Memory" tags={["New Features"]}>
   ### AI Memory: teach Octolane about your business once
 

@@ -12,26 +12,26 @@ Read access to your Octolane CRM. Each object (Accounts, Contacts, Opportunities
 ## Base URL
 
 ```
-https://enrich.octolane.com/v2/inbound
+https://api.octolane.com/v1
 ```
 
 ## Authentication
 
-Every request must include the API key in the `X-API-Key` header.
+Every request must include the API key in the `x-api-key` header.
 
 ```
-X-API-Key: your-api-key
+x-api-key: your-api-key
 ```
 
-Find your API key in **Settings , Integrations , API**.
+Find your API key in **Settings → Integrations → API**.
 
 ## Endpoints
 
 | Object | List | Search |
 |---|---|---|
-| Accounts | [`GET /accounts`](/api-reference/v2/list-accounts) | [`POST /accounts/search`](/api-reference/v2/search-accounts) |
-| Contacts | [`GET /contacts`](/api-reference/v2/list-contacts) | [`POST /contacts/search`](/api-reference/v2/search-contacts) |
-| Opportunities | [`GET /opportunities`](/api-reference/v2/list-opportunities) | [`POST /opportunities/search`](/api-reference/v2/search-opportunities) |
+| Accounts | [`GET /v1/accounts`](/api-reference/endpoints/crm/cursor-list-accounts) | [`POST /v1/accounts/search`](/api-reference/endpoints/crm/search-accounts) |
+| Contacts | [`GET /v1/contacts`](/api-reference/endpoints/crm/cursor-list-contacts) | [`POST /v1/contacts/search`](/api-reference/endpoints/crm/search-contacts) |
+| Opportunities | [`GET /v1/opportunities`](/api-reference/endpoints/crm/cursor-list-opportunities) | [`POST /v1/opportunities/search`](/api-reference/endpoints/crm/search-opportunities) |
 
 ## Shared concepts
 
@@ -49,8 +49,8 @@ Find your API key in **Settings , Integrations , API**.
 Every list and search endpoint accepts a `fields` parameter to return only the fields you need. Pass a comma-separated string (for `GET`) or a JSON array (for `POST`).
 
 ```
-GET  /accounts?fields=id,name,domain,custom_fields
-POST /accounts/search   { "fields": ["id", "name", "domain", "custom_fields"] }
+GET  /v1/accounts?fields=id,name,domain,custom_fields
+POST /v1/accounts/search   { "fields": ["id", "name", "domain", "custom_fields"] }
 ```
 
 ## Custom fields

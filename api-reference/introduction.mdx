@@ -9,7 +9,7 @@ The Octolane API lets you push data into your CRM from any source - your outboun
 ## Base URL
 
 ```
-https://enrich.octolane.com/v1
+https://api.octolane.com/v1
 ```
 
 ## Authentication
@@ -17,7 +17,7 @@ https://enrich.octolane.com/v1
 Include your API key in every request as a header:
 
 ```
-X-API-Key: your-api-key
+x-api-key: your-api-key
 ```
 
 Your API key automatically identifies your organization - no extra configuration needed. Find your API key in **Settings → Integrations → API**.
@@ -76,19 +76,19 @@ Error responses follow this format:
 
 <CardGroup cols={2}>
 
-<Card title="Create Opportunity" icon="handshake" href="/api-reference/create-opportunity">
+<Card title="Create Opportunity" icon="handshake" href="/api-reference/endpoints/crm/create-an-opportunity">
   Create a deal with associated account and contacts in one call.
 </Card>
 
-<Card title="Create Account" icon="building" href="/api-reference/create-account">
+<Card title="Create Account" icon="building" href="/api-reference/endpoints/crm/create-or-resolve-an-account">
   Create a company record by domain.
 </Card>
 
-<Card title="Create Contact" icon="user" href="/api-reference/create-contact">
+<Card title="Create Contact" icon="user" href="/api-reference/endpoints/crm/create-or-resolve-a-contact">
   Create a person record by email.
 </Card>
 
-<Card title="Create Note" icon="note-sticky" href="/api-reference/create-note">
+<Card title="Create Note" icon="note-sticky" href="/api-reference/endpoints/crm/create-a-note">
   Attach notes to accounts and contacts.
 </Card>
 
