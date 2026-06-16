@@ -1,3 +1,9 @@
 ---
 openapi: post /v1/accounts
 ---
+
+<Note>
+  **Also use this to look up an account by domain.** This endpoint is idempotent — if an account with the given `domain` already exists, it returns that existing account instead of creating a duplicate. So sending a `POST` with just a `domain` is a safe way to *resolve or fetch* an account by its domain.
+
+  Need to find accounts by other criteria, or match many at once? Use [Search accounts](/api-reference/endpoints/crm/search-accounts) for filtered search.
+</Note>
