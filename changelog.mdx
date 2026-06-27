@@ -5,6 +5,15 @@ description: "What's new in Octolane. Product updates, new features, improvement
 rss: true
 ---
 
+<Update label="June 27, 2026" description="API" tags={["Improvements"]}>
+  ### Search opportunities across all pipelines
+
+  `pipeline_id` is now optional on [`POST /v1/opportunities/search`](/api-reference/endpoints/crm/search-opportunities).
+
+  - Omit `pipeline_id` to search opportunities across every pipeline in the org
+  - Pass `pipeline_id` to scope the search to a single pipeline, as before
+</Update>
+
 <Update label="June 15, 2026" description="AI Chat" tags={["Improvements"]}>
   ### AI Chat: pinned conversations
 

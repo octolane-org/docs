@@ -903,10 +903,10 @@
         ],
         "operationId": "searchOpportunitiesV1Compatibility",
         "summary": "Search opportunities",
-        "description": "Search opportunities in a required pipeline with optional stage, structured filters, sort, cursor pagination, and field projection. Custom attribute names and value types are returned in `data.custom_field_definitions`; keys in that map match keys under each opportunity's `custom_fields` object.",
+        "description": "Search opportunities with optional pipeline scope, stage, structured filters, sort, cursor pagination, and field projection. `pipeline_id` is optional; when omitted the search spans every pipeline in the org. Custom attribute names and value types are returned in `data.custom_field_definitions`; keys in that map match keys under each opportunity's `custom_fields` object.",
         "requestBody": {
           "required": true,
-          "description": "Opportunity search body. `pipeline_id` is required.",
+          "description": "Opportunity search body. `pipeline_id` is optional; omit it to search across all pipelines.",
           "content": {
             "application/json": {
               "schema": {
@@ -4116,9 +4116,6 @@
       },
       "OpportunitySearchRequest": {
         "type": "object",
-        "required": [
-          "pipeline_id"
-        ],
         "properties": {
           "pipeline_id": {
             "type": "string"
