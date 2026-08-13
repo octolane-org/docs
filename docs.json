@@ -278,6 +278,12 @@
             "pages": [
               "api-reference/endpoints/crm/bulk-update-accounts-contacts-or-opportunities"
             ]
+          },
+          {
+            "group": "Record history",
+            "pages": [
+              "api-reference/endpoints/crm/get-record-field-history"
+            ]
           }
         ]
       },
