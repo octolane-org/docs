@@ -2503,6 +2503,128 @@
           }
         }
       }
+    },
+    "/v1/{object_type}/{object_id}/history": {
+      "get": {
+        "tags": [
+          "CRM"
+        ],
+        "operationId": "getRecordFieldHistoryV1",
+        "summary": "Get record field history",
+        "description": "Returns the field-change history for a record, newest first: which field changed, the previous and new values, who made the change, and when. `user` is `null` for system or AI-generated changes such as enrichment and workflows. `old_value_label` and `new_value_label` are set for reference-type values (currently opportunity stages); other fields return their raw values. History is recorded from the point change tracking was enabled for your workspace; earlier changes are not available. In place of the `x-api-key` header, the API key may also be sent as `Authorization: Bearer YOUR_API_KEY`. Rate limits: 300 requests per minute and 100,000 requests per month, shared across v1 read endpoints.",
+        "parameters": [
+          {
+            "name": "object_type",
+            "in": "path",
+            "required": true,
+            "description": "Object collection the record belongs to.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "accounts",
+                "contacts",
+                "opportunities"
+              ]
+            }
+          },
+          {
+            "name": "object_id",
+            "in": "path",
+            "required": true,
+            "description": "The record ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "property_name",
+            "in": "query",
+            "required": false,
+            "description": "Restrict history to a single field, identified by its stable property name (for example `opportunity_stage`).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Entries per page.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "History entries were returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "$ref": "#/components/schemas/RecordFieldHistoryData"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request failed validation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The API key is missing, invalid, or not allowed to access this route.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "The route rate limit was exceeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -4193,6 +4315,116 @@
             "type": "null"
           }
         ]
+      },
+      "RecordFieldHistoryEntry": {
+        "type": "object",
+        "properties": {
+          "property_name": {
+            "type": "string",
+            "description": "Stable property name of the changed field.",
+            "example": "opportunity_stage"
+          },
+          "property_label": {
+            "type": "string",
+            "description": "Display label of the changed field.",
+            "example": "Stage"
+          },
+          "old_value": {
+            "description": "Wrapper around the previous raw value.",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "value": {
+                "description": "Previous raw value."
+              }
+            },
+            "additionalProperties": true
+          },
+          "new_value": {
+            "description": "Wrapper around the new raw value.",
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "value": {
+                "description": "New raw value."
+              }
+            },
+            "additionalProperties": true
+          },
+          "old_value_label": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Display label for the previous value. Set for reference-type values (currently opportunity stages); `null` otherwise.",
+            "example": "Meeting Booked"
+          },
+          "new_value_label": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Display label for the new value. Set for reference-type values (currently opportunity stages); `null` otherwise.",
+            "example": "In Conversation"
+          },
+          "user": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "User who made the change. `null` for system or AI-generated changes such as enrichment and workflows.",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "display_name": {
+                "type": "string",
+                "example": "One Chowdhury"
+              }
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the change was made.",
+            "example": "2026-08-13T18:48:34.509Z"
+          }
+        }
+      },
+      "RecordFieldHistoryData": {
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer",
+                "description": "Total number of history entries.",
+                "example": 3
+              },
+              "page": {
+                "type": "integer",
+                "example": 1
+              },
+              "limit": {
+                "type": "integer",
+                "example": 20
+              }
+            }
+          },
+          "historicalData": {
+            "type": "array",
+            "description": "History entries, newest first.",
+            "items": {
+              "$ref": "#/components/schemas/RecordFieldHistoryEntry"
+            }
+          }
+        }
       }
     }
   }
