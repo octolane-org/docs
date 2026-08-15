@@ -313,9 +313,9 @@
       {
         "header": "Help",
         "items": [
-          { "label": "Support", "href": "https://docs.octolane.com/support/contact" },
-          { "label": "Status", "href": "https://docs.octolane.com/support/status" },
-          { "label": "Trust", "href": "https://docs.octolane.com/security" },
+          { "label": "Support", "href": "https://octolane.com/docs/support/contact" },
+          { "label": "Status", "href": "https://octolane.com/docs/support/status" },
+          { "label": "Trust", "href": "https://octolane.com/docs/security" },
           { "label": "Contact sales", "href": "mailto:sales@octolane.com" }
         ]
       }
